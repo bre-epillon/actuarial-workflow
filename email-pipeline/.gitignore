@@ -1,11 +1,21 @@
 # secrets and per-user config
 .env
 config.toml
-# data: never commit
+# data: never commit (CLAUDE.md rule 2). Synthetic fixtures are the only exception.
 inbox/
 jobs/
+samples/
 *.msg
 *.eml
+*.xls
+*.xlsx
+*.xlsm
+*.xlsb
+*.csv
+*.pdf
+*.doc
+*.docx
+*.zip
 !tests/fixtures/**
 # python
 __pycache__/
@@ -13,3 +23,6 @@ __pycache__/
 .venv/
 .pytest_cache/
 dist/
+*.log
+# personal Claude Code settings
+.claude/settings.local.json

@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Large loss notification: facts as stated in the sources (no calculations)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "notification_type", "cedent", "broker", "treaty_reference", "underwriting_year",
+    "event_name", "date_of_loss", "line_of_business", "country",
+    "gross_loss", "previous_estimate", "cash_call", "cash_call_due_date", "our_share", "sources", "notes"
+  ],
+  "properties": {
+    "notification_type": {
+      "enum": ["first_advice", "update", "cash_call", "closing", "other", null],
+      "description": "What the sender is notifying"
+    },
+    "cedent": {"type": ["string", "null"]},
+    "broker": {"type": ["string", "null"]},
+    "treaty_reference": {"type": ["string", "null"], "description": "Treaty / contract name or reference as stated"},
+    "underwriting_year": {"type": ["integer", "null"], "minimum": 1950, "maximum": 2100},
+    "event_name": {"type": ["string", "null"], "description": "Catastrophe event or loss name, if any"},
+    "date_of_loss": {"type": ["string", "null"], "format": "date", "description": "YYYY-MM-DD; for an event spanning several days the first day (explain in notes)"},
+    "line_of_business": {"type": ["string", "null"]},
+    "country": {"type": ["string", "null"]},
+    "gross_loss": {"$ref": "#/$defs/amount", "description": "The cedent's current 100% gross loss estimate"},
+    "previous_estimate": {"$ref": "#/$defs/amount", "description": "The previous 100% gross estimate, if this is an update and it is stated"},
+    "cash_call": {"$ref": "#/$defs/amount", "description": "Amount requested from us, if this is a cash call"},
+    "cash_call_due_date": {"type": ["string", "null"], "format": "date", "description": "YYYY-MM-DD, if a cash call states a due date"},
+    "our_share": {
+      "type": ["object", "null"],
+      "description": "Our share / participation, only if the sources state it",
+      "additionalProperties": false,
+      "required": ["percent", "as_written", "source"],
+      "properties": {
+        "percent": {"type": "number", "minimum": 0, "maximum": 100, "description": "As stated: '7.5%' -> 7.5"},
+        "as_written": {"type": "string", "minLength": 1, "description": "Only the percentage, exactly as written, e.g. '7.5%'"},
+        "source": {"type": "string", "minLength": 1, "description": "Text file it was read from, relative to the job folder"}
+      }
+    },
+    "sources": {
+      "type": "object",
+      "description": "For every non-null field above except the amounts and our_share: where it was found",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["file", "quote"],
+        "properties": {
+          "file": {"type": "string", "minLength": 1, "description": "Text file, relative to the job folder"},
+          "quote": {"type": "string", "minLength": 1, "description": "Short verbatim quote from that file (no ellipses)"}
+        }
+      }
+    },
+    "notes": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Anything ambiguous, contradictory or missing that a reviewer should know"
+    }
+  },
+  "$defs": {
+    "amount": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["value", "currency", "as_written", "source"],
+      "properties": {
+        "value": {"type": "number", "description": "The stated amount written out in full: 'EUR 12.5m' -> 12500000. Never a sum, share or conversion"},
+        "currency": {"type": ["string", "null"], "pattern": "^[A-Z]{3}$", "description": "ISO 4217 code as stated"},
+        "as_written": {"type": "string", "minLength": 1, "description": "Only the amount, exactly as written in the source file, e.g. 'EUR 12.5m': no other words or numbers"},
+        "source": {"type": "string", "minLength": 1, "description": "Text file it was read from (body.txt or an attachment's .txt/.csv version), relative to the job folder"}
+      }
+    }
+  }
+}

@@ -21,15 +21,22 @@ class Config:
     teams_webhook_url: str | None = None
 
 
+def _expand(value: str) -> Path:
+    """Expand ~ and environment variables (%USERPROFILE%, $HOME, ...)."""
+    return Path(os.path.expandvars(value)).expanduser()
+
+
 def load_config(path: Path) -> Config:
     path = Path(path).resolve()
+    if not path.exists():
+        raise FileNotFoundError(f"{path} not found: copy config.example.toml to config.toml and adjust it")
     data = tomllib.loads(path.read_text(encoding="utf-8"))
     base = path.parent
 
     def as_path(key: str) -> Path:
         if not data.get(key):
             raise ValueError(f"config: '{key}' is required")
-        return (base / Path(data[key]).expanduser()).resolve()
+        return (base / _expand(data[key])).resolve()
 
     return Config(
         inbox_dir=as_path("inbox_dir"),

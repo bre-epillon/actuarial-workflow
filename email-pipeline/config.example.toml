@@ -1,20 +1,25 @@
-# Copy to config.toml (gitignored) and adjust. Relative paths are resolved
-# against this file's folder. Keep inbox and jobs OUTSIDE the repo.
+# Copy to config.toml (gitignored) and adjust. The defaults work as they are.
+# Relative paths are resolved against this file's folder; ~ and %VARIABLES% are expanded.
+#
+# Keep the inbox and jobs folders OUTSIDE the git checkout and outside OneDrive:
+# they hold confidential data, and OneDrive sync can lock files mid-run.
+# Keep jobs_dir short: Windows paths longer than 260 characters fail.
 
-inbox_dir = "C:/Users/YOUR_NAME/Desktop/claude_inbox"
-jobs_dir  = "C:/Users/YOUR_NAME/claude_jobs"
-routes_dir = "routes"
+inbox_dir = "~/claude_pipeline/inbox"   # drag emails / files here
+jobs_dir  = "~/claude_pipeline/jobs"    # one folder per item: inputs, outputs, logs
+routes_dir = "routes"                   # the business processes (shared through git)
 
 poll_seconds = 30          # how often the inbox is checked
 settle_seconds = 10        # an item must be unchanged this long before pickup
 
-# Model aliases as understood by Claude Code (e.g. "haiku", "sonnet", "opus").
-# Leave empty to use the default. Verify the aliases against current docs.
+# Claude Code model aliases ("haiku", "sonnet", "opus") or full model ids.
+# Empty = your Claude Code default. A route can override with `model:` in its ROUTE.md.
 classifier_model = "haiku"
-route_model = ""
+route_model = "sonnet"
 
 confidence_threshold = 0.7 # below this, a job goes to needs_review
 max_turns = 30             # safety cap per route agent run
 
-# Teams webhook: prefer setting TEAMS_WEBHOOK_URL in .env / environment instead.
+# Teams "Workflows" webhook URL (see README). The TEAMS_WEBHOOK_URL environment
+# variable overrides it. It is a secret: never put it in a committed file.
 teams_webhook_url = ""

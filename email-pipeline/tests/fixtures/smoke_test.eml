@@ -1,0 +1,24 @@
+From: Pipeline Tester <tester@example.com>
+To: Actuarial Team <actuarial@example.com>
+Date: Mon, 21 Sep 2026 09:12:00 +0200
+Subject: [PIPELINE TEST] hello
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============2258297797696438980=="
+
+--===============2258297797696438980==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+Hello pipeline,
+
+this is an end-to-end test with one small attachment. Please ignore.
+
+--===============2258297797696438980==
+Content-Type: text/csv
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="test_numbers.csv"
+MIME-Version: 1.0
+
+aXRlbSx2YWx1ZQphcHBsZXMsMwpwZWFycyw1Cg==
+
+--===============2258297797696438980==--

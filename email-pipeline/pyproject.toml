@@ -1,21 +1,28 @@
 [project]
 name = "email-pipeline"
-version = "0.1.0"
+version = "0.2.0"
 description = "Folder-watching pipeline that classifies and processes actuarial emails with the Claude Agent SDK"
+readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-    "claude-agent-sdk",
-    "extract-msg",
-    "pyyaml",
-    "pandas",
-    "openpyxl",
+    # The SDK bundles the Claude Code CLI; its API moves fast, so stay on one minor line.
+    "claude-agent-sdk>=0.2.174,<0.3",
+    "extract-msg>=0.55",
+    "jsonschema>=4.20",
+    "openpyxl>=3.1",
+    "pandas>=2.2",
+    "pypdf>=5.0",
+    "python-docx>=1.1",
+    "pyxlsb>=1.0.10",
+    "pyyaml>=6.0",
+    "xlrd>=2.0",
 ]
 
 [project.scripts]
 email-pipeline = "pipeline.main:main"
 
 [dependency-groups]
-dev = ["pytest"]
+dev = ["pytest>=8"]
 
 [build-system]
 requires = ["hatchling"]
@@ -23,3 +30,13 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/pipeline"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.uv]
+# Use the Windows certificate store: needed behind the corporate TLS proxy, harmless elsewhere.
+system-certs = true
+# Use the installed (python.org) Python: Defender on company laptops blocks the
+# unsigned python.exe of uv-downloaded Pythons with "Access is denied".
+python-preference = "only-system"

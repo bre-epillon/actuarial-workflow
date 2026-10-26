@@ -1,0 +1,8 @@
+# Data never enters git, anywhere in the repo (email-pipeline/CLAUDE.md rule 2).
+# Each tool's own .gitignore adds its specific rules and fixture exceptions.
+*.msg
+*.eml
+config.toml
+.env
+.venv/
+__pycache__/

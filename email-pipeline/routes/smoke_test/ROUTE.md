@@ -5,6 +5,7 @@ description: >
   Never use this route for real business emails.
 examples: ["[PIPELINE TEST] hello"]
 allowed_tools: [Read, Write, Glob]
+model: haiku
 ---
 You are testing the pipeline end-to-end.
 

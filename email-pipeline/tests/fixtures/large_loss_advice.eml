@@ -1,0 +1,181 @@
+From: Claims Desk <claims@examplebroker.test>
+To: Actuarial Team <actuarial@example.com>
+Date: Mon, 21 Sep 2026 09:12:00 +0200
+Subject: Large Loss Advice - Nordwind Mutual - DOL 14/09/2026
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============1476234821011560943=="
+
+--===============1476234821011560943==
+Content-Type: multipart/alternative;
+ boundary="===============6589342839192183454=="
+
+--===============6589342839192183454==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Dear colleagues,
+
+On behalf of Nordwind Mutual Insurance (fictional) we advise the following la=
+rge loss
+under the Property Catastrophe Excess of Loss programme 2026, Layer 2
+(treaty ref. NWM-PCAT-2026-L2, underwriting year 2026).
+
+Event: Storm Example (windstorm)
+Date of loss: 14 September 2026
+Country: Exampleland
+Line of business: Property
+Current gross loss estimate (100%): EUR 12.5m
+Previous estimate: EUR 10,000,000
+Your share: 7.5%
+
+The cedent's loss advice and the loss details are attached. Please confirm re=
+ceipt.
+
+Kind regards
+Claims Desk, Example Broker Ltd (fictional)
+
+--===============6589342839192183454==
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+
+<html><head><style>p {margin:0}</style></head><body>
+<p>Dear colleagues,</p>
+<p>On behalf of <b>Nordwind Mutual Insurance</b> (fictional) we advise the fo=
+llowing large loss
+under the Property Catastrophe Excess of Loss programme 2026, Layer 2
+(treaty ref. NWM-PCAT-2026-L2, underwriting year 2026).</p>
+<table border=3D"1">
+<tr><th>Item</th><th>Value</th></tr>
+<tr><td>Event</td><td>Storm Example (windstorm)</td></tr>
+<tr><td>Date of loss</td><td>14 September 2026</td></tr>
+<tr><td>Country</td><td>Exampleland</td></tr>
+<tr><td>Line of business</td><td>Property</td></tr>
+<tr><td>Current gross loss estimate (100%)</td><td>EUR 12.5m</td></tr>
+<tr><td>Previous estimate</td><td>EUR 10,000,000</td></tr>
+<tr><td>Your share</td><td>7.5%</td></tr>
+</table>
+<p>The cedent's loss advice and the loss details are attached. Please confirm=
+ receipt.</p>
+<p>Kind regards<br>Claims Desk, Example Broker Ltd (fictional)</p>
+</body></html>
+
+--===============6589342839192183454==--
+
+--===============1476234821011560943==
+Content-Type: application/pdf
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="loss_advice.pdf"
+MIME-Version: 1.0
+
+JVBERi0xLjQKMSAwIG9iago8PCAvVHlwZSAvQ2F0YWxvZyAvUGFnZXMgMiAwIFIgPj4KZW5kb2Jq
+CjIgMCBvYmoKPDwgL1R5cGUgL1BhZ2VzIC9LaWRzIFszIDAgUl0gL0NvdW50IDEgPj4KZW5kb2Jq
+CjMgMCBvYmoKPDwgL1R5cGUgL1BhZ2UgL1BhcmVudCAyIDAgUiAvTWVkaWFCb3ggWzAgMCA1OTUg
+ODQyXSAvUmVzb3VyY2VzIDw8IC9Gb250IDw8IC9GMSA0IDAgUiA+PiA+PiAvQ29udGVudHMgNSAw
+IFIgPj4KZW5kb2JqCjQgMCBvYmoKPDwgL1R5cGUgL0ZvbnQgL1N1YnR5cGUgL1R5cGUxIC9CYXNl
+Rm9udCAvSGVsdmV0aWNhID4+CmVuZG9iago1IDAgb2JqCjw8IC9MZW5ndGggMzAzID4+CnN0cmVh
+bQpCVCAvRjEgMTEgVGYgNTAgNzgwIFRkIDE0IFRMIChMT1NTIEFEVklDRSAtIE5vcmR3aW5kIE11
+dHVhbCBJbnN1cmFuY2UgXChmaWN0aW9uYWxcKSkgVGogVCogKFRyZWF0eTogTldNLVBDQVQtMjAy
+Ni1MMiAgIFVuZGVyd3JpdGluZyB5ZWFyOiAyMDI2KSBUaiBUKiAoRXZlbnQ6IFN0b3JtIEV4YW1w
+bGUgICBEYXRlIG9mIGxvc3M6IDE0LjA5LjIwMjYpIFRqIFQqIChHcm9zcyBsb3NzIGVzdGltYXRl
+IFwoMTAwJVwpOiBFVVIgMTIsNTAwLDAwMCkgVGogVCogKFByZXZpb3VzIGVzdGltYXRlOiBFVVIg
+MTAsMDAwLDAwMCkgVGogVCogRVQKZW5kc3RyZWFtCmVuZG9iagp4cmVmCjAgNgowMDAwMDAwMDAw
+IDY1NTM1IGYgCjAwMDAwMDAwMDkgMDAwMDAgbiAKMDAwMDAwMDA1OCAwMDAwMCBuIAowMDAwMDAw
+MTE1IDAwMDAwIG4gCjAwMDAwMDAyNDEgMDAwMDAgbiAKMDAwMDAwMDMxMSAwMDAwMCBuIAp0cmFp
+bGVyCjw8IC9TaXplIDYgL1Jvb3QgMSAwIFIgPj4Kc3RhcnR4cmVmCjY2NQolJUVPRgo=
+
+--===============1476234821011560943==
+Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="loss_details.xlsx"
+MIME-Version: 1.0
+
+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
+bWxQSwUGAAAAAAkACQA+AgAA6hAAAAAA
+
+--===============1476234821011560943==--
