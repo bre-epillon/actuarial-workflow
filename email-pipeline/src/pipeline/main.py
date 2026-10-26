@@ -31,7 +31,7 @@ from .classifier import classify
 from .config import Config, load_config
 from .jobs import ACTIVE_STATES, Job, content_hash, create_job, load_jobs, now_iso, safe_name
 from .notify import notify
-from .preprocess import preprocess
+from .preprocess import preprocess_isolated
 from .routes import load_routes
 from .runner import run_route
 from .versions import pipeline_version
@@ -42,21 +42,44 @@ IGNORED = {"desktop.ini", "thumbs.db"}
 PAUSE_SECONDS = 15 * 60  # wait this long when Claude is unavailable and gives no reset time
 
 
-def ready_items(inbox: Path, settle_seconds: int) -> list[Path]:
-    """Inbox items that have not changed for settle_seconds (finished copying)."""
-    items = []
+def scan_inbox(inbox: Path, settle_seconds: int) -> tuple[list[Path], list[Path]]:
+    """Inbox items as (ready, still changing). An item is ready once none of its
+    files changed for settle_seconds, i.e. it has finished copying."""
+    ready, waiting = [], []
     cutoff = time.time() - settle_seconds
     for p in sorted(inbox.iterdir()):
         if p.name.startswith(("_", ".", "~$")) or p.name.lower() in IGNORED:
             continue
-        files = [p] if p.is_file() else [f for f in p.rglob("*") if f.is_file()]
-        if files and max(f.stat().st_mtime for f in files) < cutoff:
-            items.append(p)
-    return items
+        try:
+            files = [p] if p.is_file() else [f for f in p.rglob("*") if f.is_file()]
+            if files:
+                (ready if max(f.stat().st_mtime for f in files) < cutoff else waiting).append(p)
+        except OSError:  # vanished or locked while scanning: look again later
+            waiting.append(p)
+    return ready, waiting
+
+
+def ready_items(inbox: Path, settle_seconds: int) -> list[Path]:
+    return scan_inbox(inbox, settle_seconds)[0]
+
+
+async def wait_for_copies(cfg: Config) -> None:
+    """For --once: give items that are still being copied time to finish, so a single
+    pass handles everything in the inbox instead of leaving fresh files behind."""
+    deadline = time.time() + max(3 * cfg.settle_seconds, 30)
+    shown: set[str] = set()
+    while True:
+        waiting = {p.name for p in scan_inbox(cfg.inbox_dir, cfg.settle_seconds)[1]}
+        if not waiting or time.time() >= deadline:
+            return
+        if waiting - shown:
+            log.info("waiting for %s to finish copying", ", ".join(sorted(waiting)))
+            shown |= waiting
+        await asyncio.sleep(1)
 
 
 def ingest(cfg: Config, known: dict[str, str], handled: set[tuple[str, str]] | None = None) -> None:
-    """Turn settled inbox items into jobs. `known` maps content hash -> job id.
+    """Turn settled inbox items into jobs, one at a time. `known` maps content hash -> job id.
 
     `handled` remembers items already turned into a job or reported as duplicates, so
     an item that cannot be moved out of the inbox (still open somewhere) is not
@@ -65,7 +88,10 @@ def ingest(cfg: Config, known: dict[str, str], handled: set[tuple[str, str]] | N
     handled = set() if handled is None else handled
     archive = cfg.inbox_dir / INGESTED
     archive.mkdir(exist_ok=True)
-    for item in ready_items(cfg.inbox_dir, cfg.settle_seconds):
+    ready, waiting = scan_inbox(cfg.inbox_dir, cfg.settle_seconds)
+    if waiting:
+        log.info("still being copied, picked up at the next poll: %s", ", ".join(p.name for p in waiting))
+    for item in ready:
         try:
             digest = content_hash(item)
             key = (digest, item.name)
@@ -81,7 +107,7 @@ def ingest(cfg: Config, known: dict[str, str], handled: set[tuple[str, str]] | N
             handled.add(key)
             # The original is safely copied into the job; move it out of the inbox.
             shutil.move(str(item), str(archive / f"{now_iso().replace(':', '')}_{safe_name(item.name, 100)}"))
-        except OSError:
+        except Exception:  # one odd item must not stop the others
             log.exception("could not ingest %s (will retry next poll)", item.name)
 
 
@@ -109,7 +135,7 @@ async def process(job: Job, cfg: Config) -> None:
         job.set_state("classified", note="resumed")
 
     if job.state == "new":
-        s = preprocess(job)
+        s = preprocess_isolated(job, cfg.preprocess_timeout)
         job.data["subject"] = next((e["subject"] for e in s["emails"] if e["subject"]), None)
         job.set_state("preprocessed", warnings=s["warnings"])
 
@@ -202,6 +228,8 @@ async def run(cfg: Config, once: bool) -> None:
     paused_until, pause_notified = 0.0, False
     handled: set[tuple[str, str]] = set()
     while True:
+        if once:
+            await wait_for_copies(cfg)
         try:
             ingest(cfg, known, handled)
         except Exception:

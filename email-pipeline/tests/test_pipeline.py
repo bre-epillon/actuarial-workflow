@@ -1,5 +1,6 @@
 """The whole loop (ingest -> preprocess -> classify -> route -> notify) with fake agents."""
 import asyncio
+import dataclasses
 import json
 import os
 import time
@@ -11,7 +12,7 @@ from pipeline import commands, main
 from pipeline.agent import AgentUnavailable
 from pipeline.classifier import classify
 from pipeline.jobs import load_jobs
-from pipeline.preprocess import preprocess
+from pipeline.preprocess import preprocess, preprocess_isolated
 from pipeline.routes import load_routes
 from pipeline.runner import route_options
 
@@ -65,6 +66,60 @@ def test_duplicate_is_skipped(cfg, monkeypatch, notes):
     run_once(cfg)
     assert len(load_jobs(cfg.jobs_dir)) == 1
     assert notes[-1][0] == "Duplicate skipped"
+
+
+def test_once_waits_for_files_still_being_copied(cfg, monkeypatch, notes):
+    """Files written seconds before `--once` used to be skipped silently."""
+    FakeAgents(SMOKE).install(monkeypatch)
+    cfg = dataclasses.replace(cfg, settle_seconds=1)
+    cfg.inbox_dir.mkdir(parents=True)
+    (cfg.inbox_dir / "smoke_test.eml").write_bytes((FIXTURES / "smoke_test.eml").read_bytes())  # mtime: now
+    run_once(cfg)
+    assert the_job(cfg).state == "done"
+
+
+def test_one_bad_item_does_not_stop_the_others(cfg, monkeypatch, notes):
+    FakeAgents(SMOKE).install(monkeypatch)
+    real_create = main.create_job
+
+    def create(jobs_dir, item, digest):
+        if item.name == "broken.msg":
+            raise ValueError("unreadable item")
+        return real_create(jobs_dir, item, digest)
+
+    monkeypatch.setattr("pipeline.main.create_job", create)
+    drop(cfg, "smoke_test.eml")
+    (cfg.inbox_dir / "broken.msg").write_bytes(b"not an email")
+    past = time.time() - 60
+    os.utime(cfg.inbox_dir / "broken.msg", (past, past))
+    run_once(cfg)
+    assert the_job(cfg).state == "done"
+    assert (cfg.inbox_dir / "broken.msg").exists()  # left in the inbox for the next poll
+
+
+def test_one_job_failing_to_read_does_not_stop_the_others(cfg, monkeypatch, notes):
+    FakeAgents(SMOKE).install(monkeypatch)
+    real_preprocess = main.preprocess_isolated
+
+    def flaky(job, timeout):
+        if job.data["source_name"] == "quarterly_accounts.eml":
+            raise TimeoutError("reading the item took longer than 300 s and was stopped")
+        return real_preprocess(job, timeout)
+
+    monkeypatch.setattr("pipeline.main.preprocess_isolated", flaky)
+    for fixture in ("quarterly_accounts.eml", "smoke_test.eml"):
+        drop(cfg, fixture)
+    run_once(cfg)
+    states = {j.data["source_name"]: j.state for j in load_jobs(cfg.jobs_dir)}
+    assert states == {"quarterly_accounts.eml": "failed", "smoke_test.eml": "done"}
+    assert any(title.startswith("❌ Pipeline error") for title, _, _ in notes)
+
+
+def test_reading_runs_in_a_child_process_with_a_timeout(tmp_path):
+    job = job_from(tmp_path / "a", FIXTURES / "large_loss_advice.eml")
+    assert preprocess_isolated(job, timeout=120) == preprocess(job_from(tmp_path / "b", FIXTURES / "large_loss_advice.eml"))
+    with pytest.raises(TimeoutError):
+        preprocess_isolated(job_from(tmp_path / "c", FIXTURES / "large_loss_advice.eml"), timeout=0.01)
 
 
 def test_unmovable_item_is_reported_once(cfg, monkeypatch, notes):

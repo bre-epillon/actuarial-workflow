@@ -18,7 +18,8 @@ FIXTURES = REPO / "tests" / "fixtures"
 
 @pytest.fixture
 def cfg(tmp_path) -> Config:
-    return Config(inbox_dir=tmp_path / "inbox", jobs_dir=tmp_path / "jobs", routes_dir=ROUTES_DIR, settle_seconds=0)
+    return Config(inbox_dir=tmp_path / "inbox", jobs_dir=tmp_path / "jobs", routes_dir=ROUTES_DIR, settle_seconds=0,
+                  preprocess_timeout=0)  # in-process: fast, and monkeypatches stay visible
 
 
 def job_from(jobs_dir: Path, source: Path) -> Job:

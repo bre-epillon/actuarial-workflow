@@ -18,6 +18,7 @@ class Config:
     route_model: str | None = None
     confidence_threshold: float = 0.7
     max_turns: int = 30
+    preprocess_timeout: int = 300  # seconds to read one item; 0 = no child process, no limit
     teams_webhook_url: str | None = None
 
 
@@ -48,5 +49,6 @@ def load_config(path: Path) -> Config:
         route_model=data.get("route_model") or None,
         confidence_threshold=float(data.get("confidence_threshold", 0.7)),
         max_turns=int(data.get("max_turns", 30)),
+        preprocess_timeout=int(data.get("preprocess_timeout", 300)),
         teams_webhook_url=os.environ.get("TEAMS_WEBHOOK_URL") or data.get("teams_webhook_url") or None,
     )
