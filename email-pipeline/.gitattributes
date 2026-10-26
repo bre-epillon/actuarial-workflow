@@ -1,0 +1,4 @@
+* text=auto
+# test inputs must stay byte-identical on every machine
+tests/fixtures/*.eml -text
+*.cmd text eol=crlf

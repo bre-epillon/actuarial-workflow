@@ -1,0 +1,36 @@
+From: A. Colleague <colleague@example.com>
+To: Actuarial Team <actuarial@example.com>
+Date: Mon, 05 Oct 2026 08:05:00 +0200
+Subject: FW: Loss update Storm Example
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============8551119456560671152=="
+
+--===============8551119456560671152==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+FYI, see the attached update from the cedent.
+
+--===============8551119456560671152==
+Content-Type: message/rfc822
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+Content-Disposition: attachment
+
+From: Nordwind Mutual Reinsurance Dept <re@nordwind.test>
+To: Actuarial Team <actuarial@example.com>
+Date: Fri, 02 Oct 2026 16:40:00 +0200
+Subject: Loss update: Storm Example - revised estimate
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+
+Dear reinsurers,
+
+for treaty NWM-PCAT-2026-L2 (UY 2026), loss date 14.09.2026, Storm Example,
+we revise our gross loss estimate to EUR 15.0m (previously EUR 12.5m).
+A detailed report will follow.
+
+Nordwind Mutual Insurance (fictional)
+
+--===============8551119456560671152==--

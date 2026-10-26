@@ -1,0 +1,13 @@
+# Classifier regression cases: fixture (in tests/fixtures/, anonymized) -> routes
+# that must be accepted. Checked offline by pytest (files exist, routes exist);
+# run live against Claude with:  uv run email-pipeline eval-classifier
+- fixture: smoke_test.eml
+  expected: [smoke_test]
+- fixture: large_loss_advice.eml
+  expected: [large_loss]
+- fixture: loss_update_forwarded.eml
+  expected: [large_loss]
+- fixture: cash_call.eml
+  expected: [large_loss]
+- fixture: quarterly_accounts.eml
+  expected: []
