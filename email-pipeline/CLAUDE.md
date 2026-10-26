@@ -24,7 +24,10 @@ Job states (stored in `manifest.json`): `new` -> `preprocessed` -> `classified`
 -> `running` -> `done` | `failed` | `needs_review`. Every step is resumable from
 the manifest; on startup, jobs stuck in `running` go back to `classified`.
 `AgentUnavailable` (logged out, usage limit, outage) pauses the loop without
-touching job states.
+touching job states. Everything else is isolated per item: an inbox item that
+cannot be ingested stays in the inbox, and preprocessing runs in a child process
+(`preprocess_isolated`, `preprocess_timeout`) so a parser that hangs or crashes
+fails only its own job. `--once` first waits for items still being copied.
 
 ## Layout
 - `src/pipeline/config.py`    — loads `config.toml` (per user, gitignored)

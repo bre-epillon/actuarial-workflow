@@ -5,4 +5,5 @@ rarely-seen executables such as the email-pipeline.exe launcher uv generates.
 """
 from .main import main
 
-main()
+if __name__ == "__main__":  # not when a preprocessing child process imports this module
+    main()

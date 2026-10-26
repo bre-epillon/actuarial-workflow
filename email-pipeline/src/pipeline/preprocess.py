@@ -20,6 +20,7 @@ from __future__ import annotations
 import email
 import json
 import logging
+import multiprocessing
 import re
 import shutil
 import zipfile
@@ -39,6 +40,29 @@ MAX_DEPTH = 4                 # emails/zips nested inside each other
 ZIP_MAX_FILES = 500           # per job, across all (nested) archives
 ZIP_MAX_BYTES = 300 * 2**20   # per job, declared uncompressed size
 RESERVED = {"files", "summary.json"}
+
+
+def preprocess_isolated(job: Job, timeout: float) -> dict:
+    """preprocess() in a child process: a parser that hangs or crashes on one odd file
+    then fails this job only, never the whole pipeline. timeout <= 0 runs it in-process."""
+    if timeout <= 0:
+        return preprocess(job)
+    child = multiprocessing.get_context("spawn").Process(
+        target=_preprocess_dir, args=(str(job.dir),), name=f"preprocess-{job.id}")
+    child.start()
+    child.join(timeout)
+    if child.is_alive():
+        child.kill()
+        child.join()
+        raise TimeoutError(f"reading the item took longer than {timeout:.0f} s and was stopped")
+    if child.exitcode != 0:
+        raise RuntimeError(f"reading the item crashed (exit code {child.exitcode})")
+    return json.loads((job.extracted_dir / "summary.json").read_text(encoding="utf-8"))
+
+
+def _preprocess_dir(job_dir: str) -> None:
+    logging.basicConfig(level=logging.WARNING, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
+    preprocess(Job(Path(job_dir)))
 
 
 def preprocess(job: Job) -> dict:

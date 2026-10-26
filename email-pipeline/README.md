@@ -7,8 +7,8 @@ posts a summary to Teams.
 
 ```
 inbox item ─► job folder ─► preprocess ─► classify ─► route agent ─► check & compute ─► Teams
-              (copy)        (no AI:       (Claude     (Claude, only   (no AI: schema,
-                             text, CSV)    Haiku)      the job folder)  amounts, figures)
+              (copy)        (no AI:       (Claude)    (Claude, only   (no AI: schema,
+                             text, CSV)                the job folder)  amounts, figures)
 ```
 
 Everything runs on your own PC with your own Claude subscription: no API key,
@@ -67,7 +67,8 @@ denied"), so every command here goes through Python itself. On other machines
 
 1. Copy `tests\fixtures\smoke_test.eml` into your inbox folder
    (`%USERPROFILE%\claude_pipeline\inbox` by default).
-2. After 10 seconds run one pass:
+2. Run one pass (it waits for files that are still being copied, then
+   processes every item in the inbox one by one):
    ```powershell
    uv run python -m pipeline --once
    ```
@@ -84,7 +85,8 @@ Then try a real email: drag it from Outlook into the inbox folder.
 - **Drop** emails from Outlook into the inbox folder; pin the folder to Quick
   Access in Explorer to make that easy. Files that belong together: put them
   in one folder and drop the folder. Each item becomes one job; dropping the
-  same item twice is detected and skipped.
+  same item twice is detected and skipped. An item that cannot be read (or
+  takes longer than `preprocess_timeout`) fails on its own; the others carry on.
 - **Results** arrive as a Teams card and in the job folder.
 
 | Command (`uv run python -m pipeline ...`) | What it does |
@@ -146,8 +148,8 @@ Adding a process is described in [CLAUDE.md](CLAUDE.md#adding-a-route).
 
 ## Usage, cost and data
 
-- Every run uses your own Claude subscription: Haiku to classify, Sonnet for
-  the routes (change in `config.toml`). The "API-equivalent cost" on the cards
+- Every run uses your own Claude subscription: Sonnet to classify, Opus for
+  the routes by default (change in `config.toml`). The "API-equivalent cost" on the cards
   is informational; a subscription is not billed per run.
 - If `ANTHROPIC_API_KEY` is set in your environment, Claude Code bills that
   API key instead of your subscription; `doctor` warns about it.

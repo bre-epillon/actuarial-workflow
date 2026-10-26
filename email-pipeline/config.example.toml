@@ -14,11 +14,12 @@ settle_seconds = 10        # an item must be unchanged this long before pickup
 
 # Claude Code model aliases ("haiku", "sonnet", "opus") or full model ids.
 # Empty = your Claude Code default. A route can override with `model:` in its ROUTE.md.
-classifier_model = "haiku"
-route_model = "sonnet"
+classifier_model = "sonnet"
+route_model = "opus"
 
 confidence_threshold = 0.7 # below this, a job goes to needs_review
 max_turns = 30             # safety cap per route agent run
+preprocess_timeout = 300   # seconds to read one item (attachments); a stuck item fails alone
 
 # Teams "Workflows" webhook URL (see README). The TEAMS_WEBHOOK_URL environment
 # variable overrides it. It is a secret: never put it in a committed file.
