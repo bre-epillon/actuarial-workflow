@@ -1,0 +1,20 @@
+# Copy to config.toml (gitignored) and adjust. Relative paths are resolved
+# against this file's folder. Keep inbox and jobs OUTSIDE the repo.
+
+inbox_dir = "C:/Users/YOUR_NAME/Desktop/claude_inbox"
+jobs_dir  = "C:/Users/YOUR_NAME/claude_jobs"
+routes_dir = "routes"
+
+poll_seconds = 30          # how often the inbox is checked
+settle_seconds = 10        # an item must be unchanged this long before pickup
+
+# Model aliases as understood by Claude Code (e.g. "haiku", "sonnet", "opus").
+# Leave empty to use the default. Verify the aliases against current docs.
+classifier_model = "haiku"
+route_model = ""
+
+confidence_threshold = 0.7 # below this, a job goes to needs_review
+max_turns = 30             # safety cap per route agent run
+
+# Teams webhook: prefer setting TEAMS_WEBHOOK_URL in .env / environment instead.
+teams_webhook_url = ""

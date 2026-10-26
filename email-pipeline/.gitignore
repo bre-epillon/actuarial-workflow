@@ -1,0 +1,15 @@
+# secrets and per-user config
+.env
+config.toml
+# data: never commit
+inbox/
+jobs/
+*.msg
+*.eml
+!tests/fixtures/**
+# python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+dist/
