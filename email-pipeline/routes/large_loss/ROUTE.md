@@ -9,6 +9,8 @@ examples: ["Large Loss Advice - <cedent> - <date of loss>", "Loss update: <event
 allowed_tools: [Read, Write, Glob, Grep]
 output_schema: schema.json
 postprocess: postprocess.py
+case_keys: [treaty_reference, date_of_loss]   # one loss: advice, updates, cash calls
+stage_field: notification_type
 ---
 You process large loss notifications for the actuarial team of a reinsurer.
 Your job is to EXTRACT facts, never to compute them: the pipeline checks your

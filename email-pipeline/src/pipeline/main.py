@@ -3,6 +3,7 @@
     uv run python -m pipeline                       # watch the inbox (Ctrl+C to stop)
     uv run python -m pipeline --once                # single pass, for testing
     uv run python -m pipeline status                # recent jobs
+    uv run python -m pipeline report                # open the status page (jobs, linked cases)
     uv run python -m pipeline retry <job>           # run a failed job again
     uv run python -m pipeline assign <job> <route>  # route a needs_review job by hand
     uv run python -m pipeline doctor                # check install, login, config, routes
@@ -32,6 +33,7 @@ from .config import Config, load_config
 from .jobs import ACTIVE_STATES, Job, content_hash, create_job, load_jobs, now_iso, safe_name
 from .notify import notify
 from .preprocess import preprocess_isolated
+from .report import write_report
 from .routes import load_routes
 from .runner import run_route
 from .versions import pipeline_version
@@ -247,6 +249,10 @@ async def run(cfg: Config, once: bool) -> None:
                            f"Claude is unavailable: {exc}\nWaiting jobs resume automatically at about {resume}. "
                            "If you are logged out, run: uv run python -m pipeline login", {})
                     pause_notified = True
+        try:
+            write_report(cfg.jobs_dir, load_routes(cfg.routes_dir))
+        except Exception:  # the status page is a convenience; never stop the loop for it
+            log.exception("could not write %s", cfg.jobs_dir / "status.html")
         if once:
             return
         await asyncio.sleep(cfg.poll_seconds)
@@ -293,6 +299,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--config", type=Path, default=Path("config.toml"), help="default: ./config.toml")
     parser.add_argument("--once", action="store_true", help="process the inbox once and exit")
     sub = parser.add_subparsers(dest="command", metavar="command")
+    p = sub.add_parser("report", help="write <jobs_dir>/status.html and open it in the browser")
+    p.add_argument("--no-open", action="store_true", help="only write the file")
     p = sub.add_parser("status", help="list recent jobs")
     p.add_argument("--all", action="store_true", help="all jobs, not only the last 20")
     p = sub.add_parser("retry", help="run a failed / needs_review / done job again")
@@ -329,6 +337,8 @@ def main(argv: list[str] | None = None) -> None:
 
     if args.command == "status":
         sys.exit(commands.status(cfg, args.all))
+    if args.command == "report":
+        sys.exit(commands.report(cfg, open_browser=not args.no_open))
     if args.command == "retry":
         sys.exit(commands.retry(cfg, args.job, args.stage))
     if args.command == "assign":

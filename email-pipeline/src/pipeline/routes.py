@@ -8,6 +8,10 @@ Frontmatter (see CLAUDE.md, "Adding a route"):
     postprocess    optional Python file in the route folder defining
                    run(extracted: dict, out_dir: Path) -> dict; deterministic code the
                    pipeline runs on the validated extracted.json
+    case_keys      optional extracted.json fields that identify one multi-stage case
+                   (e.g. [treaty_reference, date_of_loss]); the status page links jobs
+                   with equal values
+    stage_field    optional extracted.json field naming the job's stage in its case
 """
 from __future__ import annotations
 
@@ -42,6 +46,8 @@ class Route:
     model: str | None = None
     output_schema: dict | None = None
     postprocess: Path | None = None
+    case_keys: list[str] = field(default_factory=list)
+    stage_field: str | None = None
 
 
 def parse_route_file(path: Path) -> Route:
@@ -80,6 +86,13 @@ def parse_route_file(path: Path) -> Route:
         if schema is None:
             raise ValueError(f"{path}: postprocess needs output_schema (it runs on extracted.json)")
 
+    case_keys = list(meta.get("case_keys") or [])
+    stage_field = meta.get("stage_field") or None
+    if case_keys or stage_field:
+        known = set((schema or {}).get("properties", {}))
+        if unknown := [f for f in [*case_keys, stage_field] if f and f not in known]:
+            raise ValueError(f"{path}: case_keys/stage_field not in output_schema: {unknown}")
+
     return Route(
         name=name,
         description=str(meta["description"]).strip(),
@@ -90,6 +103,8 @@ def parse_route_file(path: Path) -> Route:
         model=meta.get("model") or None,
         output_schema=schema,
         postprocess=postprocess,
+        case_keys=case_keys,
+        stage_field=stage_field,
     )
 
 
