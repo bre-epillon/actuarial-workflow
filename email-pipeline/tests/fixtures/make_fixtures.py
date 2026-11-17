@@ -184,7 +184,38 @@ def quarterly_accounts() -> EmailMessage:
     return msg
 
 
+def property_quote_request() -> EmailMessage:
+    msg = email_message(
+        "J. Broker <j.broker@examplebroking.test>",
+        "Quote request - Northwind Foods Ltd - Property PD/BI XoL 2027 (fictional)",
+        "Dear all,\n\n"
+        "we are pleased to present the renewal of Northwind Foods Ltd (fictional), a UK food manufacturer\n"
+        "(bakery products), and kindly ask for your quote on the following excess layer:\n\n"
+        "Reinsured: Example Insurance plc, United Kingdom\n"
+        "Period: 12 months at 1 January 2027\n"
+        "Cover: Property Damage and Business Interruption, all risks, BI indemnity period 12 months\n"
+        "Layer: GBP 25m xs GBP 25m each and every loss\n"
+        "Target premium: GBP 180,000 for 100%, brokerage 15%\n"
+        "We are looking for a 10% line from you.\n\n"
+        "Values per the attached schedule (GBP). Loss history: one loss of GBP 1.2m on 2 March 2024\n"
+        "(fire, bakery line), otherwise loss free over the last 5 years.\n\n"
+        "Kind regards\nJ. Broker, Example Broking (fictional)\n",
+        date="Tue, 10 Nov 2026 14:20:00 +0100",
+    )
+    msg.add_attachment(xlsx([
+        ["Northwind Foods Ltd - Schedule of values (GBP)"],
+        [],
+        ["Site", "Address", "Country", "Buildings", "Contents & Stock", "Gross Profit (BI)"],
+        ["Leeds bakery", "1 Example Road, Leeds", "UK", 12_000_000, 3_000_000, 5_000_000],
+        ["Hull depot", "2 Example Quay, Hull", "UK", 8_000_000, 1_000_000, 0],
+        ["York bakery", "3 Example Street, York", "UK", 6_500_000, 2_500_000, 3_000_000],
+        ["Total", None, None, 26_500_000, 6_500_000, 8_000_000],
+    ]), maintype=XLSX[0], subtype=XLSX[1], filename="Northwind SOV 2027.xlsx")
+    return msg
+
+
 FIXTURES = {
+    "property_quote_request.eml": property_quote_request,
     "smoke_test.eml": smoke_test,
     "large_loss_advice.eml": large_loss_advice,
     "loss_update_forwarded.eml": loss_update_forwarded,

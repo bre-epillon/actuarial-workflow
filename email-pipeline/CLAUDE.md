@@ -43,6 +43,8 @@ fails only its own job. `--once` first waits for items still being copied.
 - `src/pipeline/amounts.py`   — deterministic reading of amounts/percentages as written
 - `src/pipeline/evidence.py`  — checks that a quoted text really occurs in the cited file
 - `src/pipeline/versions.py`  — versions for the manifest (incl. git commits of pinned tools)
+- `src/pipeline/excel.py`     — runs an Excel tool: writes input cells, Excel calculates, reads outputs
+                                back (`excel_bridge.ps1`, PowerShell COM: Windows + Excel, no Python deps)
 - `src/pipeline/notify.py`    — Teams Workflows webhook (Adaptive Card)
 - `src/pipeline/report.py`    — `<jobs_dir>/status.html` after every poll: job verdicts, cases
                                 linked by the routes' `case_keys`, cross-stage checks; page is
@@ -96,6 +98,7 @@ output_schema: schema.json     # optional: agent must write output/<name>/extrac
 postprocess: postprocess.py    # optional (needs output_schema)
 case_keys: [treaty_reference, date_of_loss]  # optional: extracted fields that identify one
 stage_field: notification_type               # multi-stage case on the status page
+reference: [tool/vocabulary.md]              # optional: files copied to <job>/reference/<name>/ for the agent
 ---
 ```
 followed by the instructions for the agent (under 20k characters: they travel
@@ -104,6 +107,19 @@ on the command line). The runner adds the common task (folder layout,
 `run(extracted: dict, out_dir: Path) -> dict` returning optional `facts`
 (shown on the Teams card), `flags` (findings for the reviewer) and `versions`;
 it may write files to `out_dir` (e.g. `computed.json`). Raise to fail the run.
+
+### Routes that drive an Excel tool (pattern: `routes/property_pricing/`)
+The tool lives in `routes/<name>/tool/`: the workbook **cleared of client data**
+(gitignored like every workbook: each user copies it in; `doctor` warns when missing), a `contract.json`
+(sheet/cell/column of every input and output, the labels next to them, the
+dropdown lists) and a vocabulary file for the agent (`reference:`). The agent
+extracts inputs and, for tables, only *where* the table is and how its columns
+map (never the rows). The postprocess checks values against the lists, writes
+only cells that have a value (the tool's default formulas stay), runs
+`pipeline.excel.run`, and then verifies: written cells read back unchanged,
+labels/version cell still match the contract (else it raises: layout drift),
+the tool's own totals match what was written, no Excel error values. Sheets
+are protected: only the tool's unlocked input cells can be written.
 
 Routes are reloaded every poll; no restart needed. Add a synthetic sample to
 `tests/fixtures/make_fixtures.py` (regenerate with

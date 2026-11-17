@@ -1,0 +1,244 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Property pricing request: the inputs of the Property Pricing Tool, as stated in the sources (no calculations)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["policy", "coverage", "bi", "deductions", "layers", "risk", "asset_tables", "loss_history", "sources", "notes"],
+  "properties": {
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reinsurance_type", "new_renewal", "policy_reference", "inception_date", "expiry_date", "quoting_currency",
+                   "original_insured", "reinsured", "reinsured_country", "broker", "broker_contact", "leader"],
+      "properties": {
+        "reinsurance_type": {"enum": ["XoL", "QS", null], "description": "Facultative excess of loss (XoL) or quota share (QS)"},
+        "new_renewal": {"enum": ["New", "Renewal", null]},
+        "policy_reference": {"type": ["string", "null"], "description": "Broker's / cedent's reference for this risk"},
+        "inception_date": {"type": ["string", "null"], "format": "date", "description": "YYYY-MM-DD"},
+        "expiry_date": {"type": ["string", "null"], "format": "date", "description": "YYYY-MM-DD; null if not stated (the tool then assumes 12 months)"},
+        "quoting_currency": {"type": ["string", "null"], "pattern": "^[A-Z]{3}$", "description": "ISO code of the currency limits, premium and values are quoted in"},
+        "original_insured": {"type": ["string", "null"], "description": "The insured company (the risk)"},
+        "reinsured": {"type": ["string", "null"], "description": "The ceding insurer / fronting company"},
+        "reinsured_country": {"type": ["string", "null"]},
+        "broker": {"type": ["string", "null"], "description": "Broking firm"},
+        "broker_contact": {"type": ["string", "null"], "description": "Person at the broker who sent the request"},
+        "leader": {"type": ["string", "null"], "description": "Lead (re)insurer, if stated"}
+      }
+    },
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pd", "bi", "flexa_only", "mb", "cbi", "srcc"],
+      "description": "Covers included, as stated: Yes / No / null (not stated)",
+      "properties": {
+        "pd": {"enum": ["Yes", "No", null], "description": "Physical damage"},
+        "bi": {"enum": ["Yes", "No", null], "description": "Business interruption"},
+        "flexa_only": {"enum": ["Yes", "No", null], "description": "Yes only if PD cover is restricted to fire, lightning, explosion, aircraft"},
+        "mb": {"enum": ["Yes", "No", null], "description": "Machinery breakdown"},
+        "cbi": {"enum": ["Yes", "No", null], "description": "Contingent business interruption"},
+        "srcc": {"enum": ["Yes", "No", null], "description": "Strikes, riots and civil commotion"}
+      }
+    },
+    "bi": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mip_months", "waiting_period_days", "cbi_mip_months", "cbi_waiting_period_days"],
+      "properties": {
+        "mip_months": {"type": ["integer", "null"], "description": "BI maximum indemnity period in months"},
+        "waiting_period_days": {"type": ["integer", "null"], "description": "BI waiting period / time deductible in days"},
+        "cbi_mip_months": {"type": ["integer", "null"]},
+        "cbi_waiting_period_days": {"type": ["integer", "null"]}
+      }
+    },
+    "deductions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["brokerage", "overrider", "fronting_fee", "eng_survey_fees", "reinsurer_taxes", "other_fees"],
+      "description": "Deductions from the gross premium, as percentages of premium",
+      "properties": {
+        "brokerage": {"$ref": "#/$defs/percent"},
+        "overrider": {"$ref": "#/$defs/percent"},
+        "fronting_fee": {"$ref": "#/$defs/percent"},
+        "eng_survey_fees": {"$ref": "#/$defs/percent"},
+        "reinsurer_taxes": {"$ref": "#/$defs/percent"},
+        "other_fees": {"$ref": "#/$defs/percent"}
+      }
+    },
+    "layers": {
+      "type": "array",
+      "maxItems": 6,
+      "description": "The layers we are asked to quote. 'primary' attaches ground-up (above the deductible only); excess layers are layer_1, layer_2, ... in order of attachment point",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["layer", "offered_premium", "our_share", "limit", "excess", "deductible", "bi_limit", "bi_excess", "bi_deductible", "eq", "ws", "fl"],
+        "properties": {
+          "layer": {"enum": ["primary", "layer_1", "layer_2", "layer_3", "layer_4", "layer_5"]},
+          "offered_premium": {"$ref": "#/$defs/amount", "description": "Offered or target gross premium for 100% of the layer, before deductions"},
+          "our_share": {"$ref": "#/$defs/percent", "description": "Share / line offered to or requested from us"},
+          "limit": {"$ref": "#/$defs/amount", "description": "Limit for PD and BI combined (or PD only when BI has its own limit)"},
+          "excess": {"$ref": "#/$defs/amount", "description": "Attachment point / excess of the layer (PD and BI combined)"},
+          "deductible": {"$ref": "#/$defs/amount", "description": "Monetary deductible (PD and BI combined)"},
+          "bi_limit": {"$ref": "#/$defs/amount", "description": "Only when BI has a separate limit"},
+          "bi_excess": {"$ref": "#/$defs/amount", "description": "Only when BI has a separate excess"},
+          "bi_deductible": {"$ref": "#/$defs/amount", "description": "Only when BI has a separate deductible"},
+          "eq": {"$ref": "#/$defs/peril", "description": "Earthquake: only if the sources state a sublimit, a different excess/deductible, or an exclusion"},
+          "ws": {"$ref": "#/$defs/peril", "description": "Windstorm: as for eq"},
+          "fl": {"$ref": "#/$defs/peril", "description": "Flood: as for eq"}
+        }
+      }
+    },
+    "risk": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sector", "occupancy", "main_risk_country"],
+      "description": "Main activity and country of the insured, in the tool's vocabulary (see the route instructions)",
+      "properties": {
+        "sector": {"type": ["string", "null"]},
+        "occupancy": {"type": ["string", "null"]},
+        "main_risk_country": {"type": ["string", "null"]}
+      }
+    },
+    "asset_tables": {
+      "type": "array",
+      "description": "Where the schedule of values (list of locations) is, and how its columns map to the tool. Do NOT copy the rows: the pipeline reads them",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["file", "header_cells", "columns", "constants", "value_maps", "currency", "currency_as_written", "unit_multiplier", "stated_total_pd", "stated_total_bi"],
+        "properties": {
+          "file": {"type": "string", "minLength": 1, "description": "The CSV file holding the table, relative to the job folder"},
+          "header_cells": {"type": "array", "items": {"type": "string"}, "minItems": 1, "description": "Two or three cells of the header row, exactly as written, to locate it"},
+          "columns": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "For each tool field: the header of the source column (exact text), a list of headers whose values are added up, or null",
+            "properties": {
+              "asset_name": {"$ref": "#/$defs/column"},
+              "sector": {"$ref": "#/$defs/column"},
+              "occupancy": {"$ref": "#/$defs/column"},
+              "pd_tiv": {"$ref": "#/$defs/column"},
+              "bi_income": {"$ref": "#/$defs/column"},
+              "bi_mip_months": {"$ref": "#/$defs/column"},
+              "bi_waiting_period_days": {"$ref": "#/$defs/column"},
+              "country": {"$ref": "#/$defs/column"},
+              "cat_location": {"$ref": "#/$defs/column"},
+              "street_address": {"$ref": "#/$defs/column"},
+              "latitude": {"$ref": "#/$defs/column"},
+              "longitude": {"$ref": "#/$defs/column"},
+              "construction_type": {"$ref": "#/$defs/column"},
+              "sprinkler": {"$ref": "#/$defs/column"},
+              "year_of_build": {"$ref": "#/$defs/column"}
+            }
+          },
+          "constants": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Values that apply to every row when the table has no such column (e.g. all locations in one country); cite them in sources as constants.<field>",
+            "properties": {
+              "sector": {"type": "string"}, "occupancy": {"type": "string"}, "country": {"type": "string"},
+              "construction_type": {"type": "string"}, "sprinkler": {"type": "string"}
+            }
+          },
+          "value_maps": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Translation of the source wording to the tool's list values, per categorical column: {source value: tool value}",
+            "properties": {
+              "sector": {"$ref": "#/$defs/value_map"}, "occupancy": {"$ref": "#/$defs/value_map"}, "country": {"$ref": "#/$defs/value_map"},
+              "construction_type": {"$ref": "#/$defs/value_map"}, "sprinkler": {"$ref": "#/$defs/value_map"}
+            }
+          },
+          "currency": {"type": ["string", "null"], "pattern": "^[A-Z]{3}$", "description": "Currency of the values in the table"},
+          "currency_as_written": {"type": ["string", "null"], "description": "Verbatim text in the file or email stating that currency (e.g. a header 'TIV (GBP)')"},
+          "unit_multiplier": {"enum": [1, 1000, 1000000], "description": "1000 if the table states values in thousands, 1000000 in millions; else 1"},
+          "stated_total_pd": {"$ref": "#/$defs/amount", "description": "Total PD value as stated in the sources (a totals row or the email), if any"},
+          "stated_total_bi": {"$ref": "#/$defs/amount", "description": "Total BI value as stated, if any"}
+        }
+      }
+    },
+    "loss_history": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["years", "losses"],
+      "properties": {
+        "years": {"type": ["integer", "null"], "minimum": 1, "maximum": 30, "description": "Number of years the loss history covers, if stated"},
+        "losses": {
+          "type": "array",
+          "maxItems": 200,
+          "description": "Individual losses listed in the sources (ground-up, 100%)",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["date_of_loss", "amount", "cat"],
+            "properties": {
+              "date_of_loss": {"type": ["string", "null"], "format": "date", "description": "YYYY-MM-DD"},
+              "amount": {"$ref": "#/$defs/amount", "description": "Gross ground-up loss for 100%"},
+              "cat": {"enum": ["CAT", "Non-CAT", null], "description": "CAT if caused by earthquake, windstorm or flood"}
+            }
+          }
+        }
+      }
+    },
+    "sources": {
+      "type": "object",
+      "description": "For every non-null text, date, Yes/No or integer field above: where it was found. Keys are paths like 'policy.inception_date', 'coverage.bi', 'bi.mip_months', 'risk.sector', 'asset_tables.0.constants.country'",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["file", "quote"],
+        "properties": {
+          "file": {"type": "string", "minLength": 1, "description": "Text file, relative to the job folder"},
+          "quote": {"type": "string", "minLength": 1, "description": "Short verbatim quote from that file (no ellipses)"}
+        }
+      }
+    },
+    "notes": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Anything ambiguous, contradictory or missing that the underwriter should know"
+    }
+  },
+  "$defs": {
+    "amount": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["value", "currency", "as_written", "source"],
+      "properties": {
+        "value": {"type": "number", "description": "The amount written out in full: 'GBP 25m' -> 25000000"},
+        "currency": {"type": ["string", "null"], "pattern": "^[A-Z]{3}$"},
+        "as_written": {"type": "string", "minLength": 1, "description": "Only the amount, exactly as written in the source, e.g. 'GBP 25m'"},
+        "source": {"type": "string", "minLength": 1, "description": "Text file it was read from, relative to the job folder"}
+      }
+    },
+    "percent": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["percent", "as_written", "source"],
+      "properties": {
+        "percent": {"type": "number", "minimum": 0, "maximum": 100, "description": "As stated: '17.5%' -> 17.5"},
+        "as_written": {"type": "string", "minLength": 1, "description": "Only the percentage, exactly as written, e.g. '17.5%'"},
+        "source": {"type": "string", "minLength": 1}
+      }
+    },
+    "peril": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["excluded", "limit", "excess", "deductible"],
+      "properties": {
+        "excluded": {"type": "boolean", "description": "true if the peril is excluded from the layer"},
+        "limit": {"$ref": "#/$defs/amount"},
+        "excess": {"$ref": "#/$defs/amount"},
+        "deductible": {"$ref": "#/$defs/amount"}
+      }
+    },
+    "column": {
+      "anyOf": [
+        {"type": "string", "minLength": 1},
+        {"type": "array", "items": {"type": "string", "minLength": 1}, "minItems": 1},
+        {"type": "null"}
+      ]
+    },
+    "value_map": {"type": "object", "additionalProperties": {"type": "string"}}
+  }
+}
