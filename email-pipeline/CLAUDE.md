@@ -44,6 +44,9 @@ fails only its own job. `--once` first waits for items still being copied.
 - `src/pipeline/evidence.py`  — checks that a quoted text really occurs in the cited file
 - `src/pipeline/versions.py`  — versions for the manifest (incl. git commits of pinned tools)
 - `src/pipeline/notify.py`    — Teams Workflows webhook (Adaptive Card)
+- `src/pipeline/report.py`    — `<jobs_dir>/status.html` after every poll: job verdicts, cases
+                                linked by the routes' `case_keys`, cross-stage checks; page is
+                                `status_template.html` (data embedded as JSON, rendered with DOM APIs)
 - `src/pipeline/main.py`      — polling loop, orchestration, CLI; `commands.py` — CLI subcommands
 - `routes/<name>/`            — one folder per business process: `ROUTE.md`, optional
                                 `schema.json` and `postprocess.py`
@@ -91,6 +94,8 @@ allowed_tools: [Read, Write, Glob, Grep]   # Edit too if it rewrites its own fil
 model: sonnet           # optional; overrides config route_model
 output_schema: schema.json     # optional: agent must write output/<name>/extracted.json
 postprocess: postprocess.py    # optional (needs output_schema)
+case_keys: [treaty_reference, date_of_loss]  # optional: extracted fields that identify one
+stage_field: notification_type               # multi-stage case on the status page
 ---
 ```
 followed by the instructions for the agent (under 20k characters: they travel

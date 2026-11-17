@@ -33,6 +33,18 @@ def status(cfg: Config, show_all: bool) -> int:
     return 0
 
 
+def report(cfg: Config, open_browser: bool) -> int:
+    import webbrowser
+
+    from .report import write_report
+
+    path = write_report(cfg.jobs_dir, load_routes(cfg.routes_dir))
+    print(f"status page: {path}")
+    if open_browser:
+        webbrowser.open(path.as_uri())
+    return 0
+
+
 def retry(cfg: Config, ref: str, stage: str) -> int:
     job = find_job(cfg.jobs_dir, ref)
     if job.state in ACTIVE_STATES:

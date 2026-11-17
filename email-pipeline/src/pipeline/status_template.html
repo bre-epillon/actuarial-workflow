@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pipeline status</title>
+<style>
+  :root {
+    --bg: #f6f7f9; --panel: #ffffff; --text: #1d2330; --muted: #5d6677; --line: #e2e5eb;
+    --ok: #1f8a4c; --ok-bg: #e5f4ec; --check: #a86400; --check-bg: #fdf1dc;
+    --failed: #c4362b; --failed-bg: #fbe6e4; --review: #5b4bc4; --review-bg: #ece9fb;
+    --active: #2c6fbb; --active-bg: #e4eef9; --dot: #c9ced8; --accent: #2c6fbb;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14171c; --panel: #1c2027; --text: #e6e9ef; --muted: #9aa3b2; --line: #2d333d;
+      --ok: #5ccb8a; --ok-bg: #1b3326; --check: #f0b45a; --check-bg: #3a2c14;
+      --failed: #f0827a; --failed-bg: #3d1f1d; --review: #a99cf5; --review-bg: #2a2546;
+      --active: #74a9e8; --active-bg: #1c2b3e; --dot: #444b57; --accent: #74a9e8;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 14px/1.45 "Segoe UI", system-ui, sans-serif; }
+  main { max-width: 1180px; margin: 0 auto; padding: 20px 16px 48px; }
+  header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 16px; }
+  h1 { font-size: 22px; margin: 0; }
+  h2 { font-size: 16px; margin: 28px 0 10px; }
+  .muted { color: var(--muted); }
+  .small { font-size: 12px; }
+  .spacer { flex: 1; }
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin: 18px 0 8px; }
+  .tile { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; cursor: pointer; text-align: left; color: inherit; font: inherit; }
+  .tile.sel { outline: 2px solid var(--accent); }
+  .tile b { display: block; font-size: 24px; }
+  .bar { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+  input, select { font: inherit; color: inherit; background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; }
+  input[type=search] { flex: 1; min-width: 200px; }
+  .badge { display: inline-block; border-radius: 10px; padding: 1px 9px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+  .v-ok { color: var(--ok); background: var(--ok-bg); } .v-check { color: var(--check); background: var(--check-bg); }
+  .v-failed { color: var(--failed); background: var(--failed-bg); } .v-review { color: var(--review); background: var(--review-bg); }
+  .v-active { color: var(--active); background: var(--active-bg); }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; margin-bottom: 10px; }
+  .card-head { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: baseline; }
+  .card-head h3 { margin: 0; font-size: 15px; }
+  .stages { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+  .stage { border: 1px dashed var(--dot); border-radius: 6px; padding: 2px 8px; font-size: 12px; color: var(--muted); }
+  .stage.seen { border-style: solid; border-color: var(--accent); color: var(--text); }
+  .timeline { list-style: none; margin: 0; padding: 0 0 0 4px; }
+  .timeline li { position: relative; padding: 4px 0 10px 22px; border-left: 2px solid var(--line); }
+  .timeline li:last-child { border-left-color: transparent; }
+  .timeline li::before { content: ""; position: absolute; left: -7px; top: 8px; width: 12px; height: 12px; border-radius: 50%; background: var(--c, var(--dot)); }
+  .figs { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 13px; }
+  .notes { background: var(--check-bg); color: var(--check); border-radius: 6px; padding: 6px 10px; margin-top: 6px; font-size: 13px; }
+  .notes div + div { margin-top: 4px; }
+  table { width: 100%; border-collapse: collapse; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-size: 12px; color: var(--muted); font-weight: 600; }
+  tr.row { cursor: pointer; } tr.row:hover td { background: var(--bg); }
+  .dots { display: flex; align-items: center; gap: 3px; }
+  .dots i { width: 10px; height: 10px; border-radius: 50%; background: var(--dot); display: inline-block; }
+  .dots i.on { background: var(--accent); }
+  .dots i.end { background: var(--c); }
+  .dots s { width: 8px; height: 2px; background: var(--dot); display: inline-block; text-decoration: none; }
+  .detail td { background: var(--bg); }
+  .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; }
+  .detail h4 { margin: 4px 0 6px; font-size: 13px; }
+  .detail ul { margin: 0; padding-left: 18px; }
+  pre { white-space: pre-wrap; margin: 0; font: 12px/1.5 Consolas, monospace; background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 8px; max-height: 260px; overflow: auto; }
+  .conf { display: inline-block; width: 60px; height: 6px; background: var(--line); border-radius: 3px; vertical-align: middle; margin: 0 6px; }
+  .conf span { display: block; height: 100%; border-radius: 3px; background: var(--accent); }
+  a { color: var(--accent); }
+  .empty { padding: 16px; text-align: center; color: var(--muted); }
+  @media (max-width: 700px) { .hide-narrow { display: none; } }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Pipeline status</h1>
+    <span class="muted small" id="generated"></span>
+    <span class="spacer"></span>
+    <label class="small"><input type="checkbox" id="auto"> refresh every 30 s</label>
+  </header>
+  <div class="tiles" id="tiles"></div>
+  <div class="bar">
+    <input type="search" id="q" placeholder="Search subject, cedent, treaty, job id…">
+    <select id="route"><option value="">All processes</option></select>
+  </div>
+  <h2>Cases <span class="muted small">— jobs about the same matter, linked across stages</span></h2>
+  <div id="cases"></div>
+  <h2>Jobs</h2>
+  <table>
+    <thead><tr><th>Received</th><th>Item</th><th class="hide-narrow">Progress</th><th>Result</th><th class="hide-narrow">Process</th></tr></thead>
+    <tbody id="jobs"></tbody>
+  </table>
+  <p class="muted small" id="where"></p>
+</main>
+<script>
+const DATA = /*DATA*/null;
+const VERDICT = {
+  failed: "Failed", check: "Check", review: "Needs review", active: "In progress", ok: "Done",
+};
+const STEPS = [["new", "Received"], ["preprocessed", "Read"], ["classified", "Routed"], ["running", "Processed"]];
+const LABEL = (s) => (s || "unknown").replace(/_/g, " ").replace(/^./, (c) => c.toUpperCase());
+let filter = { verdict: "", q: "", route: "" };
+
+function h(tag, attrs, ...kids) {
+  const el = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs || {})) {
+    if (v == null || v === false) continue;
+    if (k === "style") el.style.cssText = v; else if (k.startsWith("on")) el.addEventListener(k.slice(2), v);
+    else el.setAttribute(k, v);
+  }
+  for (const kid of kids.flat()) if (kid != null && kid !== false) el.append(kid instanceof Node ? kid : String(kid));
+  return el;
+}
+const when = (iso) => { if (!iso) return ""; const d = new Date(iso); return isNaN(d) ? iso : d.toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" }); };
+const badge = (v) => h("span", { class: "badge v-" + v }, VERDICT[v] || v);
+const color = (v) => `var(--${v})`;
+const store = { get(k) { try { return localStorage.getItem(k); } catch { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch {} } };
+
+function matches(text) { return !filter.q || text.toLowerCase().includes(filter.q.toLowerCase()); }
+function jobVisible(j) {
+  const routes = Object.keys(j.routes);
+  return (!filter.verdict || (filter.verdict === "action" ? ["failed", "check", "review"].includes(j.verdict) : j.verdict === filter.verdict))
+    && (!filter.route || routes.includes(filter.route))
+    && matches([j.id, j.subject, j.source, ...routes, JSON.stringify(Object.values(j.routes).map((r) => r.facts))].join(" "));
+}
+
+function renderTiles() {
+  const c = DATA.counts, n = (k) => c[k] || 0;
+  const tiles = [
+    ["action", n("failed") + n("check") + n("review"), "need a look", "check"],
+    ["ok", n("ok"), "done, all checks passed", "ok"],
+    ["active", n("active"), "in progress", "active"],
+    ["", DATA.jobs.length, "jobs in total", "text"],
+  ];
+  document.getElementById("tiles").replaceChildren(...tiles.map(([key, count, text, col]) =>
+    h("button", { class: "tile" + (filter.verdict === key ? " sel" : ""), onclick: () => { filter.verdict = filter.verdict === key ? "" : key; render(); } },
+      h("b", { style: `color:${col === "text" ? "inherit" : color(col)}` }, count), h("span", { class: "muted small" }, text))));
+}
+
+function renderCases() {
+  const box = document.getElementById("cases");
+  const jobsById = Object.fromEntries(DATA.jobs.map((j) => [j.id, j]));
+  const cases = DATA.cases.filter((c) => c.steps.some((s) => jobVisible(jobsById[s.job])) || matches([c.title, ...Object.values(c.keys)].join(" ")) && !filter.verdict && !filter.route);
+  if (!cases.length) { box.replaceChildren(h("div", { class: "card empty" }, DATA.cases.length ? "No case matches the filter." : "No linked cases yet: they appear when a process extracts the same matter more than once.")); return; }
+  box.replaceChildren(...cases.map((c) => {
+    const seen = {};
+    c.steps.forEach((s) => { seen[s.stage] = (seen[s.stage] || 0) + 1; });
+    return h("div", { class: "card" },
+      h("div", { class: "card-head" }, h("h3", {}, c.title), badge(c.verdict),
+        h("span", { class: "muted small" }, Object.entries(c.keys).map(([k, v]) => `${LABEL(k)}: ${v}`).join(" · ")),
+        h("span", { class: "spacer" }), h("span", { class: "muted small" }, `${c.steps.length} email${c.steps.length > 1 ? "s" : ""} · ${LABEL(c.route)}`)),
+      c.stages.length ? h("div", { class: "stages" }, c.stages.map((s) => h("span", { class: "stage" + (seen[s] ? " seen" : ""), title: seen[s] ? `${seen[s]} received` : "not received" }, LABEL(s) + (seen[s] > 1 ? ` ×${seen[s]}` : "")))) : null,
+      h("ol", { class: "timeline" }, c.steps.map((s) => h("li", { style: `--c:${color(s.verdict)}` },
+        h("div", { class: "card-head" }, h("b", {}, LABEL(s.stage)), h("span", { class: "muted small" }, when(s.date)), badge(s.verdict),
+          h("a", { href: "#" + s.job, class: "small", onclick: (e) => { e.preventDefault(); openJob(s.job); } }, s.subject)),
+        h("div", { class: "figs" },
+          s.gross && h("span", {}, "Gross loss: ", h("b", {}, s.gross)),
+          s.previous && h("span", { class: "muted" }, "previous stated: " + s.previous),
+          s.facts["Movement vs previous"] && h("span", {}, "movement: " + s.facts["Movement vs previous"]),
+          s.cash_call && h("span", {}, "Cash call: ", h("b", {}, s.facts["Cash call"] || s.cash_call)),
+          s.flags.length ? h("span", { style: "color:var(--check)" }, `${s.flags.length} check${s.flags.length > 1 ? "s" : ""} to review`) : null)))),
+      c.notes.length ? h("div", { class: "notes" }, h("b", {}, "Across stages: "), c.notes.map((n) => h("div", {}, n))) : null,
+      c.info.length ? h("div", { class: "muted small", style: "margin-top:6px" }, c.info.map((n) => h("div", {}, "ℹ " + n))) : null);
+  }));
+}
+
+function progress(j) {
+  const reached = new Set(j.history.map((x) => x.state));
+  const at = Object.fromEntries(j.history.map((x) => [x.state, x.at]));
+  const parts = [];
+  STEPS.forEach(([s, label], i) => {
+    if (i) parts.push(h("s"));
+    parts.push(h("i", { class: reached.has(s) ? "on" : "", title: `${label}${at[s] ? ": " + when(at[s]) : reached.has(s) ? "" : " (skipped)"}` }));
+  });
+  parts.push(h("s"));
+  const end = j.verdict === "active" ? null : j.state;
+  parts.push(h("i", { class: end ? "end" : "", style: `--c:${color(j.verdict)}`, title: end ? `${VERDICT[j.verdict]}: ${when(at[end])}` : "not finished" }));
+  return h("div", { class: "dots" }, parts);
+}
+
+function detail(j) {
+  const routeBoxes = Object.entries(j.routes).map(([name, r]) => h("div", {},
+    h("h4", {}, LABEL(name), " ", r.ok ? badge(r.flags && r.flags.length ? "check" : "ok") : badge("failed")),
+    Object.keys(r.facts || {}).length ? h("ul", {}, Object.entries(r.facts).map(([k, v]) => h("li", {}, `${k}: `, h("b", {}, v)))) : null,
+    (r.flags || []).length ? [h("h4", { style: "color:var(--check)" }, "Checks to review"), h("ul", {}, r.flags.map((f) => h("li", {}, f)))] : null,
+    (r.problems || []).length ? [h("h4", { style: "color:var(--failed)" }, "Problems"), h("ul", {}, r.problems.map((p) => h("li", {}, p)))] : null,
+    r.summary ? [h("h4", {}, "Summary"), h("pre", {}, r.summary)] : null,
+    h("p", { class: "small muted" }, (r.models || []).join(", "), r.cost_usd ? ` · API-equivalent cost $${r.cost_usd.toFixed(3)}` : "", r.at ? ` · ${when(r.at)}` : ""),
+    r.summary_uri ? h("a", { href: r.summary_uri, class: "small" }, "Open summary.md") : null));
+  return h("div", { class: "grid2" },
+    h("div", {},
+      h("h4", {}, "Classification", j.manual ? " (assigned by hand)" : ""),
+      j.candidates.length ? h("ul", {}, j.candidates.map((c) => h("li", {}, h("b", {}, LABEL(c.name)), h("span", { class: "conf", title: c.confidence.toFixed(2) }, h("span", { style: `width:${Math.round(c.confidence * 100)}%` })), h("span", { class: "muted small" }, c.reason))))
+        : h("p", { class: "muted small" }, "No process matched."),
+      j.failure ? [h("h4", { style: "color:var(--failed)" }, "Error"), h("pre", {}, j.failure)] : null,
+      j.warnings.length ? [h("h4", {}, "Reading warnings"), h("ul", {}, j.warnings.map((w) => h("li", {}, w)))] : null,
+      h("h4", {}, "History"),
+      h("ul", { class: "small" }, j.history.map((x) => h("li", {}, `${when(x.at)} — ${LABEL(x.state)}${x.note ? " (" + x.note + ")" : ""}`))),
+      h("p", { class: "small" }, h("a", { href: j.folder }, "Open job folder"), h("span", { class: "muted" }, " · " + j.id))),
+    routeBoxes.length ? h("div", {}, routeBoxes) : h("div", { class: "muted small" }, "No process ran for this item."),
+    h("div", { class: "small muted" }, j.verdict === "failed" ? `To run it again: uv run python -m pipeline retry ${j.id}` :
+      j.verdict === "review" ? `To send it to a process: uv run python -m pipeline assign ${j.id} <route>` : ""));
+}
+
+const open = new Set();
+function openJob(id) { open.add(id); filter = { verdict: "", q: "", route: "" }; document.getElementById("q").value = ""; document.getElementById("route").value = ""; render(); const row = document.getElementById("job-" + id); if (row) row.scrollIntoView({ behavior: "smooth", block: "center" }); }
+
+function renderJobs() {
+  const body = document.getElementById("jobs");
+  const rows = [];
+  for (const j of DATA.jobs.filter(jobVisible)) {
+    rows.push(h("tr", { class: "row", id: "job-" + j.id, onclick: () => { open.has(j.id) ? open.delete(j.id) : open.add(j.id); renderJobs(); } },
+      h("td", { class: "small" }, when(j.email_date)),
+      h("td", {}, j.subject, h("div", { class: "muted small" }, j.source !== j.subject ? j.source : "")),
+      h("td", { class: "hide-narrow" }, progress(j)),
+      h("td", {}, badge(j.verdict)),
+      h("td", { class: "hide-narrow small" }, Object.keys(j.routes).map(LABEL).join(", ") || "—")));
+    if (open.has(j.id)) rows.push(h("tr", { class: "detail" }, h("td", { colspan: 5 }, detail(j))));
+  }
+  body.replaceChildren(...(rows.length ? rows : [h("tr", {}, h("td", { colspan: 5, class: "empty" }, DATA.jobs.length ? "No job matches the filter." : "No jobs yet: drop an email into the inbox."))]));
+}
+
+function render() { renderTiles(); renderCases(); renderJobs(); store.set("ep-filter", JSON.stringify(filter)); }
+
+document.getElementById("generated").textContent = "updated " + when(DATA.generated);
+document.getElementById("where").textContent = "Jobs folder: " + DATA.jobs_dir;
+const routeSel = document.getElementById("route");
+DATA.routes.forEach((r) => routeSel.append(h("option", { value: r }, LABEL(r))));
+try { filter = Object.assign(filter, JSON.parse(store.get("ep-filter") || "{}")); } catch {}
+document.getElementById("q").value = filter.q; routeSel.value = filter.route;
+document.getElementById("q").addEventListener("input", (e) => { filter.q = e.target.value; render(); });
+routeSel.addEventListener("change", (e) => { filter.route = e.target.value; render(); });
+const auto = document.getElementById("auto");
+auto.checked = store.get("ep-auto") === "1";
+const schedule = () => { if (auto.checked) setTimeout(() => location.reload(), 30000); };
+auto.addEventListener("change", () => { store.set("ep-auto", auto.checked ? "1" : "0"); schedule(); });
+schedule();
+if (location.hash.length > 1) open.add(location.hash.slice(1));
+render();
+</script>
+</body>
+</html>

@@ -92,6 +92,7 @@ Then try a real email: drag it from Outlook into the inbox folder.
 | Command (`uv run python -m pipeline ...`) | What it does |
 |---|---|
 | *(nothing)* / `--once` | watch the inbox / process it once |
+| `report` | open the status page: all jobs, their progress, and linked cases |
 | `status` | the last 20 jobs and their state (`--all` for all) |
 | `retry <job>` | run a failed job again (`--from new` redoes everything) |
 | `assign <job> <route>` | send a job to a route by hand (e.g. after `needs_review`) |
@@ -101,6 +102,18 @@ Then try a real email: drag it from Outlook into the inbox folder.
 | `eval-classifier` | live check of the classifier on the test emails |
 
 `<job>` can be the full id or its last 8 characters.
+
+### Status page
+
+`<jobs_dir>\status.html` (open it with `report`, then bookmark it) is rewritten
+after every poll; tick "refresh every 30 s" to keep it live. It shows:
+- what needs a look (failed, checks to review, no matching process) at the top;
+- every job's progress (received, read, routed, processed, result) and, on
+  click, its classification, figures, checks, summary and history;
+- **cases**: jobs about the same matter linked across stages, e.g. a loss's
+  first advice, updates and cash call (same treaty and date of loss), in email
+  order, with the estimate history and contradictions between stages (an update
+  whose "previous estimate" differs from the last estimate received).
 
 ### Job states
 
