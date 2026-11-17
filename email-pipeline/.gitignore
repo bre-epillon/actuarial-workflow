@@ -17,6 +17,8 @@ samples/
 *.docx
 *.zip
 !tests/fixtures/**
+# tool workbooks (routes/*/tool/*.xlsb) stay out of git too: each user copies the
+# blank template in by hand (see routes/property_pricing/tool/README.md)
 # python
 __pycache__/
 *.pyc

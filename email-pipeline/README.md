@@ -24,6 +24,9 @@ no server. Developer guide and design rules: [CLAUDE.md](CLAUDE.md).
   The project deliberately uses this installed Python: Defender blocks the
   Python builds uv would otherwise download.
 - [uv](https://docs.astral.sh/uv/), the package manager
+- Microsoft Excel, for routes that fill an Excel tool (`property_pricing`). The
+  tool workbooks are not in git: copy the blank template into the route's
+  `tool\` folder (see [its README](routes/property_pricing/tool/README.md)); `doctor` tells you when one is missing.
 
 ## Setup (once, about 10 minutes)
 
@@ -133,6 +136,7 @@ after every poll; tick "refresh every 30 s" to keep it live. It shows:
   original/            the item as dropped (never modified)
   extracted/           email text, attachments, CSV/TXT versions, summary.json
   output/<route>/      what the route produced: summary.md, extracted.json, computed.json, ...
+  reference/<route>/   reference material the route gives its agent (e.g. a tool's allowed values)
   logs/                full transcript of every Claude run (audit trail)
   manifest.json        state, history, classification, models and versions used
 ```
@@ -155,6 +159,7 @@ are shared through git and reloaded on every poll.
 | Route | Status |
 |---|---|
 | `large_loss` | Extracts the facts of a loss advice / update / cash call into `extracted.json` (schema-checked), verifies every amount against the text it was copied from and every quote against the file it cites, computes the movement against the previous estimate. Netting through LargeLossesNetting: not wired in yet. |
+| `property_pricing` | Quote / pricing requests for property PD/BI risks. Extracts terms, layers, shares, deductions and loss history, points to the schedule of values (the pipeline reads its rows itself and reconciles them with the totals row), fills the **Property Pricing Tool v1.08**, lets Excel price it, and checks the tool's results. Output: the filled workbook in `output/property_pricing/` plus technical premium and adequacy on the card. Needs Microsoft Excel. Details: [routes/property_pricing/tool/README.md](routes/property_pricing/tool/README.md). |
 | `smoke_test` | Only for `[PIPELINE TEST]` emails, to test the installation. |
 
 Adding a process is described in [CLAUDE.md](CLAUDE.md#adding-a-route).

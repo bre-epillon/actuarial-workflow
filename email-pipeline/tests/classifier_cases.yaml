@@ -11,3 +11,5 @@
   expected: [large_loss]
 - fixture: quarterly_accounts.eml
   expected: []
+- fixture: property_quote_request.eml
+  expected: [property_pricing]

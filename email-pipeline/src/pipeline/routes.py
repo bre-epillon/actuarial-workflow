@@ -12,6 +12,8 @@ Frontmatter (see CLAUDE.md, "Adding a route"):
                    (e.g. [treaty_reference, date_of_loss]); the status page links jobs
                    with equal values
     stage_field    optional extracted.json field naming the job's stage in its case
+    reference      optional files in the route folder the agent may read (e.g. a tool's
+                   vocabulary); copied into <job>/reference/<name>/ before the agent runs
 """
 from __future__ import annotations
 
@@ -48,6 +50,7 @@ class Route:
     postprocess: Path | None = None
     case_keys: list[str] = field(default_factory=list)
     stage_field: str | None = None
+    reference: list[Path] = field(default_factory=list)
 
 
 def parse_route_file(path: Path) -> Route:
@@ -93,6 +96,13 @@ def parse_route_file(path: Path) -> Route:
         if unknown := [f for f in [*case_keys, stage_field] if f and f not in known]:
             raise ValueError(f"{path}: case_keys/stage_field not in output_schema: {unknown}")
 
+    reference = []
+    for rel in meta.get("reference") or []:
+        ref = (path.parent / rel).resolve()
+        if not ref.is_file() or not ref.is_relative_to(path.parent.resolve()):
+            raise ValueError(f"{path}: reference file {rel} not found in the route folder")
+        reference.append(ref)
+
     return Route(
         name=name,
         description=str(meta["description"]).strip(),
@@ -105,6 +115,7 @@ def parse_route_file(path: Path) -> Route:
         postprocess=postprocess,
         case_keys=case_keys,
         stage_field=stage_field,
+        reference=reference,
     )
 
 

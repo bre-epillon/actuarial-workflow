@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import json
 import logging
+import shutil
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -94,8 +95,27 @@ def route_options(job: Job, route: Route, cfg: Config) -> ClaudeAgentOptions:
     )
 
 
+REFERENCE_TEMPLATE = """
+
+Reference material for this process (read-only, provided by the pipeline, not part of the item):
+{files}"""
+
+
+def copy_reference(job: Job, route: Route) -> None:
+    """Make the route's reference files readable inside the job folder (agents see only the job)."""
+    if not route.reference:
+        return
+    dest = job.dir / "reference" / route.name
+    dest.mkdir(parents=True, exist_ok=True)
+    for ref in route.reference:
+        shutil.copyfile(ref, dest / ref.name)
+
+
 def task_prompt(route: Route) -> str:
     prompt = TASK_TEMPLATE.format(route=route.name)
+    if route.reference:
+        prompt += REFERENCE_TEMPLATE.format(
+            files="\n".join(f"- ./reference/{route.name}/{ref.name}" for ref in route.reference))
     if route.output_schema is not None:
         schema = json.dumps(route.output_schema, indent=2)
         prompt += SCHEMA_TEMPLATE.format(route=route.name, file=EXTRACTED, schema=schema)
@@ -117,6 +137,7 @@ def validate_output(path: Path, schema: dict) -> list[str]:
 async def run_route(job: Job, route: Route, cfg: Config) -> RouteOutcome:
     out = job.output_dir(route.name)
     out.mkdir(parents=True, exist_ok=True)
+    copy_reference(job, route)
     options = route_options(job, route, cfg)
     log_path = job.logs_dir / f"{route.name}.jsonl"
     runs = [await run_agent(task_prompt(route), options, log_path)]

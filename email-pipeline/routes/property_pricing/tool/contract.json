@@ -1,0 +1,5799 @@
+{
+ "tool": "Property Pricing Tool",
+ "version": "1.08",
+ "template": "Property Pricing Tool v1.08.xlsb",
+ "version_check": {
+  "sheet": "6_Experience_Rating",
+  "cell": "B2",
+  "text": "Property Rating Tool - v1.08"
+ },
+ "derived_from": "v1_11.py input maps (v1.07 layout: experience-rating outputs one column left, no UWY column)",
+ "fields": {
+  "1_Policy_Information.Reinsurance_Type": {
+   "sheet": "1_Policy_Information",
+   "cell": "C9",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": "B9",
+   "label": "Reinsurance Type"
+  },
+  "1_Policy_Information.New_Renewal": {
+   "sheet": "1_Policy_Information",
+   "cell": "C10",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": "B10",
+   "label": "New / Renewal"
+  },
+  "1_Policy_Information.Policy_Reference": {
+   "sheet": "1_Policy_Information",
+   "cell": "C11",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": "B11",
+   "label": "Policy Reference"
+  },
+  "1_Policy_Information.Quote_Date": {
+   "sheet": "1_Policy_Information",
+   "cell": "C13",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B13",
+   "label": "Quote Date"
+  },
+  "1_Policy_Information.Policy_Inception_Date": {
+   "sheet": "1_Policy_Information",
+   "cell": "C14",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B14",
+   "label": "Policy Inception Date"
+  },
+  "1_Policy_Information.Policy_Expiry_Date": {
+   "sheet": "1_Policy_Information",
+   "cell": "C15",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B15",
+   "label": "Policy Expiry Date"
+  },
+  "1_Policy_Information.Quoting_Currency": {
+   "sheet": "1_Policy_Information",
+   "cell": "C16",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": "B16",
+   "label": "Quoting Currency"
+  },
+  "1_Policy_Information.Original_Insured": {
+   "sheet": "1_Policy_Information",
+   "cell": "H8",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": "G8",
+   "label": "Original Insured"
+  },
+  "1_Policy_Information.Reinsured": {
+   "sheet": "1_Policy_Information",
+   "cell": "H9",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": "G9",
+   "label": "Reinsured"
+  },
+  "1_Policy_Information.Reinsured_Country": {
+   "sheet": "1_Policy_Information",
+   "cell": "H10",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": "G10",
+   "label": "Reinsured Country"
+  },
+  "1_Policy_Information.Underwriter": {
+   "sheet": "1_Policy_Information",
+   "cell": "H11",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": "G11",
+   "label": "Underwriter"
+  },
+  "1_Policy_Information.Broker": {
+   "sheet": "1_Policy_Information",
+   "cell": "H12",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": "G12",
+   "label": "Broker"
+  },
+  "1_Policy_Information.Broker_Contact": {
+   "sheet": "1_Policy_Information",
+   "cell": "H13",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": "G13",
+   "label": "Broker Contact"
+  },
+  "1_Policy_Information.Leader": {
+   "sheet": "1_Policy_Information",
+   "cell": "H14",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": "G14",
+   "label": "Leader"
+  },
+  "1_Policy_Information.Physical_Damage_PD": {
+   "sheet": "1_Policy_Information",
+   "cell": "C22",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": "B22",
+   "label": "Physical Damage (PD)"
+  },
+  "1_Policy_Information.Business_Interruption_BI": {
+   "sheet": "1_Policy_Information",
+   "cell": "C23",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": "B23",
+   "label": "Business Interruption (BI)"
+  },
+  "1_Policy_Information.Fire_Lightning_Explosion_and_Aircraft_FLEXA_Only": {
+   "sheet": "1_Policy_Information",
+   "cell": "C24",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": "B24",
+   "label": "Fire, Lightning, Explosion & Aircraft (FLEXA) Only"
+  },
+  "1_Policy_Information.Machinery_Breakdown_MB": {
+   "sheet": "1_Policy_Information",
+   "cell": "C27",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": "B27",
+   "label": "Machinery Breakdown (MB)"
+  },
+  "1_Policy_Information.Contingent_Business_Interruption_CBI": {
+   "sheet": "1_Policy_Information",
+   "cell": "C28",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": "B28",
+   "label": "Contingent Business Interruption (CBI)"
+  },
+  "1_Policy_Information.Strikes_Riots_and_Civil_Comotion_SRCC": {
+   "sheet": "1_Policy_Information",
+   "cell": "C32",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": "B32",
+   "label": "Strikes, Riots & Civil Comotion (SRCC)"
+  },
+  "1_Policy_Information.Offered_GGWP_Primary": {
+   "sheet": "1_Policy_Information",
+   "cell": "C40",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B40",
+   "label": "Offered Gross Gross Premium - before deductions"
+  },
+  "1_Policy_Information.Offered_GGWP_L1": {
+   "sheet": "1_Policy_Information",
+   "cell": "D40",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B40",
+   "label": "Offered Gross Gross Premium - before deductions"
+  },
+  "1_Policy_Information.Offered_GGWP_L2": {
+   "sheet": "1_Policy_Information",
+   "cell": "E40",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B40",
+   "label": "Offered Gross Gross Premium - before deductions"
+  },
+  "1_Policy_Information.Offered_GGWP_L3": {
+   "sheet": "1_Policy_Information",
+   "cell": "F40",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B40",
+   "label": "Offered Gross Gross Premium - before deductions"
+  },
+  "1_Policy_Information.Offered_GGWP_L4": {
+   "sheet": "1_Policy_Information",
+   "cell": "G40",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B40",
+   "label": "Offered Gross Gross Premium - before deductions"
+  },
+  "1_Policy_Information.Offered_GGWP_L5": {
+   "sheet": "1_Policy_Information",
+   "cell": "H40",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B40",
+   "label": "Offered Gross Gross Premium - before deductions"
+  },
+  "1_Policy_Information.Brokerage": {
+   "sheet": "1_Policy_Information",
+   "cell": "C42",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B42",
+   "label": "Brokerage"
+  },
+  "1_Policy_Information.Overrider": {
+   "sheet": "1_Policy_Information",
+   "cell": "C43",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B43",
+   "label": "Overrider"
+  },
+  "1_Policy_Information.Fronting_Fee": {
+   "sheet": "1_Policy_Information",
+   "cell": "C44",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B44",
+   "label": "Fronting Fee"
+  },
+  "1_Policy_Information.Eng_Survey_Costs_Fees": {
+   "sheet": "1_Policy_Information",
+   "cell": "C46",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B46",
+   "label": "Eng / Survey Costs / Fees"
+  },
+  "1_Policy_Information.Reinsurer_Payable_Taxes": {
+   "sheet": "1_Policy_Information",
+   "cell": "C47",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B47",
+   "label": "Reinsurer Payable Taxes"
+  },
+  "1_Policy_Information.Other_Fees_NCD": {
+   "sheet": "1_Policy_Information",
+   "cell": "C48",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B48",
+   "label": "Other Fees (NCD)"
+  },
+  "1_Policy_Information.Separate_PD_and_BI_Limits_Primary": {
+   "sheet": "1_Policy_Information",
+   "cell": "C51",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": "B51",
+   "label": "Seperate PD & BI Limits?"
+  },
+  "1_Policy_Information.Separate_PD_and_BI_Limits_L1": {
+   "sheet": "1_Policy_Information",
+   "cell": "D51",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.Separate_PD_and_BI_Limits_L2": {
+   "sheet": "1_Policy_Information",
+   "cell": "E51",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.Separate_PD_and_BI_Limits_L3": {
+   "sheet": "1_Policy_Information",
+   "cell": "F51",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.Separate_PD_and_BI_Limits_L4": {
+   "sheet": "1_Policy_Information",
+   "cell": "G51",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.Separate_PD_and_BI_Limits_L5": {
+   "sheet": "1_Policy_Information",
+   "cell": "H51",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.MB_Primary": {
+   "sheet": "1_Policy_Information",
+   "cell": "C52",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": "B52",
+   "label": "MB Included?"
+  },
+  "1_Policy_Information.MB_L1": {
+   "sheet": "1_Policy_Information",
+   "cell": "D52",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.MB_L2": {
+   "sheet": "1_Policy_Information",
+   "cell": "E52",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.MB_L3": {
+   "sheet": "1_Policy_Information",
+   "cell": "F52",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.MB_L4": {
+   "sheet": "1_Policy_Information",
+   "cell": "G52",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.MB_L5": {
+   "sheet": "1_Policy_Information",
+   "cell": "H52",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.Limit_PD_Primary": {
+   "sheet": "1_Policy_Information",
+   "cell": "C57",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.Limit_PD_L1": {
+   "sheet": "1_Policy_Information",
+   "cell": "D57",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.Limit_PD_L2": {
+   "sheet": "1_Policy_Information",
+   "cell": "E57",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.Limit_PD_L3": {
+   "sheet": "1_Policy_Information",
+   "cell": "F57",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.Limit_PD_L4": {
+   "sheet": "1_Policy_Information",
+   "cell": "G57",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.Limit_PD_L5": {
+   "sheet": "1_Policy_Information",
+   "cell": "H57",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.Limit_BI_Primary": {
+   "sheet": "1_Policy_Information",
+   "cell": "C58",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.Limit_BI_L1": {
+   "sheet": "1_Policy_Information",
+   "cell": "D58",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.Limit_BI_L2": {
+   "sheet": "1_Policy_Information",
+   "cell": "E58",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.Limit_BI_L3": {
+   "sheet": "1_Policy_Information",
+   "cell": "F58",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.Limit_BI_L4": {
+   "sheet": "1_Policy_Information",
+   "cell": "G58",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.Limit_BI_L5": {
+   "sheet": "1_Policy_Information",
+   "cell": "H58",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.Limit_EQ_Primary": {
+   "sheet": "1_Policy_Information",
+   "cell": "C59",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B59",
+   "label": "EQ - Earthquake"
+  },
+  "1_Policy_Information.Limit_EQ_L1": {
+   "sheet": "1_Policy_Information",
+   "cell": "D59",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B59",
+   "label": "EQ - Earthquake"
+  },
+  "1_Policy_Information.Limit_EQ_L2": {
+   "sheet": "1_Policy_Information",
+   "cell": "E59",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B59",
+   "label": "EQ - Earthquake"
+  },
+  "1_Policy_Information.Limit_EQ_L3": {
+   "sheet": "1_Policy_Information",
+   "cell": "F59",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B59",
+   "label": "EQ - Earthquake"
+  },
+  "1_Policy_Information.Limit_EQ_L4": {
+   "sheet": "1_Policy_Information",
+   "cell": "G59",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B59",
+   "label": "EQ - Earthquake"
+  },
+  "1_Policy_Information.Limit_EQ_L5": {
+   "sheet": "1_Policy_Information",
+   "cell": "H59",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B59",
+   "label": "EQ - Earthquake"
+  },
+  "1_Policy_Information.Limit_WS_Primary": {
+   "sheet": "1_Policy_Information",
+   "cell": "C60",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B60",
+   "label": "WS - Windstorm"
+  },
+  "1_Policy_Information.Limit_WS_L1": {
+   "sheet": "1_Policy_Information",
+   "cell": "D60",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B60",
+   "label": "WS - Windstorm"
+  },
+  "1_Policy_Information.Limit_WS_L2": {
+   "sheet": "1_Policy_Information",
+   "cell": "E60",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B60",
+   "label": "WS - Windstorm"
+  },
+  "1_Policy_Information.Limit_WS_L3": {
+   "sheet": "1_Policy_Information",
+   "cell": "F60",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B60",
+   "label": "WS - Windstorm"
+  },
+  "1_Policy_Information.Limit_WS_L4": {
+   "sheet": "1_Policy_Information",
+   "cell": "G60",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B60",
+   "label": "WS - Windstorm"
+  },
+  "1_Policy_Information.Limit_WS_L5": {
+   "sheet": "1_Policy_Information",
+   "cell": "H60",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B60",
+   "label": "WS - Windstorm"
+  },
+  "1_Policy_Information.Limit_FL_Primary": {
+   "sheet": "1_Policy_Information",
+   "cell": "C61",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B61",
+   "label": "FL - Flood"
+  },
+  "1_Policy_Information.Limit_FL_L1": {
+   "sheet": "1_Policy_Information",
+   "cell": "D61",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B61",
+   "label": "FL - Flood"
+  },
+  "1_Policy_Information.Limit_FL_L2": {
+   "sheet": "1_Policy_Information",
+   "cell": "E61",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B61",
+   "label": "FL - Flood"
+  },
+  "1_Policy_Information.Limit_FL_L3": {
+   "sheet": "1_Policy_Information",
+   "cell": "F61",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B61",
+   "label": "FL - Flood"
+  },
+  "1_Policy_Information.Limit_FL_L4": {
+   "sheet": "1_Policy_Information",
+   "cell": "G61",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B61",
+   "label": "FL - Flood"
+  },
+  "1_Policy_Information.Limit_FL_L5": {
+   "sheet": "1_Policy_Information",
+   "cell": "H61",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B61",
+   "label": "FL - Flood"
+  },
+  "1_Policy_Information.Excess_PD_Primary": {
+   "sheet": "1_Policy_Information",
+   "cell": "C65",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.Excess_PD_L1": {
+   "sheet": "1_Policy_Information",
+   "cell": "D65",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.Excess_PD_L2": {
+   "sheet": "1_Policy_Information",
+   "cell": "E65",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.Excess_PD_L3": {
+   "sheet": "1_Policy_Information",
+   "cell": "F65",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.Excess_PD_L4": {
+   "sheet": "1_Policy_Information",
+   "cell": "G65",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.Excess_PD_L5": {
+   "sheet": "1_Policy_Information",
+   "cell": "H65",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.Excess_BI_Primary": {
+   "sheet": "1_Policy_Information",
+   "cell": "C66",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.Excess_BI_L1": {
+   "sheet": "1_Policy_Information",
+   "cell": "D66",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.Excess_BI_L2": {
+   "sheet": "1_Policy_Information",
+   "cell": "E66",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.Excess_BI_L3": {
+   "sheet": "1_Policy_Information",
+   "cell": "F66",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.Excess_BI_L4": {
+   "sheet": "1_Policy_Information",
+   "cell": "G66",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.Excess_BI_L5": {
+   "sheet": "1_Policy_Information",
+   "cell": "H66",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.Excess_EQ_Primary": {
+   "sheet": "1_Policy_Information",
+   "cell": "C67",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B67",
+   "label": "EQ - Earthquake"
+  },
+  "1_Policy_Information.Excess_EQ_L1": {
+   "sheet": "1_Policy_Information",
+   "cell": "D67",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B67",
+   "label": "EQ - Earthquake"
+  },
+  "1_Policy_Information.Excess_EQ_L2": {
+   "sheet": "1_Policy_Information",
+   "cell": "E67",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B67",
+   "label": "EQ - Earthquake"
+  },
+  "1_Policy_Information.Excess_EQ_L3": {
+   "sheet": "1_Policy_Information",
+   "cell": "F67",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B67",
+   "label": "EQ - Earthquake"
+  },
+  "1_Policy_Information.Excess_EQ_L4": {
+   "sheet": "1_Policy_Information",
+   "cell": "G67",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B67",
+   "label": "EQ - Earthquake"
+  },
+  "1_Policy_Information.Excess_EQ_L5": {
+   "sheet": "1_Policy_Information",
+   "cell": "H67",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B67",
+   "label": "EQ - Earthquake"
+  },
+  "1_Policy_Information.Excess_WS_Primary": {
+   "sheet": "1_Policy_Information",
+   "cell": "C68",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B68",
+   "label": "WS - Windstorm"
+  },
+  "1_Policy_Information.Excess_WS_L1": {
+   "sheet": "1_Policy_Information",
+   "cell": "D68",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B68",
+   "label": "WS - Windstorm"
+  },
+  "1_Policy_Information.Excess_WS_L2": {
+   "sheet": "1_Policy_Information",
+   "cell": "E68",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B68",
+   "label": "WS - Windstorm"
+  },
+  "1_Policy_Information.Excess_WS_L3": {
+   "sheet": "1_Policy_Information",
+   "cell": "F68",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B68",
+   "label": "WS - Windstorm"
+  },
+  "1_Policy_Information.Excess_WS_L4": {
+   "sheet": "1_Policy_Information",
+   "cell": "G68",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B68",
+   "label": "WS - Windstorm"
+  },
+  "1_Policy_Information.Excess_WS_L5": {
+   "sheet": "1_Policy_Information",
+   "cell": "H68",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B68",
+   "label": "WS - Windstorm"
+  },
+  "1_Policy_Information.Excess_FL_Primary": {
+   "sheet": "1_Policy_Information",
+   "cell": "C69",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B69",
+   "label": "FL - Flood"
+  },
+  "1_Policy_Information.Excess_FL_L1": {
+   "sheet": "1_Policy_Information",
+   "cell": "D69",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B69",
+   "label": "FL - Flood"
+  },
+  "1_Policy_Information.Excess_FL_L2": {
+   "sheet": "1_Policy_Information",
+   "cell": "E69",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B69",
+   "label": "FL - Flood"
+  },
+  "1_Policy_Information.Excess_FL_L3": {
+   "sheet": "1_Policy_Information",
+   "cell": "F69",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B69",
+   "label": "FL - Flood"
+  },
+  "1_Policy_Information.Excess_FL_L4": {
+   "sheet": "1_Policy_Information",
+   "cell": "G69",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B69",
+   "label": "FL - Flood"
+  },
+  "1_Policy_Information.Excess_FL_L5": {
+   "sheet": "1_Policy_Information",
+   "cell": "H69",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B69",
+   "label": "FL - Flood"
+  },
+  "1_Policy_Information.Deductible_PD_Primary": {
+   "sheet": "1_Policy_Information",
+   "cell": "C73",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.Deductible_PD_L1": {
+   "sheet": "1_Policy_Information",
+   "cell": "D73",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.Deductible_PD_L2": {
+   "sheet": "1_Policy_Information",
+   "cell": "E73",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.Deductible_PD_L3": {
+   "sheet": "1_Policy_Information",
+   "cell": "F73",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.Deductible_PD_L4": {
+   "sheet": "1_Policy_Information",
+   "cell": "G73",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.Deductible_PD_L5": {
+   "sheet": "1_Policy_Information",
+   "cell": "H73",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.Deductible_BI_Primary": {
+   "sheet": "1_Policy_Information",
+   "cell": "C74",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.Deductible_BI_L1": {
+   "sheet": "1_Policy_Information",
+   "cell": "D74",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.Deductible_BI_L2": {
+   "sheet": "1_Policy_Information",
+   "cell": "E74",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.Deductible_BI_L3": {
+   "sheet": "1_Policy_Information",
+   "cell": "F74",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.Deductible_BI_L4": {
+   "sheet": "1_Policy_Information",
+   "cell": "G74",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.Deductible_BI_L5": {
+   "sheet": "1_Policy_Information",
+   "cell": "H74",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.Deductible_EQ_Primary": {
+   "sheet": "1_Policy_Information",
+   "cell": "C75",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B75",
+   "label": "EQ - Earthquake"
+  },
+  "1_Policy_Information.Deductible_EQ_L1": {
+   "sheet": "1_Policy_Information",
+   "cell": "D75",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B75",
+   "label": "EQ - Earthquake"
+  },
+  "1_Policy_Information.Deductible_EQ_L2": {
+   "sheet": "1_Policy_Information",
+   "cell": "E75",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B75",
+   "label": "EQ - Earthquake"
+  },
+  "1_Policy_Information.Deductible_EQ_L3": {
+   "sheet": "1_Policy_Information",
+   "cell": "F75",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B75",
+   "label": "EQ - Earthquake"
+  },
+  "1_Policy_Information.Deductible_EQ_L4": {
+   "sheet": "1_Policy_Information",
+   "cell": "G75",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B75",
+   "label": "EQ - Earthquake"
+  },
+  "1_Policy_Information.Deductible_EQ_L5": {
+   "sheet": "1_Policy_Information",
+   "cell": "H75",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B75",
+   "label": "EQ - Earthquake"
+  },
+  "1_Policy_Information.Deductible_WS_Primary": {
+   "sheet": "1_Policy_Information",
+   "cell": "C76",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B76",
+   "label": "WS - Windstorm"
+  },
+  "1_Policy_Information.Deductible_WS_L1": {
+   "sheet": "1_Policy_Information",
+   "cell": "D76",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B76",
+   "label": "WS - Windstorm"
+  },
+  "1_Policy_Information.Deductible_WS_L2": {
+   "sheet": "1_Policy_Information",
+   "cell": "E76",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B76",
+   "label": "WS - Windstorm"
+  },
+  "1_Policy_Information.Deductible_WS_L3": {
+   "sheet": "1_Policy_Information",
+   "cell": "F76",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B76",
+   "label": "WS - Windstorm"
+  },
+  "1_Policy_Information.Deductible_WS_L4": {
+   "sheet": "1_Policy_Information",
+   "cell": "G76",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B76",
+   "label": "WS - Windstorm"
+  },
+  "1_Policy_Information.Deductible_WS_L5": {
+   "sheet": "1_Policy_Information",
+   "cell": "H76",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B76",
+   "label": "WS - Windstorm"
+  },
+  "1_Policy_Information.Deductible_FL_Primary": {
+   "sheet": "1_Policy_Information",
+   "cell": "C77",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B77",
+   "label": "FL - Flood"
+  },
+  "1_Policy_Information.Deductible_FL_L1": {
+   "sheet": "1_Policy_Information",
+   "cell": "D77",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B77",
+   "label": "FL - Flood"
+  },
+  "1_Policy_Information.Deductible_FL_L2": {
+   "sheet": "1_Policy_Information",
+   "cell": "E77",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B77",
+   "label": "FL - Flood"
+  },
+  "1_Policy_Information.Deductible_FL_L3": {
+   "sheet": "1_Policy_Information",
+   "cell": "F77",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B77",
+   "label": "FL - Flood"
+  },
+  "1_Policy_Information.Deductible_FL_L4": {
+   "sheet": "1_Policy_Information",
+   "cell": "G77",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B77",
+   "label": "FL - Flood"
+  },
+  "1_Policy_Information.Deductible_FL_L5": {
+   "sheet": "1_Policy_Information",
+   "cell": "H77",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B77",
+   "label": "FL - Flood"
+  },
+  "1_Policy_Information.BI_MIP": {
+   "sheet": "1_Policy_Information",
+   "cell": "C80",
+   "direction": "IN",
+   "type": "integer",
+   "label_cell": "B80",
+   "label": "BI  Maximum Indemnity Period (MIP)"
+  },
+  "1_Policy_Information.BI_Waiting_Period": {
+   "sheet": "1_Policy_Information",
+   "cell": "C81",
+   "direction": "IN",
+   "type": "integer",
+   "label_cell": "B81",
+   "label": "BI  Waiting Period (Deductible - Days)"
+  },
+  "1_Policy_Information.CBI_MIP": {
+   "sheet": "1_Policy_Information",
+   "cell": "C83",
+   "direction": "IN",
+   "type": "integer",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.CBI_Waiting_Period": {
+   "sheet": "1_Policy_Information",
+   "cell": "C84",
+   "direction": "IN",
+   "type": "integer",
+   "label_cell": null,
+   "label": null
+  },
+  "1_Policy_Information.SRCC_GGWP_Primary": {
+   "sheet": "1_Policy_Information",
+   "cell": "C100",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B100",
+   "label": "Gross Gross Written Premium"
+  },
+  "1_Policy_Information.SRCC_GGWP_L1": {
+   "sheet": "1_Policy_Information",
+   "cell": "D100",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B100",
+   "label": "Gross Gross Written Premium"
+  },
+  "1_Policy_Information.SRCC_GGWP_L2": {
+   "sheet": "1_Policy_Information",
+   "cell": "E100",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B100",
+   "label": "Gross Gross Written Premium"
+  },
+  "1_Policy_Information.SRCC_GGWP_L3": {
+   "sheet": "1_Policy_Information",
+   "cell": "F100",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B100",
+   "label": "Gross Gross Written Premium"
+  },
+  "1_Policy_Information.SRCC_GGWP_L4": {
+   "sheet": "1_Policy_Information",
+   "cell": "G100",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B100",
+   "label": "Gross Gross Written Premium"
+  },
+  "1_Policy_Information.SRCC_GGWP_L5": {
+   "sheet": "1_Policy_Information",
+   "cell": "H100",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B100",
+   "label": "Gross Gross Written Premium"
+  },
+  "1_Policy_Information.SRCC_Limit_Primary": {
+   "sheet": "1_Policy_Information",
+   "cell": "C101",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B101",
+   "label": "Limit"
+  },
+  "1_Policy_Information.SRCC_Limit_L1": {
+   "sheet": "1_Policy_Information",
+   "cell": "D101",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B101",
+   "label": "Limit"
+  },
+  "1_Policy_Information.SRCC_Limit_L2": {
+   "sheet": "1_Policy_Information",
+   "cell": "E101",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B101",
+   "label": "Limit"
+  },
+  "1_Policy_Information.SRCC_Limit_L3": {
+   "sheet": "1_Policy_Information",
+   "cell": "F101",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B101",
+   "label": "Limit"
+  },
+  "1_Policy_Information.SRCC_Limit_L4": {
+   "sheet": "1_Policy_Information",
+   "cell": "G101",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B101",
+   "label": "Limit"
+  },
+  "1_Policy_Information.SRCC_Limit_L5": {
+   "sheet": "1_Policy_Information",
+   "cell": "H101",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B101",
+   "label": "Limit"
+  },
+  "1_Policy_Information.SRCC_Excess_Primary": {
+   "sheet": "1_Policy_Information",
+   "cell": "C102",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B102",
+   "label": "Excess"
+  },
+  "1_Policy_Information.SRCC_Excess_L1": {
+   "sheet": "1_Policy_Information",
+   "cell": "D102",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B102",
+   "label": "Excess"
+  },
+  "1_Policy_Information.SRCC_Excess_L2": {
+   "sheet": "1_Policy_Information",
+   "cell": "E102",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B102",
+   "label": "Excess"
+  },
+  "1_Policy_Information.SRCC_Excess_L3": {
+   "sheet": "1_Policy_Information",
+   "cell": "F102",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B102",
+   "label": "Excess"
+  },
+  "1_Policy_Information.SRCC_Excess_L4": {
+   "sheet": "1_Policy_Information",
+   "cell": "G102",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B102",
+   "label": "Excess"
+  },
+  "1_Policy_Information.SRCC_Excess_L5": {
+   "sheet": "1_Policy_Information",
+   "cell": "H102",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B102",
+   "label": "Excess"
+  },
+  "1_Policy_Information.SRCC_Deductible_Primary": {
+   "sheet": "1_Policy_Information",
+   "cell": "C103",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B103",
+   "label": "Deductible"
+  },
+  "1_Policy_Information.SRCC_Deductible_L1": {
+   "sheet": "1_Policy_Information",
+   "cell": "D103",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B103",
+   "label": "Deductible"
+  },
+  "1_Policy_Information.SRCC_Deductible_L2": {
+   "sheet": "1_Policy_Information",
+   "cell": "E103",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B103",
+   "label": "Deductible"
+  },
+  "1_Policy_Information.SRCC_Deductible_L3": {
+   "sheet": "1_Policy_Information",
+   "cell": "F103",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B103",
+   "label": "Deductible"
+  },
+  "1_Policy_Information.SRCC_Deductible_L4": {
+   "sheet": "1_Policy_Information",
+   "cell": "G103",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B103",
+   "label": "Deductible"
+  },
+  "1_Policy_Information.SRCC_Deductible_L5": {
+   "sheet": "1_Policy_Information",
+   "cell": "H103",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B103",
+   "label": "Deductible"
+  },
+  "1_Policy_Information.FAC_QS_Primary": {
+   "sheet": "1_Policy_Information",
+   "cell": "C110",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B110",
+   "label": "Faculative RI QS (%)"
+  },
+  "1_Policy_Information.FAC_QS_L1": {
+   "sheet": "1_Policy_Information",
+   "cell": "D110",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B110",
+   "label": "Faculative RI QS (%)"
+  },
+  "1_Policy_Information.FAC_QS_L2": {
+   "sheet": "1_Policy_Information",
+   "cell": "E110",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B110",
+   "label": "Faculative RI QS (%)"
+  },
+  "1_Policy_Information.FAC_QS_L3": {
+   "sheet": "1_Policy_Information",
+   "cell": "F110",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B110",
+   "label": "Faculative RI QS (%)"
+  },
+  "1_Policy_Information.FAC_QS_L4": {
+   "sheet": "1_Policy_Information",
+   "cell": "G110",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B110",
+   "label": "Faculative RI QS (%)"
+  },
+  "1_Policy_Information.FAC_QS_L5": {
+   "sheet": "1_Policy_Information",
+   "cell": "H110",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B110",
+   "label": "Faculative RI QS (%)"
+  },
+  "1_Policy_Information.FAC_QS_Ceding_Commission_Primary": {
+   "sheet": "1_Policy_Information",
+   "cell": "C111",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B111",
+   "label": "Facultative RI QS Ceding Commissions (%)"
+  },
+  "1_Policy_Information.FAC_QS_Ceding_Commission_L1": {
+   "sheet": "1_Policy_Information",
+   "cell": "D111",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B111",
+   "label": "Facultative RI QS Ceding Commissions (%)"
+  },
+  "1_Policy_Information.FAC_QS_Ceding_Commission_L2": {
+   "sheet": "1_Policy_Information",
+   "cell": "E111",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B111",
+   "label": "Facultative RI QS Ceding Commissions (%)"
+  },
+  "1_Policy_Information.FAC_QS_Ceding_Commission_L3": {
+   "sheet": "1_Policy_Information",
+   "cell": "F111",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B111",
+   "label": "Facultative RI QS Ceding Commissions (%)"
+  },
+  "1_Policy_Information.FAC_QS_Ceding_Commission_L4": {
+   "sheet": "1_Policy_Information",
+   "cell": "G111",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B111",
+   "label": "Facultative RI QS Ceding Commissions (%)"
+  },
+  "1_Policy_Information.FAC_QS_Ceding_Commission_L5": {
+   "sheet": "1_Policy_Information",
+   "cell": "H111",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B111",
+   "label": "Facultative RI QS Ceding Commissions (%)"
+  },
+  "1_Policy_Information.FAC_XOL_GGWP_Primary": {
+   "sheet": "1_Policy_Information",
+   "cell": "C114",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B114",
+   "label": "Facultative RI XoL Premium"
+  },
+  "1_Policy_Information.FAC_XOL_GGWP_L1": {
+   "sheet": "1_Policy_Information",
+   "cell": "D114",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B114",
+   "label": "Facultative RI XoL Premium"
+  },
+  "1_Policy_Information.FAC_XOL_GGWP_L2": {
+   "sheet": "1_Policy_Information",
+   "cell": "E114",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B114",
+   "label": "Facultative RI XoL Premium"
+  },
+  "1_Policy_Information.FAC_XOL_GGWP_L3": {
+   "sheet": "1_Policy_Information",
+   "cell": "F114",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B114",
+   "label": "Facultative RI XoL Premium"
+  },
+  "1_Policy_Information.FAC_XOL_GGWP_L4": {
+   "sheet": "1_Policy_Information",
+   "cell": "G114",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B114",
+   "label": "Facultative RI XoL Premium"
+  },
+  "1_Policy_Information.FAC_XOL_GGWP_L5": {
+   "sheet": "1_Policy_Information",
+   "cell": "H114",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B114",
+   "label": "Facultative RI XoL Premium"
+  },
+  "1_Policy_Information.FAC_XOL_Limit_Primary": {
+   "sheet": "1_Policy_Information",
+   "cell": "C115",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B115",
+   "label": "Limit"
+  },
+  "1_Policy_Information.FAC_XOL_Limit_L1": {
+   "sheet": "1_Policy_Information",
+   "cell": "D115",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B115",
+   "label": "Limit"
+  },
+  "1_Policy_Information.FAC_XOL_Limit_L2": {
+   "sheet": "1_Policy_Information",
+   "cell": "E115",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B115",
+   "label": "Limit"
+  },
+  "1_Policy_Information.FAC_XOL_Limit_L3": {
+   "sheet": "1_Policy_Information",
+   "cell": "F115",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B115",
+   "label": "Limit"
+  },
+  "1_Policy_Information.FAC_XOL_Limit_L4": {
+   "sheet": "1_Policy_Information",
+   "cell": "G115",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B115",
+   "label": "Limit"
+  },
+  "1_Policy_Information.FAC_XOL_Limit_L5": {
+   "sheet": "1_Policy_Information",
+   "cell": "H115",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B115",
+   "label": "Limit"
+  },
+  "1_Policy_Information.FAC_XOL_Excess_Primary": {
+   "sheet": "1_Policy_Information",
+   "cell": "C116",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B116",
+   "label": "Excess"
+  },
+  "1_Policy_Information.FAC_XOL_Excess_L1": {
+   "sheet": "1_Policy_Information",
+   "cell": "D116",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B116",
+   "label": "Excess"
+  },
+  "1_Policy_Information.FAC_XOL_Excess_L2": {
+   "sheet": "1_Policy_Information",
+   "cell": "E116",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B116",
+   "label": "Excess"
+  },
+  "1_Policy_Information.FAC_XOL_Excess_L3": {
+   "sheet": "1_Policy_Information",
+   "cell": "F116",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B116",
+   "label": "Excess"
+  },
+  "1_Policy_Information.FAC_XOL_Excess_L4": {
+   "sheet": "1_Policy_Information",
+   "cell": "G116",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B116",
+   "label": "Excess"
+  },
+  "1_Policy_Information.FAC_XOL_Excess_L5": {
+   "sheet": "1_Policy_Information",
+   "cell": "H116",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B116",
+   "label": "Excess"
+  },
+  "1_Policy_Information.FAC_XOL_Deductible_Primary": {
+   "sheet": "1_Policy_Information",
+   "cell": "C117",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B117",
+   "label": "Deductible"
+  },
+  "1_Policy_Information.FAC_XOL_Deductible_L1": {
+   "sheet": "1_Policy_Information",
+   "cell": "D117",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B117",
+   "label": "Deductible"
+  },
+  "1_Policy_Information.FAC_XOL_Deductible_L2": {
+   "sheet": "1_Policy_Information",
+   "cell": "E117",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B117",
+   "label": "Deductible"
+  },
+  "1_Policy_Information.FAC_XOL_Deductible_L3": {
+   "sheet": "1_Policy_Information",
+   "cell": "F117",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B117",
+   "label": "Deductible"
+  },
+  "1_Policy_Information.FAC_XOL_Deductible_L4": {
+   "sheet": "1_Policy_Information",
+   "cell": "G117",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B117",
+   "label": "Deductible"
+  },
+  "1_Policy_Information.FAC_XOL_Deductible_L5": {
+   "sheet": "1_Policy_Information",
+   "cell": "H117",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B117",
+   "label": "Deductible"
+  },
+  "2_Risk_Information.Sector": {
+   "sheet": "2_Risk_Information",
+   "cell": "C8",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": "B8",
+   "label": "Sector"
+  },
+  "2_Risk_Information.Occupancy": {
+   "sheet": "2_Risk_Information",
+   "cell": "C9",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": "B9",
+   "label": "Occupancy"
+  },
+  "2_Risk_Information.Main_Risk_Country": {
+   "sheet": "2_Risk_Information",
+   "cell": "C10",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": "B10",
+   "label": "Main Risk Country"
+  },
+  "2_Risk_Information.Main_Risk_Location": {
+   "sheet": "2_Risk_Information",
+   "cell": "C11",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": "B11",
+   "label": "Main Risk Location"
+  },
+  "2_Risk_Information.Total_Asset_Values_USD": {
+   "sheet": "2_Risk_Information",
+   "cell": "C12",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B12",
+   "label": "Total Asset Values (USD)"
+  },
+  "2_Risk_Information.Number_of_Assets": {
+   "sheet": "2_Risk_Information",
+   "cell": "C13",
+   "direction": "OUT",
+   "type": "integer",
+   "label_cell": "B13",
+   "label": "Number of Assets"
+  },
+  "2_Risk_Information.Maximum_Asset_Value_USD": {
+   "sheet": "2_Risk_Information",
+   "cell": "C14",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B14",
+   "label": "Maximum Asset Value (USD)"
+  },
+  "2_Risk_Information.Location_Nat_Cat_Risk_Default": {
+   "sheet": "2_Risk_Information",
+   "cell": "C19",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B19",
+   "label": "Location Nat Cat Risk"
+  },
+  "2_Risk_Information.Location_Nat_Cat_Risk_UW": {
+   "sheet": "2_Risk_Information",
+   "cell": "D19",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B19",
+   "label": "Location Nat Cat Risk"
+  },
+  "2_Risk_Information.Occupancy_Risk_Default": {
+   "sheet": "2_Risk_Information",
+   "cell": "C20",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B20",
+   "label": "Occupancy Risk"
+  },
+  "2_Risk_Information.Occupancy_Risk_UW": {
+   "sheet": "2_Risk_Information",
+   "cell": "D20",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B20",
+   "label": "Occupancy Risk"
+  },
+  "2_Risk_Information.Total_Asset_Values_Size_Default": {
+   "sheet": "2_Risk_Information",
+   "cell": "C21",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B21",
+   "label": "Total Asset Values Size"
+  },
+  "2_Risk_Information.Total_Asset_Values_Size_UW": {
+   "sheet": "2_Risk_Information",
+   "cell": "D21",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": null,
+   "label": null
+  },
+  "2_Risk_Information.Number_of_Assets_Default": {
+   "sheet": "2_Risk_Information",
+   "cell": "C22",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B22",
+   "label": "Number of Assets"
+  },
+  "2_Risk_Information.Number_of_Assets_UW": {
+   "sheet": "2_Risk_Information",
+   "cell": "D22",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B22",
+   "label": "Number of Assets"
+  },
+  "2_Risk_Information.Concentration_of_Asset_Values_Default": {
+   "sheet": "2_Risk_Information",
+   "cell": "C23",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B23",
+   "label": "Concentration of Asset Values"
+  },
+  "2_Risk_Information.Concentration_of_Asset_Values_UW": {
+   "sheet": "2_Risk_Information",
+   "cell": "D23",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B23",
+   "label": "Concentration of Asset Values"
+  },
+  "2_Risk_Information.Proximity_of_Assets_UW": {
+   "sheet": "2_Risk_Information",
+   "cell": "D24",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B24",
+   "label": "Proximity of Assets"
+  },
+  "2_Risk_Information.Construction_Type_UW": {
+   "sheet": "2_Risk_Information",
+   "cell": "D25",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B25",
+   "label": "Construction Type"
+  },
+  "2_Risk_Information.Sprinkler_UW": {
+   "sheet": "2_Risk_Information",
+   "cell": "D26",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B26",
+   "label": "Sprinkler"
+  },
+  "2_Risk_Information.Overall_Risk_Score_Default": {
+   "sheet": "2_Risk_Information",
+   "cell": "C28",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B28",
+   "label": "Overall Risk Score (1=best, 5=worst)"
+  },
+  "2_Risk_Information.Overall_Risk_Score_UW": {
+   "sheet": "2_Risk_Information",
+   "cell": "D28",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B28",
+   "label": "Overall Risk Score (1=best, 5=worst)"
+  },
+  "2_Risk_Information.UW_Comment": {
+   "sheet": "2_Risk_Information",
+   "cell": "B32",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": null,
+   "label": null
+  },
+  "5_UW_Risk_Adjustments.Increased_Exposure": {
+   "sheet": "5_UW_Risk_Adjustments",
+   "cell": "C8",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B8",
+   "label": "Increased Exposure"
+  },
+  "5_UW_Risk_Adjustments.Increased_Exposure_UW_Comment": {
+   "sheet": "5_UW_Risk_Adjustments",
+   "cell": "G8",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": "B8",
+   "label": "Increased Exposure"
+  },
+  "5_UW_Risk_Adjustments.Hazardous_plant_process": {
+   "sheet": "5_UW_Risk_Adjustments",
+   "cell": "C9",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B9",
+   "label": "Hazardous plant / process"
+  },
+  "5_UW_Risk_Adjustments.Hazardous_plant_process_UW_Comment": {
+   "sheet": "5_UW_Risk_Adjustments",
+   "cell": "G9",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": "B9",
+   "label": "Hazardous plant / process"
+  },
+  "5_UW_Risk_Adjustments.Combustible_Construction": {
+   "sheet": "5_UW_Risk_Adjustments",
+   "cell": "C10",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B10",
+   "label": "Combustible Construction"
+  },
+  "5_UW_Risk_Adjustments.Combustible_Construction_UW_Comment": {
+   "sheet": "5_UW_Risk_Adjustments",
+   "cell": "G10",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": "B10",
+   "label": "Combustible Construction"
+  },
+  "5_UW_Risk_Adjustments.UW_Judgement_Load": {
+   "sheet": "5_UW_Risk_Adjustments",
+   "cell": "C11",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B11",
+   "label": "UW Judgement"
+  },
+  "5_UW_Risk_Adjustments.UW_Judgement_Load_UW_Comment": {
+   "sheet": "5_UW_Risk_Adjustments",
+   "cell": "G11",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": "B11",
+   "label": "UW Judgement"
+  },
+  "5_UW_Risk_Adjustments.Total_Load_Factor": {
+   "sheet": "5_UW_Risk_Adjustments",
+   "cell": "C12",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B12",
+   "label": "Total Load Factor"
+  },
+  "5_UW_Risk_Adjustments.Protection_Measures": {
+   "sheet": "5_UW_Risk_Adjustments",
+   "cell": "C16",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B16",
+   "label": "Protection Measures"
+  },
+  "5_UW_Risk_Adjustments.Protection_Measures_UW_Comment": {
+   "sheet": "5_UW_Risk_Adjustments",
+   "cell": "G16",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": "B16",
+   "label": "Protection Measures"
+  },
+  "5_UW_Risk_Adjustments.Controlled_Exposure": {
+   "sheet": "5_UW_Risk_Adjustments",
+   "cell": "C17",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B17",
+   "label": "Controlled Exposure"
+  },
+  "5_UW_Risk_Adjustments.Controlled_Exposure_UW_Comment": {
+   "sheet": "5_UW_Risk_Adjustments",
+   "cell": "G17",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": "B17",
+   "label": "Controlled Exposure"
+  },
+  "5_UW_Risk_Adjustments.Spread_of_Risk": {
+   "sheet": "5_UW_Risk_Adjustments",
+   "cell": "C18",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B18",
+   "label": "Spread of Risk"
+  },
+  "5_UW_Risk_Adjustments.Spread_of_Risk_UW_Comment": {
+   "sheet": "5_UW_Risk_Adjustments",
+   "cell": "G18",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": "B18",
+   "label": "Spread of Risk"
+  },
+  "5_UW_Risk_Adjustments.Fire_Resistant_Construction": {
+   "sheet": "5_UW_Risk_Adjustments",
+   "cell": "C19",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B19",
+   "label": "Fire Resistant Construction"
+  },
+  "5_UW_Risk_Adjustments.Fire_Resistant_Construction_UW_Comment": {
+   "sheet": "5_UW_Risk_Adjustments",
+   "cell": "G19",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": "B19",
+   "label": "Fire Resistant Construction"
+  },
+  "5_UW_Risk_Adjustments.UW_Judgement_Credit": {
+   "sheet": "5_UW_Risk_Adjustments",
+   "cell": "C20",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "B20",
+   "label": "UW Judgement"
+  },
+  "5_UW_Risk_Adjustments.UW_Judgement_Credit_UW_Comment": {
+   "sheet": "5_UW_Risk_Adjustments",
+   "cell": "G20",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": "B20",
+   "label": "UW Judgement"
+  },
+  "5_UW_Risk_Adjustments.Total_Discount_Factor": {
+   "sheet": "5_UW_Risk_Adjustments",
+   "cell": "C21",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B21",
+   "label": "Total Discount Factor"
+  },
+  "6_Experience_Rating.Number_of_Years": {
+   "sheet": "6_Experience_Rating",
+   "cell": "C11",
+   "direction": "IN",
+   "type": "integer",
+   "label_cell": "B11",
+   "label": "Number of Years"
+  },
+  "6_Experience_Rating.Credibility_Primary": {
+   "sheet": "6_Experience_Rating",
+   "cell": "I13",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "G13",
+   "label": "Credibility Factor"
+  },
+  "6_Experience_Rating.Credibility_L1": {
+   "sheet": "6_Experience_Rating",
+   "cell": "J13",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "G13",
+   "label": "Credibility Factor"
+  },
+  "6_Experience_Rating.Credibility_L2": {
+   "sheet": "6_Experience_Rating",
+   "cell": "K13",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "G13",
+   "label": "Credibility Factor"
+  },
+  "6_Experience_Rating.Credibility_L3": {
+   "sheet": "6_Experience_Rating",
+   "cell": "L13",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "G13",
+   "label": "Credibility Factor"
+  },
+  "6_Experience_Rating.Credibility_L4": {
+   "sheet": "6_Experience_Rating",
+   "cell": "M13",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "G13",
+   "label": "Credibility Factor"
+  },
+  "6_Experience_Rating.Credibility_L5": {
+   "sheet": "6_Experience_Rating",
+   "cell": "N13",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "G13",
+   "label": "Credibility Factor"
+  },
+  "7_Summary.Display_Currency": {
+   "sheet": "7_Summary",
+   "cell": "D5",
+   "direction": "IN",
+   "type": "string",
+   "label_cell": "C5",
+   "label": "Display Currency"
+  },
+  "7_Summary.TIV_PD": {
+   "sheet": "7_Summary",
+   "cell": "G5",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "F5",
+   "label": "Total Insured Values"
+  },
+  "7_Summary.TIV_BI": {
+   "sheet": "7_Summary",
+   "cell": "H5",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "F5",
+   "label": "Total Insured Values"
+  },
+  "7_Summary.TIV_Total": {
+   "sheet": "7_Summary",
+   "cell": "I5",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "F5",
+   "label": "Total Insured Values"
+  },
+  "7_Summary.BRE_Share_Primary": {
+   "sheet": "7_Summary",
+   "cell": "D28",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "C28",
+   "label": "Share"
+  },
+  "7_Summary.BRE_Share_L1": {
+   "sheet": "7_Summary",
+   "cell": "E28",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "C28",
+   "label": "Share"
+  },
+  "7_Summary.BRE_Share_L2": {
+   "sheet": "7_Summary",
+   "cell": "F28",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "C28",
+   "label": "Share"
+  },
+  "7_Summary.BRE_Share_L3": {
+   "sheet": "7_Summary",
+   "cell": "G28",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "C28",
+   "label": "Share"
+  },
+  "7_Summary.BRE_Share_L4": {
+   "sheet": "7_Summary",
+   "cell": "H28",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "C28",
+   "label": "Share"
+  },
+  "7_Summary.BRE_Share_L5": {
+   "sheet": "7_Summary",
+   "cell": "I28",
+   "direction": "IN",
+   "type": "number",
+   "label_cell": "C28",
+   "label": "Share"
+  },
+  "7_Summary.BRE_Share_Total": {
+   "sheet": "7_Summary",
+   "cell": "J28",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "C28",
+   "label": "Share"
+  },
+  "8_Pricing_Details.GGWP_Net_of_NCD_Primary": {
+   "sheet": "8_Pricing_Details",
+   "cell": "C57",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B57",
+   "label": "Gross Gross Written Premium - Net of NCD"
+  },
+  "8_Pricing_Details.GGWP_Net_of_NCD_L1": {
+   "sheet": "8_Pricing_Details",
+   "cell": "D57",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B57",
+   "label": "Gross Gross Written Premium - Net of NCD"
+  },
+  "8_Pricing_Details.GGWP_Net_of_NCD_L2": {
+   "sheet": "8_Pricing_Details",
+   "cell": "E57",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B57",
+   "label": "Gross Gross Written Premium - Net of NCD"
+  },
+  "8_Pricing_Details.GGWP_Net_of_NCD_L3": {
+   "sheet": "8_Pricing_Details",
+   "cell": "F57",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B57",
+   "label": "Gross Gross Written Premium - Net of NCD"
+  },
+  "8_Pricing_Details.GGWP_Net_of_NCD_L4": {
+   "sheet": "8_Pricing_Details",
+   "cell": "G57",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B57",
+   "label": "Gross Gross Written Premium - Net of NCD"
+  },
+  "8_Pricing_Details.GGWP_Net_of_NCD_L5": {
+   "sheet": "8_Pricing_Details",
+   "cell": "H57",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B57",
+   "label": "Gross Gross Written Premium - Net of NCD"
+  },
+  "8_Pricing_Details.GGWP_Net_of_NCD_Total": {
+   "sheet": "8_Pricing_Details",
+   "cell": "I57",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B57",
+   "label": "Gross Gross Written Premium - Net of NCD"
+  },
+  "8_Pricing_Details.GNWP_Net_of_NCD_Primary": {
+   "sheet": "8_Pricing_Details",
+   "cell": "C58",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B58",
+   "label": "Gross Net Written Premium - Net of NCD & AC"
+  },
+  "8_Pricing_Details.GNWP_Net_of_NCD_L1": {
+   "sheet": "8_Pricing_Details",
+   "cell": "D58",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B58",
+   "label": "Gross Net Written Premium - Net of NCD & AC"
+  },
+  "8_Pricing_Details.GNWP_Net_of_NCD_L2": {
+   "sheet": "8_Pricing_Details",
+   "cell": "E58",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B58",
+   "label": "Gross Net Written Premium - Net of NCD & AC"
+  },
+  "8_Pricing_Details.GNWP_Net_of_NCD_L3": {
+   "sheet": "8_Pricing_Details",
+   "cell": "F58",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B58",
+   "label": "Gross Net Written Premium - Net of NCD & AC"
+  },
+  "8_Pricing_Details.GNWP_Net_of_NCD_L4": {
+   "sheet": "8_Pricing_Details",
+   "cell": "G58",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B58",
+   "label": "Gross Net Written Premium - Net of NCD & AC"
+  },
+  "8_Pricing_Details.GNWP_Net_of_NCD_L5": {
+   "sheet": "8_Pricing_Details",
+   "cell": "H58",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B58",
+   "label": "Gross Net Written Premium - Net of NCD & AC"
+  },
+  "8_Pricing_Details.GNWP_Net_of_NCD_Total": {
+   "sheet": "8_Pricing_Details",
+   "cell": "I58",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B58",
+   "label": "Gross Net Written Premium - Net of NCD & AC"
+  },
+  "8_Pricing_Details.Model_Technical_Premium_Primary": {
+   "sheet": "8_Pricing_Details",
+   "cell": "C107",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B107",
+   "label": "Model Technical Premium"
+  },
+  "8_Pricing_Details.Model_Technical_Premium_L1": {
+   "sheet": "8_Pricing_Details",
+   "cell": "D107",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B107",
+   "label": "Model Technical Premium"
+  },
+  "8_Pricing_Details.Model_Technical_Premium_L2": {
+   "sheet": "8_Pricing_Details",
+   "cell": "E107",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B107",
+   "label": "Model Technical Premium"
+  },
+  "8_Pricing_Details.Model_Technical_Premium_L3": {
+   "sheet": "8_Pricing_Details",
+   "cell": "F107",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B107",
+   "label": "Model Technical Premium"
+  },
+  "8_Pricing_Details.Model_Technical_Premium_L4": {
+   "sheet": "8_Pricing_Details",
+   "cell": "G107",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B107",
+   "label": "Model Technical Premium"
+  },
+  "8_Pricing_Details.Model_Technical_Premium_L5": {
+   "sheet": "8_Pricing_Details",
+   "cell": "H107",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B107",
+   "label": "Model Technical Premium"
+  },
+  "8_Pricing_Details.Model_Technical_Premium_Total": {
+   "sheet": "8_Pricing_Details",
+   "cell": "I107",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B107",
+   "label": "Model Technical Premium"
+  },
+  "8_Pricing_Details.Technical_Premium_UW_Primary": {
+   "sheet": "8_Pricing_Details",
+   "cell": "C108",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B108",
+   "label": "UW-adjusted Technical Premium"
+  },
+  "8_Pricing_Details.Technical_Premium_UW_L1": {
+   "sheet": "8_Pricing_Details",
+   "cell": "D108",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B108",
+   "label": "UW-adjusted Technical Premium"
+  },
+  "8_Pricing_Details.Technical_Premium_UW_L2": {
+   "sheet": "8_Pricing_Details",
+   "cell": "E108",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B108",
+   "label": "UW-adjusted Technical Premium"
+  },
+  "8_Pricing_Details.Technical_Premium_UW_L3": {
+   "sheet": "8_Pricing_Details",
+   "cell": "F108",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B108",
+   "label": "UW-adjusted Technical Premium"
+  },
+  "8_Pricing_Details.Technical_Premium_UW_L4": {
+   "sheet": "8_Pricing_Details",
+   "cell": "G108",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B108",
+   "label": "UW-adjusted Technical Premium"
+  },
+  "8_Pricing_Details.Technical_Premium_UW_L5": {
+   "sheet": "8_Pricing_Details",
+   "cell": "H108",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B108",
+   "label": "UW-adjusted Technical Premium"
+  },
+  "8_Pricing_Details.Technical_Premium_UW_Total": {
+   "sheet": "8_Pricing_Details",
+   "cell": "I108",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B108",
+   "label": "UW-adjusted Technical Premium"
+  },
+  "8_Pricing_Details.Model_Technical_Premium_incl_retro_Primary": {
+   "sheet": "8_Pricing_Details",
+   "cell": "U107",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "T107",
+   "label": "Model Technical Premium"
+  },
+  "8_Pricing_Details.Model_Technical_Premium_incl_retro_L1": {
+   "sheet": "8_Pricing_Details",
+   "cell": "V107",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "T107",
+   "label": "Model Technical Premium"
+  },
+  "8_Pricing_Details.Model_Technical_Premium_incl_retro_L2": {
+   "sheet": "8_Pricing_Details",
+   "cell": "W107",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "T107",
+   "label": "Model Technical Premium"
+  },
+  "8_Pricing_Details.Model_Technical_Premium_incl_retro_L3": {
+   "sheet": "8_Pricing_Details",
+   "cell": "X107",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "T107",
+   "label": "Model Technical Premium"
+  },
+  "8_Pricing_Details.Model_Technical_Premium_incl_retro_L4": {
+   "sheet": "8_Pricing_Details",
+   "cell": "Y107",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "T107",
+   "label": "Model Technical Premium"
+  },
+  "8_Pricing_Details.Model_Technical_Premium_incl_retro_L5": {
+   "sheet": "8_Pricing_Details",
+   "cell": "Z107",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "T107",
+   "label": "Model Technical Premium"
+  },
+  "8_Pricing_Details.Model_Technical_Premium_incl_retro_Total": {
+   "sheet": "8_Pricing_Details",
+   "cell": "AA107",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "T107",
+   "label": "Model Technical Premium"
+  },
+  "8_Pricing_Details.Technical_Premium_UW_incl_retro_Primary": {
+   "sheet": "8_Pricing_Details",
+   "cell": "U108",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "T108",
+   "label": "UW-adjusted Technical Premium"
+  },
+  "8_Pricing_Details.Technical_Premium_UW_incl_retro_L1": {
+   "sheet": "8_Pricing_Details",
+   "cell": "V108",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "T108",
+   "label": "UW-adjusted Technical Premium"
+  },
+  "8_Pricing_Details.Technical_Premium_UW_incl_retro_L2": {
+   "sheet": "8_Pricing_Details",
+   "cell": "W108",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "T108",
+   "label": "UW-adjusted Technical Premium"
+  },
+  "8_Pricing_Details.Technical_Premium_UW_incl_retro_L3": {
+   "sheet": "8_Pricing_Details",
+   "cell": "X108",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "T108",
+   "label": "UW-adjusted Technical Premium"
+  },
+  "8_Pricing_Details.Technical_Premium_UW_incl_retro_L4": {
+   "sheet": "8_Pricing_Details",
+   "cell": "Y108",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "T108",
+   "label": "UW-adjusted Technical Premium"
+  },
+  "8_Pricing_Details.Technical_Premium_UW_incl_retro_L5": {
+   "sheet": "8_Pricing_Details",
+   "cell": "Z108",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "T108",
+   "label": "UW-adjusted Technical Premium"
+  },
+  "8_Pricing_Details.Technical_Premium_UW_incl_retro_Total": {
+   "sheet": "8_Pricing_Details",
+   "cell": "AA108",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "T108",
+   "label": "UW-adjusted Technical Premium"
+  },
+  "8_Pricing_Details.Total_ELC_Primary": {
+   "sheet": "8_Pricing_Details",
+   "cell": "C110",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B110",
+   "label": "Total Modelled Coverage ELC"
+  },
+  "8_Pricing_Details.Total_ELC_L1": {
+   "sheet": "8_Pricing_Details",
+   "cell": "D110",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B110",
+   "label": "Total Modelled Coverage ELC"
+  },
+  "8_Pricing_Details.Total_ELC_L2": {
+   "sheet": "8_Pricing_Details",
+   "cell": "E110",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B110",
+   "label": "Total Modelled Coverage ELC"
+  },
+  "8_Pricing_Details.Total_ELC_L3": {
+   "sheet": "8_Pricing_Details",
+   "cell": "F110",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B110",
+   "label": "Total Modelled Coverage ELC"
+  },
+  "8_Pricing_Details.Total_ELC_L4": {
+   "sheet": "8_Pricing_Details",
+   "cell": "G110",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B110",
+   "label": "Total Modelled Coverage ELC"
+  },
+  "8_Pricing_Details.Total_ELC_L5": {
+   "sheet": "8_Pricing_Details",
+   "cell": "H110",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B110",
+   "label": "Total Modelled Coverage ELC"
+  },
+  "8_Pricing_Details.Total_ELC_Total": {
+   "sheet": "8_Pricing_Details",
+   "cell": "I110",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B110",
+   "label": "Total Modelled Coverage ELC"
+  },
+  "8_Pricing_Details.Total_ELC_UW_Primary": {
+   "sheet": "8_Pricing_Details",
+   "cell": "C111",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B111",
+   "label": "Total UW Risk-Adjusted ELC"
+  },
+  "8_Pricing_Details.Total_ELC_UW_L1": {
+   "sheet": "8_Pricing_Details",
+   "cell": "D111",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B111",
+   "label": "Total UW Risk-Adjusted ELC"
+  },
+  "8_Pricing_Details.Total_ELC_UW_L2": {
+   "sheet": "8_Pricing_Details",
+   "cell": "E111",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B111",
+   "label": "Total UW Risk-Adjusted ELC"
+  },
+  "8_Pricing_Details.Total_ELC_UW_L3": {
+   "sheet": "8_Pricing_Details",
+   "cell": "F111",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B111",
+   "label": "Total UW Risk-Adjusted ELC"
+  },
+  "8_Pricing_Details.Total_ELC_UW_L4": {
+   "sheet": "8_Pricing_Details",
+   "cell": "G111",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B111",
+   "label": "Total UW Risk-Adjusted ELC"
+  },
+  "8_Pricing_Details.Total_ELC_UW_L5": {
+   "sheet": "8_Pricing_Details",
+   "cell": "H111",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B111",
+   "label": "Total UW Risk-Adjusted ELC"
+  },
+  "8_Pricing_Details.Total_ELC_UW_Total": {
+   "sheet": "8_Pricing_Details",
+   "cell": "I111",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B111",
+   "label": "Total UW Risk-Adjusted ELC"
+  },
+  "8_Pricing_Details.Non_Cat_ELC_Primary": {
+   "sheet": "8_Pricing_Details",
+   "cell": "C115",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B115",
+   "label": "Non-Cat ELC - Core Coverages"
+  },
+  "8_Pricing_Details.Non_Cat_ELC_L1": {
+   "sheet": "8_Pricing_Details",
+   "cell": "D115",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B115",
+   "label": "Non-Cat ELC - Core Coverages"
+  },
+  "8_Pricing_Details.Non_Cat_ELC_L2": {
+   "sheet": "8_Pricing_Details",
+   "cell": "E115",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B115",
+   "label": "Non-Cat ELC - Core Coverages"
+  },
+  "8_Pricing_Details.Non_Cat_ELC_L3": {
+   "sheet": "8_Pricing_Details",
+   "cell": "F115",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B115",
+   "label": "Non-Cat ELC - Core Coverages"
+  },
+  "8_Pricing_Details.Non_Cat_ELC_L4": {
+   "sheet": "8_Pricing_Details",
+   "cell": "G115",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B115",
+   "label": "Non-Cat ELC - Core Coverages"
+  },
+  "8_Pricing_Details.Non_Cat_ELC_L5": {
+   "sheet": "8_Pricing_Details",
+   "cell": "H115",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B115",
+   "label": "Non-Cat ELC - Core Coverages"
+  },
+  "8_Pricing_Details.Non_Cat_ELC_Total": {
+   "sheet": "8_Pricing_Details",
+   "cell": "I115",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B115",
+   "label": "Non-Cat ELC - Core Coverages"
+  },
+  "8_Pricing_Details.PD_ELC_Primary": {
+   "sheet": "8_Pricing_Details",
+   "cell": "C116",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B116",
+   "label": "PD"
+  },
+  "8_Pricing_Details.PD_ELC_L1": {
+   "sheet": "8_Pricing_Details",
+   "cell": "D116",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B116",
+   "label": "PD"
+  },
+  "8_Pricing_Details.PD_ELC_L2": {
+   "sheet": "8_Pricing_Details",
+   "cell": "E116",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B116",
+   "label": "PD"
+  },
+  "8_Pricing_Details.PD_ELC_L3": {
+   "sheet": "8_Pricing_Details",
+   "cell": "F116",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B116",
+   "label": "PD"
+  },
+  "8_Pricing_Details.PD_ELC_L4": {
+   "sheet": "8_Pricing_Details",
+   "cell": "G116",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B116",
+   "label": "PD"
+  },
+  "8_Pricing_Details.PD_ELC_L5": {
+   "sheet": "8_Pricing_Details",
+   "cell": "H116",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B116",
+   "label": "PD"
+  },
+  "8_Pricing_Details.FLEXA_ELC_Primary": {
+   "sheet": "8_Pricing_Details",
+   "cell": "C117",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B117",
+   "label": "FLEXA"
+  },
+  "8_Pricing_Details.FLEXA_ELC_L1": {
+   "sheet": "8_Pricing_Details",
+   "cell": "D117",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B117",
+   "label": "FLEXA"
+  },
+  "8_Pricing_Details.FLEXA_ELC_L2": {
+   "sheet": "8_Pricing_Details",
+   "cell": "E117",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B117",
+   "label": "FLEXA"
+  },
+  "8_Pricing_Details.FLEXA_ELC_L3": {
+   "sheet": "8_Pricing_Details",
+   "cell": "F117",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B117",
+   "label": "FLEXA"
+  },
+  "8_Pricing_Details.FLEXA_ELC_L4": {
+   "sheet": "8_Pricing_Details",
+   "cell": "G117",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B117",
+   "label": "FLEXA"
+  },
+  "8_Pricing_Details.FLEXA_ELC_L5": {
+   "sheet": "8_Pricing_Details",
+   "cell": "H117",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B117",
+   "label": "FLEXA"
+  },
+  "8_Pricing_Details.BI_ELC_Primary": {
+   "sheet": "8_Pricing_Details",
+   "cell": "C118",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B118",
+   "label": "BI "
+  },
+  "8_Pricing_Details.BI_ELC_L1": {
+   "sheet": "8_Pricing_Details",
+   "cell": "D118",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B118",
+   "label": "BI "
+  },
+  "8_Pricing_Details.BI_ELC_L2": {
+   "sheet": "8_Pricing_Details",
+   "cell": "E118",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B118",
+   "label": "BI "
+  },
+  "8_Pricing_Details.BI_ELC_L3": {
+   "sheet": "8_Pricing_Details",
+   "cell": "F118",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B118",
+   "label": "BI "
+  },
+  "8_Pricing_Details.BI_ELC_L4": {
+   "sheet": "8_Pricing_Details",
+   "cell": "G118",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B118",
+   "label": "BI "
+  },
+  "8_Pricing_Details.BI_ELC_L5": {
+   "sheet": "8_Pricing_Details",
+   "cell": "H118",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B118",
+   "label": "BI "
+  },
+  "8_Pricing_Details.PD_ELC_Exposure_Primary": {
+   "sheet": "8_Pricing_Details",
+   "cell": "C121",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B121",
+   "label": "PD"
+  },
+  "8_Pricing_Details.PD_ELC_Exposure_L1": {
+   "sheet": "8_Pricing_Details",
+   "cell": "D121",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B121",
+   "label": "PD"
+  },
+  "8_Pricing_Details.PD_ELC_Exposure_L2": {
+   "sheet": "8_Pricing_Details",
+   "cell": "E121",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B121",
+   "label": "PD"
+  },
+  "8_Pricing_Details.PD_ELC_Exposure_L3": {
+   "sheet": "8_Pricing_Details",
+   "cell": "F121",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B121",
+   "label": "PD"
+  },
+  "8_Pricing_Details.PD_ELC_Exposure_L4": {
+   "sheet": "8_Pricing_Details",
+   "cell": "G121",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B121",
+   "label": "PD"
+  },
+  "8_Pricing_Details.PD_ELC_Exposure_L5": {
+   "sheet": "8_Pricing_Details",
+   "cell": "H121",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B121",
+   "label": "PD"
+  },
+  "8_Pricing_Details.PD_ELC_Exposure_Total": {
+   "sheet": "8_Pricing_Details",
+   "cell": "I121",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B121",
+   "label": "PD"
+  },
+  "8_Pricing_Details.FLEXA_ELC_Exposure_Primary": {
+   "sheet": "8_Pricing_Details",
+   "cell": "C122",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B122",
+   "label": "FLEXA"
+  },
+  "8_Pricing_Details.FLEXA_ELC_Exposure_L1": {
+   "sheet": "8_Pricing_Details",
+   "cell": "D122",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B122",
+   "label": "FLEXA"
+  },
+  "8_Pricing_Details.FLEXA_ELC_Exposure_L2": {
+   "sheet": "8_Pricing_Details",
+   "cell": "E122",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B122",
+   "label": "FLEXA"
+  },
+  "8_Pricing_Details.FLEXA_ELC_Exposure_L3": {
+   "sheet": "8_Pricing_Details",
+   "cell": "F122",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B122",
+   "label": "FLEXA"
+  },
+  "8_Pricing_Details.FLEXA_ELC_Exposure_L4": {
+   "sheet": "8_Pricing_Details",
+   "cell": "G122",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B122",
+   "label": "FLEXA"
+  },
+  "8_Pricing_Details.FLEXA_ELC_Exposure_L5": {
+   "sheet": "8_Pricing_Details",
+   "cell": "H122",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B122",
+   "label": "FLEXA"
+  },
+  "8_Pricing_Details.FLEXA_ELC_Exposure_Total": {
+   "sheet": "8_Pricing_Details",
+   "cell": "I122",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B122",
+   "label": "FLEXA"
+  },
+  "8_Pricing_Details.BI_ELC_Exposure_Primary": {
+   "sheet": "8_Pricing_Details",
+   "cell": "C123",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B123",
+   "label": "BI "
+  },
+  "8_Pricing_Details.BI_ELC_Exposure_L1": {
+   "sheet": "8_Pricing_Details",
+   "cell": "D123",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B123",
+   "label": "BI "
+  },
+  "8_Pricing_Details.BI_ELC_Exposure_L2": {
+   "sheet": "8_Pricing_Details",
+   "cell": "E123",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B123",
+   "label": "BI "
+  },
+  "8_Pricing_Details.BI_ELC_Exposure_L3": {
+   "sheet": "8_Pricing_Details",
+   "cell": "F123",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B123",
+   "label": "BI "
+  },
+  "8_Pricing_Details.BI_ELC_Exposure_L4": {
+   "sheet": "8_Pricing_Details",
+   "cell": "G123",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B123",
+   "label": "BI "
+  },
+  "8_Pricing_Details.BI_ELC_Exposure_L5": {
+   "sheet": "8_Pricing_Details",
+   "cell": "H123",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B123",
+   "label": "BI "
+  },
+  "8_Pricing_Details.BI_ELC_Exposure_Total": {
+   "sheet": "8_Pricing_Details",
+   "cell": "I123",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B123",
+   "label": "BI "
+  },
+  "8_Pricing_Details.PD_ELC_Experience_Primary": {
+   "sheet": "8_Pricing_Details",
+   "cell": "C126",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B126",
+   "label": "PD"
+  },
+  "8_Pricing_Details.PD_ELC_Experience_L1": {
+   "sheet": "8_Pricing_Details",
+   "cell": "D126",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B126",
+   "label": "PD"
+  },
+  "8_Pricing_Details.PD_ELC_Experience_L2": {
+   "sheet": "8_Pricing_Details",
+   "cell": "E126",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B126",
+   "label": "PD"
+  },
+  "8_Pricing_Details.PD_ELC_Experience_L3": {
+   "sheet": "8_Pricing_Details",
+   "cell": "F126",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B126",
+   "label": "PD"
+  },
+  "8_Pricing_Details.PD_ELC_Experience_L4": {
+   "sheet": "8_Pricing_Details",
+   "cell": "G126",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B126",
+   "label": "PD"
+  },
+  "8_Pricing_Details.PD_ELC_Experience_L5": {
+   "sheet": "8_Pricing_Details",
+   "cell": "H126",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B126",
+   "label": "PD"
+  },
+  "8_Pricing_Details.PD_ELC_Experience_Total": {
+   "sheet": "8_Pricing_Details",
+   "cell": "I126",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B126",
+   "label": "PD"
+  },
+  "8_Pricing_Details.FLEXA_ELC_Experience_Primary": {
+   "sheet": "8_Pricing_Details",
+   "cell": "C127",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B127",
+   "label": "FLEXA"
+  },
+  "8_Pricing_Details.FLEXA_ELC_Experience_L1": {
+   "sheet": "8_Pricing_Details",
+   "cell": "D127",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B127",
+   "label": "FLEXA"
+  },
+  "8_Pricing_Details.FLEXA_ELC_Experience_L2": {
+   "sheet": "8_Pricing_Details",
+   "cell": "E127",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B127",
+   "label": "FLEXA"
+  },
+  "8_Pricing_Details.FLEXA_ELC_Experience_L3": {
+   "sheet": "8_Pricing_Details",
+   "cell": "F127",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B127",
+   "label": "FLEXA"
+  },
+  "8_Pricing_Details.FLEXA_ELC_Experience_L4": {
+   "sheet": "8_Pricing_Details",
+   "cell": "G127",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B127",
+   "label": "FLEXA"
+  },
+  "8_Pricing_Details.FLEXA_ELC_Experience_L5": {
+   "sheet": "8_Pricing_Details",
+   "cell": "H127",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B127",
+   "label": "FLEXA"
+  },
+  "8_Pricing_Details.FLEXA_ELC_Experience_Total": {
+   "sheet": "8_Pricing_Details",
+   "cell": "I127",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B127",
+   "label": "FLEXA"
+  },
+  "8_Pricing_Details.BI_ELC_Experience_Primary": {
+   "sheet": "8_Pricing_Details",
+   "cell": "C128",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B128",
+   "label": "BI "
+  },
+  "8_Pricing_Details.BI_ELC_Experience_L1": {
+   "sheet": "8_Pricing_Details",
+   "cell": "D128",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B128",
+   "label": "BI "
+  },
+  "8_Pricing_Details.BI_ELC_Experience_L2": {
+   "sheet": "8_Pricing_Details",
+   "cell": "E128",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B128",
+   "label": "BI "
+  },
+  "8_Pricing_Details.BI_ELC_Experience_L3": {
+   "sheet": "8_Pricing_Details",
+   "cell": "F128",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B128",
+   "label": "BI "
+  },
+  "8_Pricing_Details.BI_ELC_Experience_L4": {
+   "sheet": "8_Pricing_Details",
+   "cell": "G128",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B128",
+   "label": "BI "
+  },
+  "8_Pricing_Details.BI_ELC_Experience_L5": {
+   "sheet": "8_Pricing_Details",
+   "cell": "H128",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B128",
+   "label": "BI "
+  },
+  "8_Pricing_Details.BI_ELC_Experience_Total": {
+   "sheet": "8_Pricing_Details",
+   "cell": "I128",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B128",
+   "label": "BI "
+  },
+  "8_Pricing_Details.Cat_ELC_Primary": {
+   "sheet": "8_Pricing_Details",
+   "cell": "C130",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B130",
+   "label": "Cat ELC (All Perils)"
+  },
+  "8_Pricing_Details.Cat_ELC_L1": {
+   "sheet": "8_Pricing_Details",
+   "cell": "D130",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B130",
+   "label": "Cat ELC (All Perils)"
+  },
+  "8_Pricing_Details.Cat_ELC_L2": {
+   "sheet": "8_Pricing_Details",
+   "cell": "E130",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B130",
+   "label": "Cat ELC (All Perils)"
+  },
+  "8_Pricing_Details.Cat_ELC_L3": {
+   "sheet": "8_Pricing_Details",
+   "cell": "F130",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B130",
+   "label": "Cat ELC (All Perils)"
+  },
+  "8_Pricing_Details.Cat_ELC_L4": {
+   "sheet": "8_Pricing_Details",
+   "cell": "G130",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B130",
+   "label": "Cat ELC (All Perils)"
+  },
+  "8_Pricing_Details.Cat_ELC_L5": {
+   "sheet": "8_Pricing_Details",
+   "cell": "H130",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B130",
+   "label": "Cat ELC (All Perils)"
+  },
+  "8_Pricing_Details.EQ_ELC_Primary": {
+   "sheet": "8_Pricing_Details",
+   "cell": "C131",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B131",
+   "label": "EQ - Earthquake"
+  },
+  "8_Pricing_Details.EQ_ELC_L1": {
+   "sheet": "8_Pricing_Details",
+   "cell": "D131",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B131",
+   "label": "EQ - Earthquake"
+  },
+  "8_Pricing_Details.EQ_ELC_L2": {
+   "sheet": "8_Pricing_Details",
+   "cell": "E131",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B131",
+   "label": "EQ - Earthquake"
+  },
+  "8_Pricing_Details.EQ_ELC_L3": {
+   "sheet": "8_Pricing_Details",
+   "cell": "F131",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B131",
+   "label": "EQ - Earthquake"
+  },
+  "8_Pricing_Details.EQ_ELC_L4": {
+   "sheet": "8_Pricing_Details",
+   "cell": "G131",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B131",
+   "label": "EQ - Earthquake"
+  },
+  "8_Pricing_Details.EQ_ELC_L5": {
+   "sheet": "8_Pricing_Details",
+   "cell": "H131",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B131",
+   "label": "EQ - Earthquake"
+  },
+  "8_Pricing_Details.WS_ELC_Primary": {
+   "sheet": "8_Pricing_Details",
+   "cell": "C132",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B132",
+   "label": "WS - Windstorm"
+  },
+  "8_Pricing_Details.WS_ELC_L1": {
+   "sheet": "8_Pricing_Details",
+   "cell": "D132",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B132",
+   "label": "WS - Windstorm"
+  },
+  "8_Pricing_Details.WS_ELC_L2": {
+   "sheet": "8_Pricing_Details",
+   "cell": "E132",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B132",
+   "label": "WS - Windstorm"
+  },
+  "8_Pricing_Details.WS_ELC_L3": {
+   "sheet": "8_Pricing_Details",
+   "cell": "F132",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B132",
+   "label": "WS - Windstorm"
+  },
+  "8_Pricing_Details.WS_ELC_L4": {
+   "sheet": "8_Pricing_Details",
+   "cell": "G132",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B132",
+   "label": "WS - Windstorm"
+  },
+  "8_Pricing_Details.WS_ELC_L5": {
+   "sheet": "8_Pricing_Details",
+   "cell": "H132",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B132",
+   "label": "WS - Windstorm"
+  },
+  "8_Pricing_Details.FL_ELC_Primary": {
+   "sheet": "8_Pricing_Details",
+   "cell": "C133",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B133",
+   "label": "FL - Flood"
+  },
+  "8_Pricing_Details.FL_ELC_L1": {
+   "sheet": "8_Pricing_Details",
+   "cell": "D133",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B133",
+   "label": "FL - Flood"
+  },
+  "8_Pricing_Details.FL_ELC_L2": {
+   "sheet": "8_Pricing_Details",
+   "cell": "E133",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B133",
+   "label": "FL - Flood"
+  },
+  "8_Pricing_Details.FL_ELC_L3": {
+   "sheet": "8_Pricing_Details",
+   "cell": "F133",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B133",
+   "label": "FL - Flood"
+  },
+  "8_Pricing_Details.FL_ELC_L4": {
+   "sheet": "8_Pricing_Details",
+   "cell": "G133",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B133",
+   "label": "FL - Flood"
+  },
+  "8_Pricing_Details.FL_ELC_L5": {
+   "sheet": "8_Pricing_Details",
+   "cell": "H133",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B133",
+   "label": "FL - Flood"
+  },
+  "8_Pricing_Details.Expected_Loss_Ratio_L1": {
+   "sheet": "8_Pricing_Details",
+   "cell": "D152",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B152",
+   "label": "Expected Loss Ratio"
+  },
+  "8_Pricing_Details.Expected_Loss_Ratio_L2": {
+   "sheet": "8_Pricing_Details",
+   "cell": "E152",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B152",
+   "label": "Expected Loss Ratio"
+  },
+  "8_Pricing_Details.Expected_Loss_Ratio_L3": {
+   "sheet": "8_Pricing_Details",
+   "cell": "F152",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B152",
+   "label": "Expected Loss Ratio"
+  },
+  "8_Pricing_Details.Expected_Loss_Ratio_L4": {
+   "sheet": "8_Pricing_Details",
+   "cell": "G152",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B152",
+   "label": "Expected Loss Ratio"
+  },
+  "8_Pricing_Details.Expected_Loss_Ratio_L5": {
+   "sheet": "8_Pricing_Details",
+   "cell": "H152",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B152",
+   "label": "Expected Loss Ratio"
+  },
+  "8_Pricing_Details.Technical_Premium_Adequacy_Primary": {
+   "sheet": "8_Pricing_Details",
+   "cell": "C159",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B159",
+   "label": "Technical Pricing Adequacy"
+  },
+  "8_Pricing_Details.Technical_Premium_Adequacy_L1": {
+   "sheet": "8_Pricing_Details",
+   "cell": "D159",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B159",
+   "label": "Technical Pricing Adequacy"
+  },
+  "8_Pricing_Details.Technical_Premium_Adequacy_L2": {
+   "sheet": "8_Pricing_Details",
+   "cell": "E159",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B159",
+   "label": "Technical Pricing Adequacy"
+  },
+  "8_Pricing_Details.Technical_Premium_Adequacy_L3": {
+   "sheet": "8_Pricing_Details",
+   "cell": "F159",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B159",
+   "label": "Technical Pricing Adequacy"
+  },
+  "8_Pricing_Details.Technical_Premium_Adequacy_L4": {
+   "sheet": "8_Pricing_Details",
+   "cell": "G159",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B159",
+   "label": "Technical Pricing Adequacy"
+  },
+  "8_Pricing_Details.Technical_Premium_Adequacy_L5": {
+   "sheet": "8_Pricing_Details",
+   "cell": "H159",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B159",
+   "label": "Technical Pricing Adequacy"
+  },
+  "8_Pricing_Details.Technical_Premium_Adequacy_UW_Primary": {
+   "sheet": "8_Pricing_Details",
+   "cell": "C172",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B172",
+   "label": "Technical Pricing Adequacy"
+  },
+  "8_Pricing_Details.Technical_Premium_Adequacy_UW_L1": {
+   "sheet": "8_Pricing_Details",
+   "cell": "D172",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B172",
+   "label": "Technical Pricing Adequacy"
+  },
+  "8_Pricing_Details.Technical_Premium_Adequacy_UW_L2": {
+   "sheet": "8_Pricing_Details",
+   "cell": "E172",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B172",
+   "label": "Technical Pricing Adequacy"
+  },
+  "8_Pricing_Details.Technical_Premium_Adequacy_UW_L3": {
+   "sheet": "8_Pricing_Details",
+   "cell": "F172",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B172",
+   "label": "Technical Pricing Adequacy"
+  },
+  "8_Pricing_Details.Technical_Premium_Adequacy_UW_L4": {
+   "sheet": "8_Pricing_Details",
+   "cell": "G172",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B172",
+   "label": "Technical Pricing Adequacy"
+  },
+  "8_Pricing_Details.Technical_Premium_Adequacy_UW_L5": {
+   "sheet": "8_Pricing_Details",
+   "cell": "H172",
+   "direction": "OUT",
+   "type": "number",
+   "label_cell": "B172",
+   "label": "Technical Pricing Adequacy"
+  }
+ },
+ "tables": {
+  "3_Asset_Details": {
+   "sheet": "3_Asset_Details",
+   "start_row": 7,
+   "end_row": 6901,
+   "header_row": 6,
+   "columns": {
+    "Asset_ID": {
+     "column": "A",
+     "direction": "OUT",
+     "type": "integer",
+     "header": "Asset ID"
+    },
+    "Modelled_Asset_ID_Aggregated": {
+     "column": "B",
+     "direction": "IN",
+     "type": "integer",
+     "header": "Modelled Asset ID (Aggregated)"
+    },
+    "Number_of_Assets_to_be_Modelled": {
+     "column": "C",
+     "direction": "IN",
+     "type": "integer",
+     "header": "Number of Assets to be Modelled"
+    },
+    "Asset_Name": {
+     "column": "D",
+     "direction": "IN",
+     "type": "string",
+     "header": "Asset Name"
+    },
+    "Sector": {
+     "column": "E",
+     "direction": "IN",
+     "type": "string",
+     "header": "Sector"
+    },
+    "Occupancy": {
+     "column": "F",
+     "direction": "IN",
+     "type": "string",
+     "header": "Occupancy"
+    },
+    "Asset_TIV_PD": {
+     "column": "G",
+     "direction": "IN",
+     "type": "number",
+     "header": "Asset TIV (PD)"
+    },
+    "Insured_Income_BI": {
+     "column": "H",
+     "direction": "IN",
+     "type": "number",
+     "header": "Insured Income (BI)"
+    },
+    "BI_MIP_Months": {
+     "column": "I",
+     "direction": "IN",
+     "type": "integer",
+     "header": "BI  MIP \n(Months)"
+    },
+    "Income_Basis": {
+     "column": "J",
+     "direction": "IN",
+     "type": "string",
+     "header": "Income Basis"
+    },
+    "BI_Waiting_Period_Days": {
+     "column": "K",
+     "direction": "IN",
+     "type": "integer",
+     "header": "BI  Waiting Period (Days)"
+    },
+    "CBI_Included": {
+     "column": "L",
+     "direction": "IN",
+     "type": "string",
+     "header": "CBI Included?"
+    },
+    "MB_Included": {
+     "column": "M",
+     "direction": "IN",
+     "type": "string",
+     "header": "MB Included?"
+    },
+    "PD_Cover_FLEXA_Only": {
+     "column": "N",
+     "direction": "IN",
+     "type": "string",
+     "header": "PD Cover FLEXA Only?"
+    },
+    "Asset_Risk_Country": {
+     "column": "O",
+     "direction": "IN",
+     "type": "string",
+     "header": "Asset Risk Country"
+    },
+    "Asset_Risk_Location": {
+     "column": "P",
+     "direction": "IN",
+     "type": "string",
+     "header": "Asset Risk Location"
+    },
+    "Location_Street_Address": {
+     "column": "Q",
+     "direction": "IN",
+     "type": "string",
+     "header": "Location Street Address"
+    },
+    "Latitude": {
+     "column": "R",
+     "direction": "IN",
+     "type": "number",
+     "header": "Latitude"
+    },
+    "Longitude": {
+     "column": "S",
+     "direction": "IN",
+     "type": "number",
+     "header": "Longitude"
+    },
+    "Construction_Type": {
+     "column": "T",
+     "direction": "IN",
+     "type": "string",
+     "header": "Construction Type"
+    },
+    "Sprinkler": {
+     "column": "U",
+     "direction": "IN",
+     "type": "string",
+     "header": "Sprinkler"
+    },
+    "Year_of_Build": {
+     "column": "V",
+     "direction": "IN",
+     "type": "integer",
+     "header": "Year of Build"
+    },
+    "Total_Insured_Value_PD_BI": {
+     "column": "W",
+     "direction": "OUT",
+     "type": "number",
+     "header": "Total Insured Value PD + BI"
+    }
+   }
+  },
+  "4_CAT_Details": {
+   "sheet": "4_CAT_Details",
+   "start_row": 7,
+   "end_row": 1006,
+   "header_row": 6,
+   "columns": {
+    "EQ_Earthquake": {
+     "column": "V",
+     "direction": "IN",
+     "type": "string",
+     "header": "EQ - Earthquake"
+    },
+    "WS_Windstorm": {
+     "column": "W",
+     "direction": "IN",
+     "type": "string",
+     "header": "WS - Windstorm"
+    },
+    "FL_Flood": {
+     "column": "X",
+     "direction": "IN",
+     "type": "string",
+     "header": "FL - Flood"
+    },
+    "Comment": {
+     "column": "Z",
+     "direction": "IN",
+     "type": "string",
+     "header": "Comment"
+    },
+    "EQ_Limit_Override": {
+     "column": "AB",
+     "direction": "IN",
+     "type": "number",
+     "header": "Limit"
+    },
+    "EQ_Excess_Override": {
+     "column": "AC",
+     "direction": "IN",
+     "type": "number",
+     "header": "Excess"
+    },
+    "EQ_Deductible_Override": {
+     "column": "AD",
+     "direction": "IN",
+     "type": "number",
+     "header": "Deductible"
+    },
+    "WS_Limit_Override": {
+     "column": "AE",
+     "direction": "IN",
+     "type": "number",
+     "header": "Limit"
+    },
+    "WS_Excess_Override": {
+     "column": "AF",
+     "direction": "IN",
+     "type": "number",
+     "header": "Excess"
+    },
+    "WS_Deductible_Override": {
+     "column": "AG",
+     "direction": "IN",
+     "type": "number",
+     "header": "Deductible"
+    },
+    "FL_Limit_Override": {
+     "column": "AH",
+     "direction": "IN",
+     "type": "number",
+     "header": "Limit"
+    },
+    "FL_Excess_Override": {
+     "column": "AI",
+     "direction": "IN",
+     "type": "number",
+     "header": "Excess"
+    },
+    "FL_Deductible_Override": {
+     "column": "AJ",
+     "direction": "IN",
+     "type": "number",
+     "header": "Deductible"
+    }
+   }
+  },
+  "6_Experience_Rating": {
+   "sheet": "6_Experience_Rating",
+   "start_row": 20,
+   "end_row": 219,
+   "header_row": 19,
+   "columns": {
+    "DOL": {
+     "column": "C",
+     "direction": "IN",
+     "type": "number",
+     "header": "DOL"
+    },
+    "Ground_Up_Loss_Total": {
+     "column": "D",
+     "direction": "IN",
+     "type": "number",
+     "header": "Gross FGU Loss"
+    },
+    "Non_CAT_CAT": {
+     "column": "E",
+     "direction": "IN",
+     "type": "string",
+     "header": "Non-CAT/CAT"
+    },
+    "Loss_Year": {
+     "column": "G",
+     "direction": "OUT",
+     "type": "integer",
+     "header": "Year"
+    },
+    "As_If_Loss": {
+     "column": "H",
+     "direction": "OUT",
+     "type": "number",
+     "header": "As If Loss"
+    },
+    "As_If_Loss_Primary": {
+     "column": "I",
+     "direction": "OUT",
+     "type": "number",
+     "header": "Primary"
+    },
+    "As_If_Loss_L1": {
+     "column": "J",
+     "direction": "OUT",
+     "type": "number",
+     "header": "Layer 1"
+    },
+    "As_If_Loss_L2": {
+     "column": "K",
+     "direction": "OUT",
+     "type": "number",
+     "header": "Layer 2"
+    },
+    "As_If_Loss_L3": {
+     "column": "L",
+     "direction": "OUT",
+     "type": "number",
+     "header": "Layer 3"
+    },
+    "As_If_Loss_L4": {
+     "column": "M",
+     "direction": "OUT",
+     "type": "number",
+     "header": "Layer 4"
+    },
+    "As_If_Loss_L5": {
+     "column": "N",
+     "direction": "OUT",
+     "type": "number",
+     "header": "Layer 5"
+    },
+    "As_If_Loss_Total": {
+     "column": "O",
+     "direction": "OUT",
+     "type": "number",
+     "header": "Total"
+    }
+   }
+  }
+ },
+ "lists": {
+  "Sector": [
+   "Electronics",
+   "Food",
+   "Leisure",
+   "Metal Working",
+   "Minerals\\Ceramics\\Glass",
+   "Miscellaneous Non Manufacturing",
+   "Paper/Printing/Rubber",
+   "Plastics/Chemicals/Pharmaceuticals",
+   "Retail",
+   "Textiles",
+   "Warehousing",
+   "Wood and Related Products"
+  ],
+  "Occupancy": [
+   "Abattoir",
+   "Abrasives",
+   "Adhesives",
+   "Adhesives (Excluding flammables)",
+   "Adhesives (Including flammables)",
+   "Aerosols (with propellent)",
+   "Aerosols (without propellant)",
+   "Agriculture",
+   "Aircraft Manufacturing",
+   "Airport",
+   "All Other",
+   "Ammunitia",
+   "Animal Goods",
+   "Apartments",
+   "Asbestos Goods",
+   "Auto Manufacturing",
+   "Bakery",
+   "Banana Ripening",
+   "Barley Mills",
+   "Batteries (non lithium)",
+   "Bedwares (inc foam)",
+   "Bedwares (quilts and mattresses' ex foam)",
+   "Biodiesel",
+   "Bonded fabric",
+   "Book Binding",
+   "Books",
+   "Bottlers and Canners",
+   "Bottlers and Canners (plastic)",
+   "Bowling Alley",
+   "Brewery",
+   "Bricks",
+   "Brickworks",
+   "Bridges",
+   "Broad woven Fabric",
+   "Broad woven Fabric (man made)",
+   "Cables (with combustible insulation)",
+   "Cables (without combustible insulation)",
+   "Cables/wires (non insulated)",
+   "Car Showrooms",
+   "Carbon Black",
+   "Cardboard Box Manufacture",
+   "Carpet and Textiles (no foam)",
+   "Carpet Manufacturing",
+   "Carpets (foam)",
+   "Cash & Carry",
+   "Casino",
+   "Cast Stores",
+   "Cement",
+   "Ceramics",
+   "Ceramics (fire)",
+   "Cereal Breakfasts",
+   "Cereals",
+   "Chalk",
+   "Chemical Fibres (viscose)",
+   "Chocolate Production",
+   "Cinema",
+   "Clothing",
+   "Clothing Manufacturing",
+   "Coal & Coke",
+   "Coffee",
+   "Coffee Grinds/Roasts",
+   "Cold Rolling Mill",
+   "Colouring Agents",
+   "Components (Chip/bulbs)",
+   "Compost Preparation",
+   "Concentrated Animal Food Stuffs",
+   "Concrete",
+   "Confectionary",
+   "Conference/Exhibition",
+   "Cosmetics",
+   "Cotton Lining",
+   "Cotton Wool",
+   "Council/Municipality",
+   "Dairy/Cheese",
+   "Department Store",
+   "Direct Reduction",
+   "Discotheque",
+   "Distillery",
+   "Dry Convenience Foods",
+   "Earthenware",
+   "Egg Production",
+   "Electro Plate & Finishing",
+   "Electro Technical",
+   "Electronic Equipment",
+   "Electronic Machines",
+   "Embroidery Works",
+   "Essence Manufacturer",
+   "Ethanol",
+   "Explosives",
+   "Fats",
+   "Felt",
+   "Fertiliser",
+   "Fertilisers (ammonium nitrate)",
+   "Fertilisers (mixing only)",
+   "Fertilisers (phosphate)",
+   "Film Studios",
+   "Finishing, Bleach and Dye",
+   "Fire Glass & Porcelain",
+   "Fish Processing",
+   "Flour and Corn Mills",
+   "Foamed Plastics",
+   "Fodder",
+   "Food",
+   "Forwarding Agents",
+   "Foundry",
+   "Frozen Food",
+   "Fruit and Vegetables",
+   "Furniture",
+   "Furniture & Carpets",
+   "Furniture (no upholstery)",
+   "Furniture (with upholstery)",
+   "General electronics",
+   "General Metal Working (precision)",
+   "General Wood Work",
+   "Glass (fibre)",
+   "Glass (flat panel)",
+   "Glass (flat)",
+   "Glass (hollow)",
+   "Grain Terminal (inland)",
+   "Grain Terminal (marine)",
+   "Grocery",
+   "Gum and Wood Chemicals",
+   "Gymnasium and Dance Studio",
+   "Heat Treating",
+   "Heavy Machinery",
+   "Hg1 Plastics",
+   "Hg2 Plastics",
+   "Hg3 Plastics",
+   "Hg4 Plastics",
+   "High Hazard Chemicals",
+   "Highly spread offices (Low BI)",
+   "Holiday Camp/Complex",
+   "Horizontal reeled paper",
+   "Hospitals",
+   "Hotel",
+   "Houses",
+   "Ice Manufacturer",
+   "Integrated",
+   "Iron and Steel",
+   "Iron Manufacturing",
+   "Jam, Sauce, Pickle, and Syrup",
+   "Lacquers/Dyes Paints (ex FL)",
+   "Lacquers/Dyes Paints (inc FL)",
+   "Leather Goods",
+   "Linoleum Manufacturing",
+   "Liquids (non-flammable, incl Beer and Wine)",
+   "Lithium Batteries",
+   "Livestock",
+   "Logs in the open",
+   "Low Hazard Chemicals",
+   "Machinery",
+   "Mail Order",
+   "Malt Houses",
+   "Margarine (edible oils)",
+   "Meat Production",
+   "Mineral Processing (asphalt & bitumen)",
+   "Mineral Wool",
+   "Mining (OG)",
+   "Mining (UG)",
+   "Mobile Equipment (H)",
+   "Mobile Equipment (L)",
+   "Moderate Hazard Chemicals",
+   "Motor Vehicles",
+   "Munitions",
+   "Museums",
+   "N.O.C (H)",
+   "N.O.C (L)",
+   "N.O.C (M)",
+   "Newspaper Printing",
+   "Non Alcoholic Drinks",
+   "Nursing Homes",
+   "Offices",
+   "Oil",
+   "Ore Refining",
+   "Other Rubber",
+   "Paints & Liquids (flammble)",
+   "Paper & Stationary",
+   "Paper Board Mills",
+   "Paper Boards",
+   "Paper Goods (reels, sheets and cardboard)",
+   "Paper Products",
+   "Particle Board",
+   "Pasta",
+   "Peat",
+   "Pharma",
+   "Pharmaceuticals",
+   "Photographic Supplies",
+   "Plasterboard",
+   "Plastic (foam)",
+   "Plastics (non foam)",
+   "Polyester Manufacturing",
+   "Port Buildings and Concrete Structures",
+   "Port Cranes and Handling Equipment",
+   "Port Jetties and Piers",
+   "Potatoes",
+   "Poultry Processing",
+   "Precision Components",
+   "Printing",
+   "Prisons/Detention Centres",
+   "Public Houses/Bars",
+   "Quarrying and Processing",
+   "Rail and Transport (fixed property)",
+   "Rail and Transport (freight)",
+   "Rail and Transport (integrated)",
+   "Rail and Transport (passenger)",
+   "Recording Studios",
+   "Religious Property",
+   "Research Lab",
+   "Restaurant",
+   "Retail Warehouse",
+   "Rice Milling",
+   "Roads",
+   "Rolling Stock (Collision & Derailment)",
+   "Rope Making",
+   "Rough Metal Processing",
+   "Rubber Goods (non foam)",
+   "Rubber Recycling",
+   "Salt",
+   "Salt Processing",
+   "Sawmills",
+   "Schools/Universities",
+   "Semiconductors",
+   "Sheet Metal",
+   "Shops",
+   "Silent",
+   "Slay & Rock Wool",
+   "Smelting",
+   "Soap & Detergent",
+   "Soaps & Detergents",
+   "Spinning Mills",
+   "Spirits",
+   "Sports Arena/Racetrack",
+   "Starch Manufacturer",
+   "Steel",
+   "Student/Labourers Accomodation",
+   "Substitute Fodder",
+   "Sugar",
+   "Sugar beet Pellets",
+   "Supermarket",
+   "Tea",
+   "Tea Blending",
+   "Telecoms",
+   "Textile Waste (sorting,Washing,etc)",
+   "Textiles (foam)",
+   "Theme/Amusement Parks",
+   "Timber Goods",
+   "Tire Manufacture (ex Retreading)",
+   "Tire Manufacture (with Retreading)",
+   "Tobacco Goods",
+   "Tobacco Production (cigarettes)",
+   "Tunnels",
+   "TV/Radio Stations",
+   "Unoccupied Building (new)",
+   "Unoccupied Building (old)",
+   "Vegetable Fats and Oils",
+   "Vehicles in the open",
+   "Veneers/Plywood",
+   "Vinegar/mustard",
+   "Wall Paper",
+   "Waste (dismantling - into smaller components)",
+   "Waste Incineration",
+   "Waste Paper",
+   "Waste Recycling",
+   "Water Infrastructure",
+   "Water Sewers",
+   "Water Treatment",
+   "Wax",
+   "Weaving Mills",
+   "Wet Milling",
+   "Winery",
+   "Wood Panels/Chipboard",
+   "Zoos"
+  ],
+  "AssetRisk": [
+   "Very Low",
+   "Low",
+   "Medium",
+   "High",
+   "Very High"
+  ],
+  "RiskCountry": [
+   "Abkhazia",
+   "Afghanistan",
+   "Akrotiri and Dhekelia",
+   "Åland Islands",
+   "Albania",
+   "Algeria",
+   "American Samoa",
+   "Andorra",
+   "Angola",
+   "Anguilla",
+   "Antártica",
+   "Antigua and Barbuda",
+   "Argentina",
+   "Argentine Antarctica",
+   "Armenia",
+   "Aruba",
+   "Ashmore and Cartier Islands",
+   "Australia",
+   "Australian Antarctic Territory",
+   "Austria",
+   "Azerbaijan",
+   "Bahamas",
+   "Bahrain",
+   "Bangladesh",
+   "Barbados",
+   "Belarus",
+   "Belgium",
+   "Belize",
+   "Benin",
+   "Bermuda",
+   "Bhutan",
+   "Bolivia",
+   "Bosnia Herzegovina",
+   "Botswana",
+   "Bouvet Island",
+   "Brazil",
+   "British Antarctic Territory",
+   "British Indian Ocean Territory",
+   "British Virgin Islands",
+   "Brunei",
+   "Bulgaria",
+   "Burkina Faso",
+   "Burundi",
+   "Cambodia",
+   "Cameroon",
+   "Canada",
+   "Cape Verde",
+   "Cayman Islands",
+   "Central African Republic",
+   "Chad",
+   "Chile",
+   "China",
+   "Christmas Island",
+   "Clipperton Island",
+   "Cocos (Keeling) Islands",
+   "Colombia",
+   "Comoros",
+   "Congo-Brazzaville",
+   "Congo-Kinshasa",
+   "Cook Islands",
+   "Coral Sea Islands",
+   "Costa Rica",
+   "Croatia",
+   "Cuba",
+   "Curaçao",
+   "Cyprus",
+   "Czech Republic",
+   "Dem Rep Congo",
+   "Denmark",
+   "Djibouti",
+   "Dominica",
+   "Dominican Republic",
+   "East Timor",
+   "Ecuador",
+   "Egypt",
+   "El Salvador",
+   "Equatorial Guinea",
+   "Eritrea",
+   "Estonia",
+   "Ethiopia",
+   "Falkland Islands",
+   "Faroe Islands",
+   "Fiji",
+   "Finland",
+   "France",
+   "French Guiana",
+   "French Polynesia",
+   "French Southern and Antarctic Lands",
+   "Gabon",
+   "Gambia",
+   "Georgia",
+   "Germany",
+   "Ghana",
+   "Gibraltar",
+   "Greece",
+   "Greenland",
+   "Grenada",
+   "Guadeloupe",
+   "Guam",
+   "Guatemala",
+   "Guernsey",
+   "Guinea",
+   "Guinea-Bissau",
+   "Guyana",
+   "Haiti",
+   "Heard Island and McDonald Islands",
+   "Honduras",
+   "Hong Kong",
+   "Hungary",
+   "Iceland",
+   "India",
+   "Indonesia",
+   "International Waters",
+   "Iran",
+   "Iraq",
+   "Ireland",
+   "Isle of Man",
+   "Israel",
+   "Italy",
+   "Ivory Coast",
+   "Jamaica",
+   "Japan",
+   "Jersey",
+   "Jordan",
+   "Kazakhstan",
+   "Kenya",
+   "Kiribati",
+   "Kosovo",
+   "Kuwait",
+   "Kyrgyzstan",
+   "Laos",
+   "Latvia",
+   "Lebanon",
+   "Lesotho",
+   "Liberia",
+   "Libya",
+   "Liechtenstein",
+   "Lithuania",
+   "Luxembourg",
+   "Macau",
+   "Macedonia",
+   "Madagascar",
+   "Malawi",
+   "Malaysia",
+   "Maldives",
+   "Mali",
+   "Malta",
+   "Marie Byrd Land",
+   "Marshall Islands",
+   "Martinique",
+   "Mauritania",
+   "Mauritius",
+   "Mayotte",
+   "Mexico",
+   "Micronesia",
+   "Moldova",
+   "Monaco",
+   "Mongolia",
+   "Montenegro",
+   "Montserrat",
+   "Morocco",
+   "Mozambique",
+   "Myanmar",
+   "Nagorno-Karabakh",
+   "Namibia",
+   "Nauru",
+   "Nepal",
+   "Netherlands",
+   "Netherlands Antilles",
+   "New Caledonia",
+   "New Zealand",
+   "Nicaragua",
+   "Niger",
+   "Nigeria",
+   "Niue",
+   "Norfolk Island",
+   "Northern Cyprus",
+   "Northern Mariana Islands",
+   "Norway",
+   "Oman",
+   "Pakistan",
+   "Palau",
+   "Palestine",
+   "Panama",
+   "Papua New Guinea",
+   "Paraguay",
+   "Peru",
+   "Peter I Island",
+   "Philippines",
+   "Pitcairn Islands",
+   "Poland",
+   "Portugal",
+   "Puerto Rico",
+   "Qatar",
+   "Queen Maud Land",
+   "Rep Congo",
+   "Réunion",
+   "Romania",
+   "Ross Dependency",
+   "Russia",
+   "Rwanda",
+   "Sahrawi Arab Democratic Republic",
+   "Saint Helena, Ascension and Tristan da Cunha",
+   "Saint Kitts and Nevis",
+   "Saint Martin",
+   "Saint Pierre and Miquelon",
+   "Saint Vincent and the Grenadines",
+   "Saint-Barthélemy",
+   "Saipan",
+   "Samoa",
+   "San Marino",
+   "São Tomé and Príncipe",
+   "Saudi Arabia",
+   "Senegal",
+   "Serbia",
+   "Seychelles",
+   "Sierra Leone",
+   "Singapore",
+   "Sint Maarten",
+   "Slovakia",
+   "Slovenia",
+   "Solomon Islands",
+   "Somalia",
+   "Somaliland",
+   "South Africa",
+   "South Georgia and the South Sandwich Islands",
+   "South Korea",
+   "South Ossetia",
+   "South Sudan",
+   "Spain",
+   "Sri Lanka",
+   "St Lucia",
+   "Sudan",
+   "Suriname",
+   "Swaziland",
+   "Sweden",
+   "Switzerland",
+   "Syria",
+   "Taiwan",
+   "Tajikistan",
+   "Tanzania",
+   "Thailand",
+   "Togo",
+   "Tokelau",
+   "Tonga",
+   "Transnistria",
+   "Trinidad",
+   "Tunisia",
+   "Turkey",
+   "Turkmenistan",
+   "Turks and Caicos Islands",
+   "Tuvalu",
+   "UAE",
+   "Uganda",
+   "Ukraine",
+   "United Kingdom",
+   "United States",
+   "Uruguay",
+   "US Minor Outlying Islands",
+   "US Virgin Islands",
+   "Uzbekistan",
+   "Vanuatu",
+   "Vatican City",
+   "Venezuela",
+   "Vietnam",
+   "Wallis and Futuna",
+   "Worldwide",
+   "Yemen",
+   "Zambia",
+   "Zimbabwe"
+  ],
+  "Sprinkler": [
+   "Non-Sprinklered",
+   "Fully-Sprinklered",
+   "Partially-Sprinklered",
+   "Unknown"
+  ],
+  "CatRisk": [
+   "Low",
+   "Medium",
+   "High"
+  ],
+  "AssetProximity": [
+   "Close",
+   "Distant",
+   "Isolated"
+  ],
+  "ConstructionType": [
+   "Combustible",
+   "Non-Combustible",
+   "Unknown"
+  ],
+  "AssetValueCategory": [
+   "Small",
+   "Average",
+   "Large",
+   "Very Large"
+  ],
+  "NumLocationsCategory": [
+   "Small",
+   "Average",
+   "Large",
+   "Very Large"
+  ],
+  "ConcentrationCategory": [
+   "Low",
+   "Medium",
+   "High",
+   "Very High"
+  ],
+  "BIMIP": [
+   3,
+   6,
+   12,
+   18,
+   24,
+   30,
+   36,
+   48
+  ],
+  "WaitingPeriod": [
+   0,
+   5,
+   10,
+   15,
+   20,
+   25,
+   30,
+   35,
+   40,
+   45,
+   50,
+   55,
+   60,
+   65,
+   70,
+   75,
+   80,
+   85,
+   90,
+   95,
+   100,
+   105,
+   110,
+   115,
+   120
+  ],
+  "CCY": [
+   "GBP",
+   "USD",
+   "CAD",
+   "AUD",
+   "DKK",
+   "EUR",
+   "HKD",
+   "JPY",
+   "NZD",
+   "NOK",
+   "SGD",
+   "ZAR",
+   "SEK",
+   "CHF",
+   "PHP",
+   "MYR",
+   "INR",
+   "THB",
+   "MXN",
+   "TRY",
+   "HUF",
+   "CZK",
+   "CLP",
+   "COP",
+   "HRK",
+   "AED",
+   "PLN",
+   "KRW",
+   "ALL",
+   "BYN",
+   "BAM",
+   "BGN",
+   "ISK",
+   "MKD",
+   "MDL",
+   "RON",
+   "RUB",
+   "RSD",
+   "UAH",
+   "ARS",
+   "BSD",
+   "BBD",
+   "BMD",
+   "BOB",
+   "BRL",
+   "KYD",
+   "CRC",
+   "JMD",
+   "PEN",
+   "TTD",
+   "PYG",
+   "NIO",
+   "BND",
+   "KHR",
+   "CNY",
+   "MMK",
+   "NPR",
+   "PKR",
+   "LKR",
+   "VND",
+   "BZD",
+   "CUP",
+   "DOP",
+   "XCD",
+   "GTQ",
+   "HTG",
+   "HNL",
+   "ANG",
+   "PAB",
+   "UYU",
+   "BDT",
+   "XPF",
+   "FJD",
+   "IDR",
+   "LAK",
+   "MOP",
+   "SCR",
+   "TWD",
+   "AMD",
+   "AZN",
+   "BHD",
+   "GEL",
+   "IRR",
+   "IQD",
+   "ILS",
+   "JOD",
+   "KZT",
+   "KWD",
+   "LBP",
+   "OMR",
+   "QAR",
+   "SAR",
+   "SYP",
+   "TMT",
+   "UZS",
+   "YER",
+   "DZD",
+   "AOA",
+   "BWP",
+   "BIF",
+   "CVE",
+   "XOF",
+   "XAF",
+   "DJF",
+   "EGP",
+   "ETB",
+   "GMD",
+   "GHS",
+   "GNF",
+   "KES",
+   "LSL",
+   "LYD",
+   "MWK",
+   "MUR",
+   "MAD",
+   "NAD",
+   "NGN",
+   "RWF",
+   "SOS",
+   "SDG",
+   "SZL",
+   "TZS",
+   "TND",
+   "UGX",
+   "ZMW"
+  ],
+  "Brokers": [
+   "TBC",
+   "Various",
+   "AJG",
+   "Aldagi",
+   "Altor Re",
+   "AON",
+   "Aon Benfield",
+   "Barents Risk Management",
+   "Carpenter Marsh",
+   "Chedid",
+   "CJ Coleman",
+   "Cogent",
+   "Connor Halliday",
+   "Consilium Re",
+   "Cope",
+   "Cope Re",
+   "Gallagher",
+   "Gallagher Re",
+   "Guy Carpenter",
+   "Howden",
+   "Lockton",
+   "Lockton Re",
+   "Marsh",
+   "Marsh IT",
+   "McGill",
+   "Miller",
+   "Polaris Re",
+   "Price Forbes",
+   "Prudent Brokers",
+   "UIB",
+   "Verta",
+   "Willis Towers Watson"
+  ],
+  "occupancy_by_sector": {
+   "Minerals\\Ceramics\\Glass": [
+    "Abrasives",
+    "Brickworks",
+    "Cement",
+    "Concrete",
+    "Ceramics (fire)",
+    "Earthenware",
+    "Ore Refining",
+    "Mining (OG)",
+    "Mining (UG)",
+    "Mobile Equipment (H)",
+    "Mobile Equipment (L)",
+    "Smelting",
+    "Steel",
+    "Direct Reduction",
+    "Iron Manufacturing",
+    "Salt Processing",
+    "Glass (flat)",
+    "Glass (hollow)",
+    "Glass (fibre)",
+    "Slay & Rock Wool",
+    "Quarrying and Processing",
+    "Mineral Processing (asphalt & bitumen)"
+   ],
+   "Retail": [
+    "Department Store",
+    "Supermarket",
+    "Retail Warehouse",
+    "Mail Order",
+    "Cash & Carry",
+    "Furniture & Carpets",
+    "Car Showrooms",
+    "Shops",
+    "All Other"
+   ],
+   "Metal Working": [
+    "Foundry",
+    "General Metal Working (precision)",
+    "Rough Metal Processing",
+    "Heat Treating",
+    "Cold Rolling Mill",
+    "Electro Plate & Finishing"
+   ],
+   "Electronics": [
+    "Electronic Machines",
+    "General electronics",
+    "Components (Chip/bulbs)",
+    "Semiconductors",
+    "Batteries (non lithium)",
+    "Cables/wires (non insulated)",
+    "Auto Manufacturing",
+    "Aircraft Manufacturing",
+    "Lithium Batteries"
+   ],
+   "Plastics/Chemicals/Pharmaceuticals": [
+    "High Hazard Chemicals",
+    "Moderate Hazard Chemicals",
+    "Low Hazard Chemicals",
+    "Munitions",
+    "Hg1 Plastics",
+    "Hg2 Plastics",
+    "Hg3 Plastics",
+    "Hg4 Plastics",
+    "Polyester Manufacturing",
+    "Colouring Agents",
+    "Lacquers/Dyes Paints (ex FL)",
+    "Lacquers/Dyes Paints (inc FL)",
+    "Foamed Plastics",
+    "Vegetable Fats and Oils",
+    "Soaps & Detergents",
+    "Adhesives (Including flammables)",
+    "Adhesives (Excluding flammables)",
+    "Cosmetics",
+    "Pharma",
+    "Research Lab",
+    "Chemical Fibres (viscose)",
+    "Ethanol",
+    "Biodiesel",
+    "Fertilisers (ammonium nitrate)",
+    "Fertilisers (phosphate)",
+    "Fertilisers (mixing only)",
+    "Gum and Wood Chemicals",
+    "Carbon Black"
+   ],
+   "Paper/Printing/Rubber": [
+    "Tire Manufacture (ex Retreading)",
+    "Tire Manufacture (with Retreading)",
+    "Other Rubber",
+    "Rubber Recycling",
+    "Paper Products",
+    "Paper Boards",
+    "Cardboard Box Manufacture",
+    "Paper Goods (reels, sheets and cardboard)",
+    "Printing",
+    "Newspaper Printing",
+    "Book Binding",
+    "Waste Paper",
+    "Paper Board Mills",
+    "Wall Paper",
+    "Plasterboard"
+   ],
+   "Textiles": [
+    "Broad woven Fabric",
+    "Broad woven Fabric (man made)",
+    "Spinning Mills",
+    "Weaving Mills",
+    "Finishing, Bleach and Dye",
+    "Carpet Manufacturing",
+    "Clothing Manufacturing",
+    "Embroidery Works",
+    "Leather Goods",
+    "Linoleum Manufacturing",
+    "Textile Waste (sorting,Washing,etc)",
+    "Felt",
+    "Cotton Wool",
+    "Bonded fabric",
+    "Rope Making",
+    "Bedwares (quilts and mattresses' ex foam)",
+    "Bedwares (inc foam)",
+    "Cotton Lining"
+   ],
+   "Wood and Related Products": [
+    "Sawmills",
+    "Veneers/Plywood",
+    "Particle Board",
+    "Wood Panels/Chipboard",
+    "Furniture (no upholstery)",
+    "Furniture (with upholstery)",
+    "General Wood Work"
+   ],
+   "Food": [
+    "Flour and Corn Mills",
+    "Barley Mills",
+    "Sugar",
+    "Brewery",
+    "Malt Houses",
+    "Distillery",
+    "Winery",
+    "Non Alcoholic Drinks",
+    "Starch Manufacturer",
+    "Dry Convenience Foods",
+    "Potatoes",
+    "Dairy/Cheese",
+    "Egg Production",
+    "Poultry Processing",
+    "Margarine (edible oils)",
+    "Bakery",
+    "Pasta",
+    "Confectionary",
+    "Frozen Food",
+    "Meat Production",
+    "Abattoir",
+    "Coffee Grinds/Roasts",
+    "Substitute Fodder",
+    "Fodder",
+    "Tobacco Production (cigarettes)",
+    "Bottlers and Canners",
+    "Bottlers and Canners (plastic)",
+    "Essence Manufacturer",
+    "Jam, Sauce, Pickle, and Syrup",
+    "Tea Blending",
+    "Chocolate Production",
+    "Fish Processing",
+    "Grain Terminal (marine)",
+    "Grain Terminal (inland)",
+    "Wet Milling",
+    "Cereal Breakfasts",
+    "Rice Milling",
+    "Ice Manufacturer",
+    "Concentrated Animal Food Stuffs",
+    "Vinegar/mustard",
+    "Agriculture",
+    "Livestock"
+   ],
+   "Warehousing": [
+    "Iron and Steel",
+    "Heavy Machinery",
+    "Vehicles in the open",
+    "Logs in the open",
+    "Banana Ripening",
+    "Sheet Metal",
+    "Coal & Coke",
+    "Cables (without combustible insulation)",
+    "Cast Stores",
+    "Cement",
+    "Bricks",
+    "Fruit and Vegetables",
+    "Machinery",
+    "Tea",
+    "Clothing",
+    "Forwarding Agents",
+    "Ceramics",
+    "Grocery",
+    "Liquids (non-flammable, incl Beer and Wine)",
+    "Carpet and Textiles (no foam)",
+    "Sugar",
+    "Leather goods",
+    "Spirits",
+    "Abrasives",
+    "Salt",
+    "Tobacco Goods",
+    "Aerosols (without propellant)",
+    "Animal Goods",
+    "Asbestos Goods",
+    "Cereals",
+    "Chalk",
+    "Soap & Detergent",
+    "Coffee",
+    "Cosmetics",
+    "Electro Technical",
+    "Food",
+    "Glass (flat panel)",
+    "Mineral Wool",
+    "Horizontal reeled paper",
+    "Pharmaceuticals",
+    "Books",
+    "Paper & Stationary",
+    "Furniture",
+    "Plastics (non foam)",
+    "Fire Glass & Porcelain",
+    "Timber Goods",
+    "Adhesives",
+    "Textiles (foam)",
+    "Carpets (foam)",
+    "Rubber Goods (non foam)",
+    "Wax",
+    "Cables (with combustible insulation)",
+    "Electronic Equipment",
+    "Fats",
+    "Fertiliser",
+    "Oil",
+    "Photographic Supplies",
+    "Precision Components",
+    "Peat",
+    "Plastic (foam)",
+    "Explosives",
+    "Ammunitia",
+    "Sugar beet Pellets",
+    "Aerosols (with propellent)",
+    "Paints & Liquids (flammble)"
+   ],
+   "Leisure": [
+    "Airport",
+    "Bowling Alley",
+    "Casino",
+    "Cinema",
+    "Public Houses/Bars",
+    "Restaurant",
+    "Discotheque",
+    "Hotel",
+    "Gymnasium and Dance Studio",
+    "Zoos",
+    "Recording Studios",
+    "TV/Radio Stations",
+    "Film Studios",
+    "Sports Arena/Racetrack",
+    "Apartments",
+    "Houses",
+    "Student/Labourers Accomodation",
+    "Museums",
+    "Theme/Amusement Parks",
+    "Conference/Exhibition",
+    "Holiday Camp/Complex"
+   ],
+   "Miscellaneous Non Manufacturing": [
+    "Offices",
+    "Highly spread offices (Low BI)",
+    "Unoccupied Building (new)",
+    "Unoccupied Building (old)",
+    "Silent",
+    "Motor Vehicles",
+    "Water Treatment",
+    "Water Sewers",
+    "Water Infrastructure",
+    "Rail and Transport (freight)",
+    "Rail and Transport (passenger)",
+    "Rail and Transport (fixed property)",
+    "Rail and Transport (integrated)",
+    "Rolling Stock (Collision & Derailment)",
+    "Schools/Universities",
+    "Hospitals",
+    "Council/Municipality",
+    "Prisons/Detention Centres",
+    "Nursing Homes",
+    "Religious Property",
+    "Telecoms",
+    "Port Buildings and Concrete Structures",
+    "Port Jetties and Piers",
+    "Port Cranes and Handling Equipment",
+    "Roads",
+    "Bridges",
+    "Tunnels",
+    "Waste Recycling",
+    "Waste (dismantling - into smaller components)",
+    "Compost Preparation",
+    "Integrated",
+    "Waste Incineration",
+    "N.O.C (L)",
+    "N.O.C (M)",
+    "N.O.C (H)"
+   ]
+  },
+  "cat_locations_by_country": {
+   "Abkhazia": [
+    "Abkhazia"
+   ],
+   "Afghanistan": [
+    "Afghanistan"
+   ],
+   "Akrotiri and Dhekelia": [
+    "Akrotiri and Dhekelia"
+   ],
+   "Åland Islands": [
+    "Åland Islands"
+   ],
+   "Albania": [
+    "Albania"
+   ],
+   "Algeria": [
+    "Algeria"
+   ],
+   "American Samoa": [
+    "American Samoa"
+   ],
+   "Andorra": [
+    "Andorra"
+   ],
+   "Angola": [
+    "Angola"
+   ],
+   "Anguilla": [
+    "Anguilla"
+   ],
+   "Antártica": [
+    "Antártica"
+   ],
+   "Antigua and Barbuda": [
+    "Antigua",
+    "Antigua Beach Front",
+    "Antigua Inland"
+   ],
+   "Argentina": [
+    "Argentina"
+   ],
+   "Argentine Antarctica": [
+    "Argentine Antarctica"
+   ],
+   "Armenia": [
+    "Armenia"
+   ],
+   "Aruba": [
+    "Aruba"
+   ],
+   "Ashmore and Cartier Islands": [
+    "Ashmore and Cartier Islands"
+   ],
+   "Australia": [
+    "AUS_1",
+    "AUS_10",
+    "AUS_11",
+    "AUS_12",
+    "AUS_13",
+    "AUS_14",
+    "AUS_15",
+    "AUS_16",
+    "AUS_17",
+    "AUS_18",
+    "AUS_19",
+    "AUS_2",
+    "AUS_20",
+    "AUS_21",
+    "AUS_22",
+    "AUS_23",
+    "AUS_24",
+    "AUS_25",
+    "AUS_26",
+    "AUS_27",
+    "AUS_28",
+    "AUS_29",
+    "AUS_3",
+    "AUS_30",
+    "AUS_31",
+    "AUS_32",
+    "AUS_33",
+    "AUS_34",
+    "AUS_35",
+    "AUS_36",
+    "AUS_37",
+    "AUS_38",
+    "AUS_39",
+    "AUS_4",
+    "AUS_40",
+    "AUS_41",
+    "AUS_42",
+    "AUS_43",
+    "AUS_44",
+    "AUS_45",
+    "AUS_46",
+    "AUS_47",
+    "AUS_48",
+    "AUS_49",
+    "AUS_5",
+    "AUS_6",
+    "AUS_7",
+    "AUS_8",
+    "AUS_9"
+   ],
+   "Australian Antarctic Territory": [
+    "Australian Antarctic Territory"
+   ],
+   "Austria": [
+    "Austria"
+   ],
+   "Azerbaijan": [
+    "Azerbaijan"
+   ],
+   "Bahamas": [
+    "Bahamas Beach Front",
+    "Bahamas Inland"
+   ],
+   "Bahrain": [
+    "Bahrain"
+   ],
+   "Bangladesh": [
+    "Bangladesh"
+   ],
+   "Barbados": [
+    "Barbados"
+   ],
+   "Belarus": [
+    "Belarus"
+   ],
+   "Belgium": [
+    "Belgium"
+   ],
+   "Belize": [
+    "Belize"
+   ],
+   "Benin": [
+    "Benin"
+   ],
+   "Bermuda": [
+    "Bermuda"
+   ],
+   "Bhutan": [
+    "Bhutan"
+   ],
+   "Bolivia": [
+    "Bolivia Inland"
+   ],
+   "Bosnia Herzegovina": [
+    "Bosnia Herzegovina"
+   ],
+   "Botswana": [
+    "Botswana"
+   ],
+   "Bouvet Island": [
+    "Bouvet Island"
+   ],
+   "Brazil": [
+    "Brazil"
+   ],
+   "British Antarctic Territory": [
+    "British Antarctic Territory"
+   ],
+   "British Indian Ocean Territory": [
+    "British Indian Ocean Territory"
+   ],
+   "British Virgin Islands": [
+    "Virgin Islands (UK&US)"
+   ],
+   "Brunei": [
+    "Brunei"
+   ],
+   "Bulgaria": [
+    "Bulgaria"
+   ],
+   "Burkina Faso": [
+    "Burkina Faso"
+   ],
+   "Burundi": [
+    "Burundi"
+   ],
+   "Cambodia": [
+    "Cambodia"
+   ],
+   "Cameroon": [
+    "Cameroon"
+   ],
+   "Canada": [
+    "Canada British Columbia",
+    "Canada Quebec",
+    "Canada Richmond Delta"
+   ],
+   "Cape Verde": [
+    "Cape Verde"
+   ],
+   "Cayman Islands": [
+    "Cayman Islands Beach Front",
+    "Cayman Islands Inland"
+   ],
+   "Central African Republic": [
+    "Central African Republic"
+   ],
+   "Chad": [
+    "Chad"
+   ],
+   "Chile": [
+    "Chile 1,2,3,4",
+    "Chile 5"
+   ],
+   "China": [
+    "China"
+   ],
+   "Christmas Island": [
+    "Christmas Island"
+   ],
+   "Clipperton Island": [
+    "Clipperton Island"
+   ],
+   "Cocos (Keeling) Islands": [
+    "Cocos (Keeling) Islands"
+   ],
+   "Colombia": [
+    "Columbia 1,2,3,4,7",
+    "Columbia 5,9",
+    "Columbia 8"
+   ],
+   "Comoros": [
+    "Comoros"
+   ],
+   "Congo-Brazzaville": [
+    "Congo-Brazzaville"
+   ],
+   "Congo-Kinshasa": [
+    "Congo-Kinshasa"
+   ],
+   "Cook Islands": [
+    "Cook Islands"
+   ],
+   "Coral Sea Islands": [
+    "Coral Sea Islands"
+   ],
+   "Costa Rica": [
+    "Costa Rica",
+    "Costa Rica 6"
+   ],
+   "Croatia": [
+    "Croatia"
+   ],
+   "Cuba": [
+    "Cuba"
+   ],
+   "Curaçao": [
+    "Curaçao"
+   ],
+   "Cyprus": [
+    "Cyprus"
+   ],
+   "Czech Republic": [
+    "Czech Republic"
+   ],
+   "Dem Rep Congo": [
+    "Dem Rep Congo"
+   ],
+   "Denmark": [
+    "Denmark"
+   ],
+   "Djibouti": [
+    "Djibouti"
+   ],
+   "Dominica": [
+    "Dominica"
+   ],
+   "Dominican Republic": [
+    "Dominican Rep",
+    "Dominican Rep Beach Front",
+    "Dominican Rep Inland"
+   ],
+   "East Timor": [
+    "East Timor"
+   ],
+   "Ecuador": [
+    "Ecuador 1,2,3",
+    "Ecuador 1,3 Coast Line"
+   ],
+   "Egypt": [
+    "Egypt 1,2,3"
+   ],
+   "El Salvador": [
+    "El Salvador 1,2"
+   ],
+   "Equatorial Guinea": [
+    "Equatorial Guinea"
+   ],
+   "Eritrea": [
+    "Eritrea"
+   ],
+   "Estonia": [
+    "Estonia"
+   ],
+   "Ethiopia": [
+    "Ethiopia"
+   ],
+   "Falkland Islands": [
+    "Falkland Islands"
+   ],
+   "Faroe Islands": [
+    "Faroe Islands"
+   ],
+   "Fiji": [
+    "Fiji"
+   ],
+   "Finland": [
+    "Finland"
+   ],
+   "France": [
+    "France"
+   ],
+   "French Guiana": [
+    "French Guiana"
+   ],
+   "French Polynesia": [
+    "French Polynesia"
+   ],
+   "French Southern and Antarctic Lands": [
+    "French Southern and Antarctic Lands"
+   ],
+   "Gabon": [
+    "Gabon"
+   ],
+   "Gambia": [
+    "Gambia"
+   ],
+   "Georgia": [
+    "Georgia"
+   ],
+   "Germany": [
+    "Germany"
+   ],
+   "Ghana": [
+    "Ghana"
+   ],
+   "Gibraltar": [
+    "Gibraltar"
+   ],
+   "Greece": [
+    "Greece"
+   ],
+   "Greenland": [
+    "Greenland"
+   ],
+   "Grenada": [
+    "Grenada"
+   ],
+   "Guadeloupe": [
+    "Guadeloupe"
+   ],
+   "Guam": [
+    "Guam"
+   ],
+   "Guatemala": [
+    "Guatemala 1,2"
+   ],
+   "Guernsey": [
+    "Guernsey"
+   ],
+   "Guinea-Bissau": [
+    "Guinea-Bissau"
+   ],
+   "Guinea": [
+    "Guinea"
+   ],
+   "Guyana": [
+    "Guyana"
+   ],
+   "Haiti": [
+    "Haiti"
+   ],
+   "Heard Island and McDonald Islands": [
+    "Heard Island and McDonald Islands"
+   ],
+   "Honduras": [
+    "Honduras",
+    "Honduras North Coast"
+   ],
+   "Hong Kong": [
+    "Hong Kong"
+   ],
+   "Hungary": [
+    "Hungary"
+   ],
+   "Iceland": [
+    "Iceland"
+   ],
+   "India": [
+    "India 1,2,6,7,8,9,10,11,18,19",
+    "India 10,12,15",
+    "India 7,13"
+   ],
+   "Indonesia": [
+    "Indonesia 1,2,3,4,5,7",
+    "Indonesia 8"
+   ],
+   "International Waters": [
+    "International Waters"
+   ],
+   "Iran": [
+    "Iran"
+   ],
+   "Iraq": [
+    "Iraq"
+   ],
+   "Ireland": [
+    "Ireland"
+   ],
+   "Isle of Man": [
+    "Isle of Man"
+   ],
+   "Israel": [
+    "Israel 1,5,6",
+    "Israel 2,3"
+   ],
+   "Italy": [
+    "Italy 4,5,6,7"
+   ],
+   "Ivory Coast": [
+    "Ivory Coast"
+   ],
+   "Jamaica": [
+    "Jamaica",
+    "Jamaica Beach Front",
+    "Jamaica Inland"
+   ],
+   "Japan": [
+    "Japan 1,7,9,10,11",
+    "Japan 2,3,4,5,6,8",
+    "Japan 5,6,7,9,10,11"
+   ],
+   "Jersey": [
+    "Jersey"
+   ],
+   "Jordan": [
+    "Jordan"
+   ],
+   "Kazakhstan": [
+    "Kazakhstan"
+   ],
+   "Kenya": [
+    "Kenya"
+   ],
+   "Kiribati": [
+    "Kiribati"
+   ],
+   "Kosovo": [
+    "Kosovo"
+   ],
+   "Kuwait": [
+    "Kuwait"
+   ],
+   "Kyrgyzstan": [
+    "Kyrgyzstan"
+   ],
+   "Laos": [
+    "Laos"
+   ],
+   "Latvia": [
+    "Latvia"
+   ],
+   "Lebanon": [
+    "Lebanon"
+   ],
+   "Lesotho": [
+    "Lesotho"
+   ],
+   "Liberia": [
+    "Liberia"
+   ],
+   "Libya": [
+    "Libya"
+   ],
+   "Liechtenstein": [
+    "Liechtenstein"
+   ],
+   "Lithuania": [
+    "Lithuania"
+   ],
+   "Luxembourg": [
+    "Luxembourg"
+   ],
+   "Macau": [
+    "Macau"
+   ],
+   "Macedonia": [
+    "Macedonia"
+   ],
+   "Madagascar": [
+    "Madagascar"
+   ],
+   "Malawi": [
+    "Malawi"
+   ],
+   "Malaysia": [
+    "Malaysia"
+   ],
+   "Maldives": [
+    "Maldives"
+   ],
+   "Mali": [
+    "Mali"
+   ],
+   "Malta": [
+    "Malta"
+   ],
+   "Marie Byrd Land": [
+    "Marie Byrd Land"
+   ],
+   "Marshall Islands": [
+    "Marshall Islands"
+   ],
+   "Martinique": [
+    "Martinique"
+   ],
+   "Mauritania": [
+    "Mauritania"
+   ],
+   "Mauritius": [
+    "Mauritius"
+   ],
+   "Mayotte": [
+    "Mayotte"
+   ],
+   "Mexico": [
+    "Mexico 1,2,4,21,36,39,40,41",
+    "Mexico 11,12,35,46",
+    "Mexico 13,14,29,33,34",
+    "Mexico 16,22,25,27,30,33",
+    "Mexico 2,3,43 (Coastal)",
+    "Mexico 23,24,29,31,39,40,41 (Coastal)",
+    "Mexico 3,7,10,17,18,23,24,28",
+    "Mexico 37,42,44,45,46,47 (Coastal)",
+    "Mexico 4,5,6,9,10,17,18,19,20 (Coastal)",
+    "Mexico 43,44,45,48"
+   ],
+   "Micronesia": [
+    "Micronesia"
+   ],
+   "Moldova": [
+    "Moldova"
+   ],
+   "Monaco": [
+    "Monaco"
+   ],
+   "Mongolia": [
+    "Mongolia"
+   ],
+   "Montenegro": [
+    "Montenegro"
+   ],
+   "Montserrat": [
+    "Montserrat",
+    "Montserrat Beach Front",
+    "Montserrat Inland"
+   ],
+   "Morocco": [
+    "Morocco"
+   ],
+   "Mozambique": [
+    "Mozambique"
+   ],
+   "Myanmar": [
+    "Myanmar"
+   ],
+   "Nagorno-Karabakh": [
+    "Nagorno-Karabakh"
+   ],
+   "Namibia": [
+    "Namibia"
+   ],
+   "Nauru": [
+    "Nauru"
+   ],
+   "Nepal": [
+    "Nepal"
+   ],
+   "Netherlands Antilles": [
+    "Netherlands Antilles"
+   ],
+   "Netherlands": [
+    "Netherlands"
+   ],
+   "New Caledonia": [
+    "New Caledonia"
+   ],
+   "New Zealand": [
+    "New Zealand 1,2",
+    "New Zealand 3,4,5,14,15,16",
+    "New Zealand 6,7,8,9,10,11,12,13"
+   ],
+   "Nicaragua": [
+    "Nicaragua",
+    "Nicaragua 1",
+    "Nicaragua 2"
+   ],
+   "Nigeria": [
+    "Nigeria"
+   ],
+   "Niger": [
+    "Niger"
+   ],
+   "Niue": [
+    "Niue"
+   ],
+   "Norfolk Island": [
+    "Norfolk Island"
+   ],
+   "Northern Cyprus": [
+    "Northern Cyprus"
+   ],
+   "Northern Mariana Islands": [
+    "Northern Mariana Islands"
+   ],
+   "Norway": [
+    "Norway"
+   ],
+   "Oman": [
+    "Oman"
+   ],
+   "Pakistan": [
+    "Pakistan"
+   ],
+   "Palau": [
+    "Palau"
+   ],
+   "Palestine": [
+    "Palestine"
+   ],
+   "Panama": [
+    "Panama 1,4",
+    "Panama 2,3,5,6,7"
+   ],
+   "Papua New Guinea": [
+    "Papua New Guinea 3"
+   ],
+   "Paraguay": [
+    "Paraguay"
+   ],
+   "Peru": [
+    "Peru 1,2,3,4,5,6,9,10,11,12",
+    "Peru 6,7"
+   ],
+   "Peter I Island": [
+    "Peter I Island"
+   ],
+   "Philippines": [
+    "Philippines 1,2,3,4,5,6",
+    "Philippines 1,2,3,4,5,6,7,8",
+    "Philippines 7",
+    "Philippines 8,9",
+    "Philippines 9"
+   ],
+   "Pitcairn Islands": [
+    "Pitcairn Islands"
+   ],
+   "Poland": [
+    "Poland"
+   ],
+   "Portugal": [
+    "Portugal"
+   ],
+   "Puerto Rico": [
+    "Puerto Rico",
+    "Puerto Rico Beach Front",
+    "Puerto Rico Inland"
+   ],
+   "Qatar": [
+    "Qatar"
+   ],
+   "Queen Maud Land": [
+    "Queen Maud Land"
+   ],
+   "Rep Congo": [
+    "Rep Congo"
+   ],
+   "Réunion": [
+    "Réunion"
+   ],
+   "Romania": [
+    "Romania"
+   ],
+   "Ross Dependency": [
+    "Ross Dependency"
+   ],
+   "Russia": [
+    "Russia"
+   ],
+   "Rwanda": [
+    "Rwanda"
+   ],
+   "Sahrawi Arab Democratic Republic": [
+    "Sahrawi Arab Democratic Republic"
+   ],
+   "Saint Helena, Ascension and Tristan da Cunha": [
+    "Saint Helena, Ascension and Tristan da Cunha"
+   ],
+   "Saint Kitts and Nevis": [
+    "St Kitts"
+   ],
+   "Saint Martin": [
+    "St Martin"
+   ],
+   "Saint Pierre and Miquelon": [
+    "Saint Pierre and Miquelon"
+   ],
+   "Saint Vincent and the Grenadines": [
+    "St Vincent"
+   ],
+   "Saint-Barthélemy": [
+    "St Barts"
+   ],
+   "Saipan": [
+    "Saipan"
+   ],
+   "Samoa": [
+    "Samoa"
+   ],
+   "San Marino": [
+    "San Marino"
+   ],
+   "São Tomé and Príncipe": [
+    "São Tomé and Príncipe"
+   ],
+   "Saudi Arabia": [
+    "Saudi Arabia"
+   ],
+   "Senegal": [
+    "Senegal"
+   ],
+   "Serbia": [
+    "Serbia"
+   ],
+   "Seychelles": [
+    "Seychelles"
+   ],
+   "Sierra Leone": [
+    "Sierra Leone"
+   ],
+   "Singapore": [
+    "Singapore"
+   ],
+   "Sint Maarten": [
+    "Sint Maarten"
+   ],
+   "Slovakia": [
+    "Slovakia"
+   ],
+   "Slovenia": [
+    "Slovenia"
+   ],
+   "Solomon Islands": [
+    "Solomon Islands"
+   ],
+   "Somalia": [
+    "Somalia"
+   ],
+   "Somaliland": [
+    "Somaliland"
+   ],
+   "South Africa": [
+    "South Africa"
+   ],
+   "South Georgia and the South Sandwich Islands": [
+    "South Georgia and the South Sandwich Islands"
+   ],
+   "South Korea": [
+    "South Korea"
+   ],
+   "South Ossetia": [
+    "South Ossetia"
+   ],
+   "South Sudan": [
+    "South Sudan"
+   ],
+   "Spain": [
+    "Spain"
+   ],
+   "Sri Lanka": [
+    "Sri Lanka"
+   ],
+   "St Lucia": [
+    "St Lucia"
+   ],
+   "Sudan": [
+    "Sudan"
+   ],
+   "Suriname": [
+    "Suriname"
+   ],
+   "Swaziland": [
+    "Swaziland"
+   ],
+   "Sweden": [
+    "Sweden"
+   ],
+   "Switzerland": [
+    "Switzerland"
+   ],
+   "Syria": [
+    "Syria"
+   ],
+   "Taiwan": [
+    "Taiwan 1,10,11,12",
+    "Taiwan 1,2,3,12",
+    "Taiwan 2,3,4,5,6,7,8",
+    "Taiwan 4,5,6,7,8,10",
+    "Taiwan 9,11"
+   ],
+   "Tajikistan": [
+    "Tajikistan"
+   ],
+   "Tanzania": [
+    "Tanzania"
+   ],
+   "Thailand": [
+    "Thailand"
+   ],
+   "Togo": [
+    "Togo"
+   ],
+   "Tokelau": [
+    "Tokelau"
+   ],
+   "Tonga": [
+    "Tonga"
+   ],
+   "Transnistria": [
+    "Transnistria"
+   ],
+   "Trinidad": [
+    "Trinidad & Tobago"
+   ],
+   "Tunisia": [
+    "Tunisia"
+   ],
+   "Turkey": [
+    "Turkey 1",
+    "Turkey 2",
+    "Turkey 3,5,7",
+    "Turkey 4,6,8,11,12,13,14",
+    "Turkey 9,10,15"
+   ],
+   "Turkmenistan": [
+    "Turkmenistan"
+   ],
+   "Turks and Caicos Islands": [
+    "Turks & Caicos"
+   ],
+   "Tuvalu": [
+    "Tuvalu"
+   ],
+   "UAE": [
+    "UAE"
+   ],
+   "Uganda": [
+    "Uganda"
+   ],
+   "Ukraine": [
+    "Ukraine"
+   ],
+   "United Kingdom": [
+    "United Kingdom"
+   ],
+   "United States": [
+    "A/V",
+    "Alabama CT1",
+    "Alabama DE1",
+    "Alabama T1",
+    "Alabama T2",
+    "Alaska",
+    "B",
+    "C/X",
+    "California A other",
+    "California A1",
+    "California A2",
+    "California A3",
+    "California A4",
+    "California B1",
+    "California B2",
+    "California B3",
+    "California C",
+    "California D",
+    "California E",
+    "California F",
+    "California G",
+    "California H",
+    "Florida Centre North",
+    "Florida Far North",
+    "Florida Far South",
+    "Florida Mid South",
+    "Florida Panhandle",
+    "Georgia GA 1",
+    "Hawaii Hawaii",
+    "Hawaii Honolulu",
+    "Hawaii Kauai",
+    "Hawaii Maui",
+    "Hawaii Oahu",
+    "Louisiana LA 1",
+    "Louisiana LA 2",
+    "Maryland T1",
+    "Massachusetts MA 1",
+    "Mississippi T1",
+    "Mississippi T2",
+    "Nevada",
+    "New Jersey T1",
+    "New Madrid INM",
+    "New Madrid ONM",
+    "New York Ex Long Island",
+    "New York Long Island",
+    "North Carolina T1",
+    "North Carolina T2",
+    "Oregon",
+    "South Carolina",
+    "South Carolina T1 Ex Myrtle beach",
+    "South Carolina T1 Myrtle beach",
+    "South Carolina T2",
+    "Texas T1",
+    "Texas T2",
+    "Utah",
+    "Virginia T1",
+    "Washington North",
+    "Washington South"
+   ],
+   "Uruguay": [
+    "Uruguay"
+   ],
+   "US Minor Outlying Islands": [
+    "US Minor Outlying Islands"
+   ],
+   "US Virgin Islands": [
+    "Virgin Islands (UK&US)"
+   ],
+   "Uzbekistan": [
+    "Uzbekistan"
+   ],
+   "Vanuatu": [
+    "Vanuatu"
+   ],
+   "Vatican City": [
+    "Vatican City"
+   ],
+   "Venezuela": [
+    "Venezuela 3,4,5,6,7,8,9,11,12",
+    "Venezuela where applicable"
+   ],
+   "Vietnam": [
+    "Vietnam"
+   ],
+   "Wallis and Futuna": [
+    "Wallis and Futuna"
+   ],
+   "Worldwide": [
+    "Worldwide"
+   ],
+   "Yemen": [
+    "Yemen"
+   ],
+   "Zambia": [
+    "Zambia"
+   ],
+   "Zimbabwe": [
+    "Zimbabwe"
+   ]
+  }
+ },
+ "notes": "label/label_cell: the text next to an input cell, checked on every run to detect a changed layout (None where the label is computed by the tool).",
+ "runtime_lists": {
+  "orig_insured": {
+   "sheet": "DropDownLists",
+   "range": "AP2:AP800",
+   "note": "the tool's list of insureds: client names, so read from the local workbook at run time, never stored in git"
+  }
+ }
+}

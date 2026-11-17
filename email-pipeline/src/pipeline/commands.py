@@ -11,6 +11,7 @@ from pathlib import Path
 
 import yaml
 
+from . import excel
 from .agent import cli_path, sdk_versions
 from .classifier import classify
 from .config import Config, load_config
@@ -166,6 +167,15 @@ def doctor(config_path: Path, notify_test: bool) -> int:
             line("OK", f"Route {r.name}: tools {', '.join(r.allowed_tools)}{'; ' + ', '.join(extras) if extras else ''}")
         except Exception as exc:
             line("FAIL", f"Route {f.parent.name}: {exc}")
+    for contract_file in sorted(cfg.routes_dir.glob("*/tool/contract.json")):
+        template = contract_file.parent / json.loads(contract_file.read_text(encoding="utf-8"))["template"]
+        if not template.is_file():
+            line("WARN", f"Route {contract_file.parent.parent.name}: tool template missing, copy the blank "
+                         f"'{template.name}' into {template.parent} (not in git; see tool/README.md)")
+    if any(cfg.routes_dir.glob("*/tool/contract.json")):
+        why = excel.available()
+        line("WARN" if why else "OK", f"Excel tools: {why}" if why else "Excel tools: Windows PowerShell found "
+             "(routes with an Excel tool also need Microsoft Excel installed)")
 
     if cfg.teams_webhook_url:
         line("OK", "Teams webhook configured")
